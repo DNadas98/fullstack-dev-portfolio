@@ -1,0 +1,30 @@
+version: "3"
+
+# dev mysql container
+services:
+  mysql:
+    image: mysql:latest
+    #    networks:
+    #      - db_network
+    ports: # Exposes MySQL on localhost for development
+      - "${NEST_DB_EXPOSED_PORT}:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${NEST_DB_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${NEST_DB_NAME}"
+      MYSQL_USER: "${NEST_DB_USER}"
+      MYSQL_PASSWORD: "${NEST_DB_PASSWORD}"
+    volumes:
+      - "mysql_data:/var/lib/mysql"
+    restart: "no"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+#networks:
+#  db_network:
+#    driver: bridge
+
+volumes:
+  mysql_data:
