@@ -7,7 +7,11 @@ export class BcryptPasswordEncoder implements IPasswordEncoder {
   private static readonly SALT_ROUNDS: number = 10;
 
   async compare(password: string, hashedPassword: string): Promise<boolean> {
-    return await bcrypt.compare(password, hashedPassword);
+    try {
+      return await bcrypt.compare(password, hashedPassword);
+    } catch (e) {
+      return false;
+    }
   }
 
   async hash(password: string): Promise<string> {
