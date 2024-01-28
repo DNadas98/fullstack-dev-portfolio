@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
-import {CreateUserDto} from "../dto/CreateUserDto";
-import {UpdateUserDto} from "../dto/UpdateUserDto";
+import {UserCreateRequestDto} from "../dto/UserCreateRequestDto";
+import {UserUpdateRequestDto} from "../dto/UserUpdateRequestDto";
 import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
 import {IUserService} from "./IUserService";
 import {DatabaseService} from "../../database/database.service";
@@ -44,7 +44,7 @@ export class PrismaUserService implements IUserService {
     return this.toUserResponsePrivateDto(user);
   }
 
-  async create(createUserDto: CreateUserDto): Promise<UserResponsePrivateDto> {
+  async create(createUserDto: UserCreateRequestDto): Promise<UserResponsePrivateDto> {
     const hashedPassword = await this.passwordEncoder.hash(createUserDto.password);
     const created = await this.prisma.user.create({
       data: {
@@ -56,7 +56,7 @@ export class PrismaUserService implements IUserService {
     return this.toUserResponsePrivateDto(created);
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserResponsePrivateDto> {
+  async update(id: number, updateUserDto: UserUpdateRequestDto): Promise<UserResponsePrivateDto> {
     const updated = await this.prisma.user.update({
       where: {id}, data: {username: updateUserDto.username}
     });

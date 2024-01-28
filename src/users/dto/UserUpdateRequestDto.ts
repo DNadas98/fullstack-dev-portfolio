@@ -1,7 +1,7 @@
 import {Matches} from "class-validator";
 import {usernameRegex} from "../../regex/regex";
 
-export class UpdateUserDto {
+export class UserUpdateRequestDto {
   @Matches(usernameRegex, {message: "Invalid username format"})
   private readonly _username: string;
 

@@ -1,5 +1,5 @@
-import {CreateUserDto} from "../dto/CreateUserDto";
-import {UpdateUserDto} from "../dto/UpdateUserDto";
+import {UserCreateRequestDto} from "../dto/UserCreateRequestDto";
+import {UserUpdateRequestDto} from "../dto/UserUpdateRequestDto";
 import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
 
 export abstract class IUserService {
@@ -9,9 +9,9 @@ export abstract class IUserService {
 
   abstract findByEmail(email: string): Promise<UserResponsePrivateDto | null>;
 
-  abstract create(createUserDto: CreateUserDto): Promise<UserResponsePrivateDto>;
+  abstract create(createUserDto: UserCreateRequestDto): Promise<UserResponsePrivateDto>;
 
-  abstract update(id: number, updateUserDto: UpdateUserDto): Promise<UserResponsePrivateDto>;
+  abstract update(id: number, updateUserDto: UserUpdateRequestDto): Promise<UserResponsePrivateDto>;
 
   abstract remove(id: number): Promise<void>;
 }
