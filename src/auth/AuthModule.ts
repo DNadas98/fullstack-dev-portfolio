@@ -5,7 +5,7 @@ import {BcryptPasswordEncoder} from "./BcryptPasswordEncoder";
 
 @Module({
   providers: [AuthService, {provide: IPasswordEncoder, useClass: BcryptPasswordEncoder}],
-  exports: [BcryptPasswordEncoder]
+  exports: [{provide: IPasswordEncoder, useClass: BcryptPasswordEncoder}]
 })
 export class AuthModule {
 }
