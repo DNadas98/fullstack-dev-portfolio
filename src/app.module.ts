@@ -1,10 +1,10 @@
 import {Module} from "@nestjs/common";
 import {DatabaseModule} from "./database/database.module";
-import { UsersModule } from './users/UsersModule';
-import { AuthModule } from './auth/AuthModule';
+import {UsersModule} from "./users/UsersModule";
+import {AuthModule} from "./auth/AuthModule";
 
 @Module({
-  imports: [DatabaseModule, UsersModule, AuthModule]
+  imports: [DatabaseModule, AuthModule, UsersModule]
 })
 export class AppModule {
 }
