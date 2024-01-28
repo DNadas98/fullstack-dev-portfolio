@@ -1,7 +1,7 @@
 import {Matches} from "class-validator";
 import {emailRegex, passwordRegex, usernameRegex} from "../../regex/regex";
 
-export class UserCreateRequestDto {
+export class RegisterRequestDto {
   @Matches(emailRegex, {message: "Invalid email format"})
   private readonly _email: string;
 
