@@ -1,5 +1,6 @@
 import {Test, TestingModule} from "@nestjs/testing";
 import {DatabaseService} from "./database.service";
+import * as process from "process";
 
 describe("DatabaseService", () => {
   let service: DatabaseService;
@@ -16,12 +17,16 @@ describe("DatabaseService", () => {
     expect(service).toBeDefined();
   });
 
-  it("should connect to the database", async () => {
-    await expect(service.$connect()).resolves.not.toThrow();
+  it("should connect to the database if ENV is present", async () => {
+    if (process.env.PORTFOLIO_DB_URL) {
+      await expect(service.$connect()).resolves.not.toThrow();
+    }
   });
 
-  it("should disconnect from the database", async () => {
-    await service.$connect();
-    await expect(service.$disconnect()).resolves.not.toThrow();
+  it("should disconnect from the database if ENV is present", async () => {
+    if (process.env.PORTFOLIO_DB_URL) {
+      await service.$connect();
+      await expect(service.$disconnect()).resolves.not.toThrow();
+    }
   });
 });
