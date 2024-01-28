@@ -1,5 +1,15 @@
-export class UpdateUserDto{
-  email?: string;
-  password?: string;
-  username?: string;
+import {Matches} from "class-validator";
+import {usernameRegex} from "../../regex/regex";
+
+export class UpdateUserDto {
+  @Matches(usernameRegex, {message: "Invalid username format"})
+  private readonly _username: string;
+
+  constructor(username: string) {
+    this._username = username;
+  }
+
+  get username(): string {
+    return this._username;
+  }
 }
