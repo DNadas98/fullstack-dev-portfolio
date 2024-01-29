@@ -7,9 +7,19 @@ datasource db {
   url      = env("PORTFOLIO_DB_URL")
 }
 
-model test {
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
   id        Int      @id @default(autoincrement())
-  test      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  email     String   @unique
+  username  String
+  password  String
+  role      Role     @default(USER)
+  enabled   Boolean  @default(false)
+  active    Boolean  @default(true)
 }
