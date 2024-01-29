@@ -3,6 +3,7 @@ import { AuthService } from './AuthService';
 import {DatabaseService} from "../database/database.service";
 import {IPasswordEncoder} from "./IPasswordEncoder";
 import {UserService} from "../users/service/UserService";
+import {IJwtService} from "./IJwtService";
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -15,6 +16,10 @@ describe('AuthService', () => {
   };
 
   const mockPasswordEncoder = {
+    //TODO: impl
+  };
+
+  const mockJwtService = {
     //TODO: impl
   };
 
@@ -32,6 +37,10 @@ describe('AuthService', () => {
         {
           provide: IPasswordEncoder,
           useValue: mockPasswordEncoder
+        },
+        {
+          provide: IJwtService,
+          useValue: mockJwtService
         }],
     }).compile();
 

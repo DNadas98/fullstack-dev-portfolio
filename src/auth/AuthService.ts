@@ -7,21 +7,25 @@ import {DatabaseService} from "../database/database.service";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
 import {UniqueConstraintError} from "../error/UniqueConstraintError";
 import {LoginRequestDto} from "./dto/LoginRequestDto";
-import {InvalidCredentialsError} from "../error/InvalidCredentialsError";
-import {AccountDeactivatedError} from "../error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../error/AccountNotEnabledError";
+import {InvalidCredentialsError} from "./error/InvalidCredentialsError";
+import {AccountDeactivatedError} from "./error/AccountDeactivatedError";
+import {AccountNotEnabledError} from "./error/AccountNotEnabledError";
 import {UserService} from "../users/service/UserService";
+import {IJwtService} from "./IJwtService";
+import {JwtPayloadDto} from "./dto/JwtPayloadDto";
 
 @Injectable()
 export class AuthService {
   private readonly prisma: DatabaseService;
   private readonly userService: UserService;
   private readonly passwordEncoder: IPasswordEncoder;
+  private readonly jwtService: IJwtService;
 
-
-  constructor(userService: UserService, passwordEncoder: IPasswordEncoder) {
+  constructor(databaseService: DatabaseService, userService: UserService, passwordEncoder: IPasswordEncoder, jwtService: IJwtService) {
+    this.prisma = databaseService;
     this.userService = userService;
     this.passwordEncoder = passwordEncoder;
+    this.jwtService = jwtService;
   }
 
   async register(registerRequestDto: RegisterRequestDto): Promise<UserResponsePrivateDto> {
@@ -33,7 +37,8 @@ export class AuthService {
         data: {
           username: registerRequestDto.username,
           email: registerRequestDto.email,
-          password: hashedPassword
+          password: hashedPassword,
+          enabled: true
         }
       });
       return this.userService.toUserResponsePrivateDto(created);
@@ -70,19 +75,21 @@ export class AuthService {
     }
     const userDto = this.userService.toUserResponsePrivateDto(user);
 
-    //TODO: Implement JWT signing
-    const accessToken = "accessToken";
-    const refreshToken = "refreshToken";
+    const bearerToken = await this.jwtService.signBearerToken(new JwtPayloadDto(
+      user.email
+    ));
+    const refreshToken = await this.jwtService.signRefreshToken(new JwtPayloadDto(
+      user.email
+    ));
 
-    return new LoginResponseDto(userDto, accessToken, refreshToken);
+    return new LoginResponseDto(userDto, bearerToken, refreshToken);
   }
 
-  async refresh(accessToken: string): Promise<string> {
-    //TODO: Implement JWT verifying, parsing
-    const email = "email";
+  async refresh(refreshToken: string): Promise<string> {
+    const payload = await this.jwtService.verifyRefreshToken(refreshToken);
 
     const user = await this.prisma.user.findUnique({
-      where: {email}
+      where: {email: payload.email}
     });
     if (!user) {
       throw new InvalidCredentialsError();
@@ -94,8 +101,7 @@ export class AuthService {
       throw new AccountNotEnabledError();
     }
 
-    //TODO: Implement JwtService
-    const newAccessToken = "accessToken";
-    return newAccessToken;
+    const newPayload = new JwtPayloadDto(payload.email);
+    return this.jwtService.signBearerToken(newPayload);
   }
 }
