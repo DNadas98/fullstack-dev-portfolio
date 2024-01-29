@@ -1,8 +1,8 @@
 import {Test, TestingModule} from "@nestjs/testing";
 import {INestApplication} from "@nestjs/common";
-import {AppModule} from "./../src/app.module";
+import {AppModule} from "../../src/app.module";
 
-describe("App context (e2e)", () => {
+describe("App context (integration)", () => {
   let app: INestApplication;
 
   beforeEach(async () => {

@@ -1,7 +1,7 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {UserController} from "./UserController";
-import {UserService} from "./service/UserService";
-import {IJwtService} from "../auth/IJwtService";
+import {UserController} from "../../../src/users/UserController";
+import {UserService} from "../../../src/users/service/UserService";
+import {IJwtService} from "../../../src/auth/IJwtService";
 
 describe("UsersController", () => {
   let controller: UserController;
