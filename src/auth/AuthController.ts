@@ -7,12 +7,16 @@ import {UnauthorizedError} from "./error/UnauthorizedError";
 import {MessageResponseDto} from "../dto/MessageResponseDto";
 import {DataResponseDto} from "../dto/DataResponseDto";
 import {ErrorResponseDto} from "../dto/ErrorResponseDto";
+import {ConfigService} from "@nestjs/config";
 
 @Controller("/api/v1/auth")
 export class AuthController {
   private readonly refreshCookieName: string = "jwtrefresh";
 
-  constructor(private readonly authService: AuthService) {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly configService: ConfigService
+  ) {
   }
 
   @Post("register")
@@ -71,7 +75,7 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: Number(process.env.PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN)
+      maxAge: Number(this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN"))
     };
   }
 

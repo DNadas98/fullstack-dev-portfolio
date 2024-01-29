@@ -7,8 +7,8 @@ import {
   JwtVerifyOptions,
   TokenExpiredError
 } from "@nestjs/jwt";
-import * as process from "process";
 import {JwtExpiredError} from "./error/JwtExpiredError";
+import {ConfigService} from "@nestjs/config";
 
 /**
  * @link https://docs.nestjs.com/security/authentication#jwt-token
@@ -17,13 +17,13 @@ import {JwtExpiredError} from "./error/JwtExpiredError";
 @Injectable()
 export class CustomJwtService implements IJwtService {
 
-  constructor(private readonly jwt: JwtService) {
+  constructor(private readonly jwt: JwtService, private readonly configService: ConfigService) {
   }
 
   async signBearerToken(payloadDto: JwtPayloadDto): Promise<string> {
     const options: JwtSignOptions = {
-      secret: process.env.PORTFOLIO_BEARER_TOKEN_SECRET,
-      expiresIn: process.env.PORTFOLIO_BEARER_TOKEN_EXPIRES_IN,
+      secret: this.configService.get("PORTFOLIO_BEARER_TOKEN_SECRET"),
+      expiresIn: this.configService.get("PORTFOLIO_BEARER_TOKEN_EXPIRES_IN"),
       algorithm: "HS256"
     };
     return await this.jwt.signAsync({...payloadDto}, options);
@@ -31,8 +31,8 @@ export class CustomJwtService implements IJwtService {
 
   async signRefreshToken(payloadDto: JwtPayloadDto): Promise<string> {
     const options: JwtSignOptions = {
-      secret: process.env.PORTFOLIO_REFRESH_TOKEN_SECRET,
-      expiresIn: process.env.PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN,
+      secret: this.configService.get("PORTFOLIO_REFRESH_TOKEN_SECRET"),
+      expiresIn: this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN"),
       algorithm: "HS256"
     };
     return await this.jwt.signAsync({...payloadDto}, options);
@@ -41,7 +41,7 @@ export class CustomJwtService implements IJwtService {
   async verifyBearerToken(bearerToken: string): Promise<JwtPayloadDto> {
     try {
       const options: JwtVerifyOptions = {
-        secret: process.env.PORTFOLIO_BEARER_TOKEN_SECRET,
+        secret: this.configService.get("PORTFOLIO_BEARER_TOKEN_SECRET"),
         algorithms: ["HS256"]
       };
       return await this.jwt.verifyAsync(bearerToken, options);
@@ -56,7 +56,7 @@ export class CustomJwtService implements IJwtService {
   async verifyRefreshToken(refreshToken: string): Promise<JwtPayloadDto> {
     try {
       const options: JwtVerifyOptions = {
-        secret: process.env.PORTFOLIO_REFRESH_TOKEN_SECRET,
+        secret: this.configService.get("PORTFOLIO_REFRESH_TOKEN_SECRET"),
         algorithms: ["HS256"]
       };
       return await this.jwt.verifyAsync(refreshToken, options);

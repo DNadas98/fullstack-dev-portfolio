@@ -6,9 +6,10 @@ import {DatabaseModule} from "../database/database.module";
 import {UsersModule} from "../users/UsersModule";
 import {AuthController} from "./AuthController";
 import {CustomJwtModule} from "./CustomJwtModule";
+import {ConfigModule} from "@nestjs/config";
 
 @Module({
-  imports: [DatabaseModule, UsersModule, CustomJwtModule],
+  imports: [ConfigModule, DatabaseModule, UsersModule, CustomJwtModule],
   providers: [
     AuthService,
     {provide: IPasswordEncoder, useClass: BcryptPasswordEncoder}
