@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   HttpCode,
@@ -31,8 +32,11 @@ export class UserController {
   @Get(":id")
   @Roles("ADMIN")
   @HttpCode(HttpStatus.OK)
-  async getUserDetailsById(@Param() id: string) {
-    const userDetails = await this.userService.readById(parseInt(id,10));
+  async getUserDetailsById(@Param("id") id: string) {
+    if (!id || isNaN(parseInt(id))) {
+      throw new BadRequestException();
+    }
+    const userDetails = await this.userService.readById(+id);
     return new DataResponseDto(userDetails);
   }
 }
