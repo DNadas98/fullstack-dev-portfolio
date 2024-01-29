@@ -1,47 +1,23 @@
 import {Role} from "@prisma/client";
 
 export class UserResponsePrivateDto {
-  constructor(
-    private readonly _id: number,
-    private readonly _createdAt: Date,
-    private readonly _updatedAt: Date,
-    private readonly _email: string,
-    private readonly _username: string,
-    private readonly _role: Role,
-    private readonly _enabled: boolean,
-    private readonly _active: boolean
-  ) {
-  }
+  readonly id: number;
+  readonly createdAt: Date;
+  readonly updatedAt: Date;
+  readonly email: string;
+  readonly username: string;
+  readonly role: Role;
+  readonly enabled: boolean;
+  readonly active: boolean;
 
-  get id(): number {
-    return this._id;
-  }
-
-  get createdAt(): Date {
-    return this._createdAt;
-  }
-
-  get updatedAt(): Date {
-    return this._updatedAt;
-  }
-
-  get email(): string {
-    return this._email;
-  }
-
-  get username(): string {
-    return this._username;
-  }
-
-  get role(): Role {
-    return this._role;
-  }
-
-  get enabled(): boolean {
-    return this._enabled;
-  }
-
-  get active(): boolean {
-    return this._active;
+  constructor(id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean) {
+    this.id = id;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.email = email;
+    this.username = username;
+    this.role = role;
+    this.enabled = enabled;
+    this.active = active;
   }
 }

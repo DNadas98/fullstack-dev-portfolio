@@ -1,13 +1,18 @@
 import {Role} from "@prisma/client";
 
 export class UserResponsePublicDto {
-  constructor(
-    private readonly _id: number,
-    private readonly _email: string,
-    private readonly _username: string,
-    private readonly _role: Role,
-  ) {
+  private readonly _id: number;
+  private readonly _email: string;
+  private readonly _username: string;
+  private readonly _role: Role;
+
+  constructor(id: number, email: string, username: string, role: Role) {
+    this._id = id;
+    this._email = email;
+    this._username = username;
+    this._role = role;
   }
+
 
   get id(): number {
     return this._id;
