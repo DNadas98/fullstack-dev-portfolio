@@ -10,25 +10,22 @@ import {LoginRequestDto} from "./dto/LoginRequestDto";
 import {InvalidCredentialsError} from "./error/InvalidCredentialsError";
 import {AccountDeactivatedError} from "./error/AccountDeactivatedError";
 import {AccountNotEnabledError} from "./error/AccountNotEnabledError";
-import {UserService} from "../users/service/UserService";
 import {IJwtService} from "./IJwtService";
 import {JwtPayloadDto} from "./dto/JwtPayloadDto";
 
 @Injectable()
 export class AuthService {
   private readonly prisma: DatabaseService;
-  private readonly userService: UserService;
   private readonly passwordEncoder: IPasswordEncoder;
   private readonly jwtService: IJwtService;
 
-  constructor(databaseService: DatabaseService, userService: UserService, passwordEncoder: IPasswordEncoder, jwtService: IJwtService) {
+  constructor(databaseService: DatabaseService, passwordEncoder: IPasswordEncoder, jwtService: IJwtService) {
     this.prisma = databaseService;
-    this.userService = userService;
     this.passwordEncoder = passwordEncoder;
     this.jwtService = jwtService;
   }
 
-  async register(registerRequestDto: RegisterRequestDto): Promise<UserResponsePrivateDto> {
+  async register(registerRequestDto: RegisterRequestDto, enabled: boolean): Promise<UserResponsePrivateDto> {
     try {
       const hashedPassword = await this.passwordEncoder.hash(
         registerRequestDto.password
@@ -38,10 +35,11 @@ export class AuthService {
           username: registerRequestDto.username,
           email: registerRequestDto.email,
           password: hashedPassword,
-          enabled: true
+          enabled: enabled
         }
       });
-      return this.userService.toUserResponsePrivateDto(created);
+      return new UserResponsePrivateDto(created.id, created.createdAt, created.updatedAt,
+        created.email, created.username, created.role, created.enabled, created.active);
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
         throw new UniqueConstraintError(
@@ -73,7 +71,9 @@ export class AuthService {
     if (!user.enabled) {
       throw new AccountNotEnabledError();
     }
-    const userDto = this.userService.toUserResponsePrivateDto(user);
+    const userDto = new UserResponsePrivateDto(user.id,
+      user.createdAt, user.updatedAt, user.email, user.username, user.role, user.enabled,
+      user.active);
 
     const bearerToken = await this.jwtService.signBearerToken(new JwtPayloadDto(
       user.email

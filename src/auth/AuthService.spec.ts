@@ -2,16 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthService } from './AuthService';
 import {DatabaseService} from "../database/database.service";
 import {IPasswordEncoder} from "./IPasswordEncoder";
-import {UserService} from "../users/service/UserService";
 import {IJwtService} from "./IJwtService";
 
 describe('AuthService', () => {
   let service: AuthService;
   const mockDatabaseService = {
-    //TODO: impl
-  };
-
-  const mockUserService = {
     //TODO: impl
   };
 
@@ -29,10 +24,6 @@ describe('AuthService', () => {
         {
           provide: DatabaseService,
           useValue: mockDatabaseService
-        },
-        {
-          provide: UserService,
-          useValue: mockUserService
         },
         {
           provide: IPasswordEncoder,
