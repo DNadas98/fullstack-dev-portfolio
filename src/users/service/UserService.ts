@@ -2,9 +2,9 @@ import {Injectable} from "@nestjs/common";
 import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
 import {DatabaseService} from "../../database/database.service";
 import {User} from "@prisma/client";
-import {AccountNotFoundError} from "../../error/AccountNotFoundError";
-import {AccountDeactivatedError} from "../../error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../../error/AccountNotEnabledError";
+import {AccountNotFoundError} from "../../auth/error/AccountNotFoundError";
+import {AccountDeactivatedError} from "../../auth/error/AccountDeactivatedError";
+import {AccountNotEnabledError} from "../../auth/error/AccountNotEnabledError";
 import {UserResponsePublicDto} from "../dto/UserResponsePublicDto";
 
 @Injectable()
@@ -128,5 +128,4 @@ export class UserService {
       });
     });
   }
-
 }
