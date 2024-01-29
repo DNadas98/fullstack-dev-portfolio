@@ -50,7 +50,7 @@ export class UserService {
 
   async readByEmail(email: string): Promise<UserResponsePrivateDto> {
     const user = await this.prisma.user.findUnique({
-      where: {email: email, active: true, enabled: true}
+      where: {email: email}
     });
     if (!user) {
       throw new AccountNotFoundError();
