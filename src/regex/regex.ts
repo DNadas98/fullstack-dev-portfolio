@@ -17,7 +17,8 @@ export const emailRegex = /^(?=.{6,100}$)[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z
  * - Minimum 9, maximum 100 characters.
  * @type {RegExp}
  */
-export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{9,100}$/;
+export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{9,100}$/;
+
 
 /**
  * Checks username format:
