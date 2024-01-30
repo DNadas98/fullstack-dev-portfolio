@@ -121,7 +121,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer token here",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QudGVzdCIsImlhdCI6MTcwNjYxMTQ0NSwiZXhwIjoxNzA2NjEyMDQ1fQ.OsDgerPQMdJtOSAPr5OO17jBpoyoVF19Vl4ycRG0p0A",
 									"type": "string"
 								}
 							]
@@ -154,7 +154,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "bearer token here",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QudGVzdCIsImlhdCI6MTcwNjYxMTQ0NSwiZXhwIjoxNzA2NjEyMDQ1fQ.OsDgerPQMdJtOSAPr5OO17jBpoyoVF19Vl4ycRG0p0A",
 									"type": "string"
 								}
 							]
@@ -170,6 +170,38 @@
 								"admin",
 								"users",
 								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "mail",
+			"item": [
+				{
+					"name": "sendTestMail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"to\":\"\",\n    \"subject\":\"\",\n    \"content\":\"\",\n    \"isHtml\":false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/mail/test",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"mail",
+								"test"
 							]
 						}
 					},
