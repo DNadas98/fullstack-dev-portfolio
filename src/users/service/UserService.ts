@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
-import {DatabaseService} from "../../database/database.service";
+import {DatabaseService} from "../../database/service/DatabaseService";
 import {User} from "@prisma/client";
 import {AccountNotFoundError} from "../../auth/error/AccountNotFoundError";
 import {AccountDeactivatedError} from "../../auth/error/AccountDeactivatedError";

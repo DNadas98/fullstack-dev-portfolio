@@ -1,5 +1,5 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {DatabaseService} from "../../../src/database/database.service";
+import {DatabaseService} from "../../../src/database/service/DatabaseService";
 import * as process from "process";
 
 describe("DatabaseService (integration)", () => {

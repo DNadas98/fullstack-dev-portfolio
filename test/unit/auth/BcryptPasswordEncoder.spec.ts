@@ -1,5 +1,5 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {BcryptPasswordEncoder} from "../../../src/auth/BcryptPasswordEncoder";
+import {BcryptPasswordEncoder} from "../../../src/auth/service/BcryptPasswordEncoder";
 
 describe("PasswordEncoderService", () => {
   let service: BcryptPasswordEncoder;

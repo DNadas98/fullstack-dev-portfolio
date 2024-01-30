@@ -1,12 +1,12 @@
 import {Body, Controller, HttpStatus, Post, Req, Res} from "@nestjs/common";
-import {AuthService} from "./AuthService";
-import {RegisterRequestDto} from "./dto/RegisterRequestDto";
+import {AuthService} from "../service/AuthService";
+import {RegisterRequestDto} from "../dto/RegisterRequestDto";
 import {CookieOptions, Request, Response} from "express";
-import {LoginRequestDto} from "./dto/LoginRequestDto";
-import {UnauthorizedError} from "./error/UnauthorizedError";
-import {MessageResponseDto} from "../dto/MessageResponseDto";
-import {DataResponseDto} from "../dto/DataResponseDto";
-import {ErrorResponseDto} from "../dto/ErrorResponseDto";
+import {LoginRequestDto} from "../dto/LoginRequestDto";
+import {UnauthorizedError} from "../error/UnauthorizedError";
+import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
+import {DataResponseDto} from "../../common/dto/DataResponseDto";
+import {ErrorResponseDto} from "../../common/dto/ErrorResponseDto";
 import {ConfigService} from "@nestjs/config";
 
 @Controller("/api/v1/auth")

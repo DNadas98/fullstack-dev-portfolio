@@ -1,10 +1,10 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {UserController} from "../../../src/users/controller/UserController";
 import {UserService} from "../../../src/users/service/UserService";
 import {IJwtService} from "../../../src/auth/service/IJwtService";
+import {AdminController} from "../../../src/users/controller/AdminController";
 
-describe("UsersController", () => {
-  let controller: UserController;
+describe("AdminController", () => {
+  let controller: AdminController;
   const mockUserService = {
     //TODO:Impl
   };
@@ -15,14 +15,14 @@ describe("UsersController", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UserController],
+      controllers: [AdminController],
       providers: [
         {provide: UserService, useValue: mockUserService},
         {provide: IJwtService, useValue: mockJwtService}
       ]
     }).compile();
 
-    controller = module.get<UserController>(UserController);
+    controller = module.get<AdminController>(AdminController);
   });
 
   it("should be defined", () => {

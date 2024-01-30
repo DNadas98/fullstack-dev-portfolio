@@ -3,8 +3,8 @@ import {
   ExecutionContext,
   Injectable, SetMetadata
 } from "@nestjs/common";
-import {UnauthorizedError} from "./error/UnauthorizedError";
-import {UserResponsePrivateDto} from "../users/dto/UserResponsePrivateDto";
+import {UnauthorizedError} from "../error/UnauthorizedError";
+import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
 import {Role} from "@prisma/client";
 import {Reflector} from "@nestjs/core";
 
