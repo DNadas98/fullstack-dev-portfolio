@@ -129,18 +129,23 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/users/",
+							"raw": "{{BASE_URL}}/users/details",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"users",
-								""
+								"details"
 							]
 						}
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "admin",
+			"item": [
 				{
 					"name": "getUserDetailsById",
 					"request": {
@@ -157,13 +162,14 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/users/1",
+							"raw": "{{BASE_URL}}/admin/users/2",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
+								"admin",
 								"users",
-								"1"
+								"2"
 							]
 						}
 					},
