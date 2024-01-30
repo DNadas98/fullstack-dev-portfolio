@@ -18,6 +18,7 @@
 - Set up and start the database
 - `npm start` or `node dist/main`
 - See `package.json` for test, lint and other commands
+- Import and use the included Postman collection to test endpoints
 
 #### Database
 - Option 1: Start the dockerized database using `docker compose up -d`
