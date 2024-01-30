@@ -1,8 +1,8 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {DatabaseService} from "./database.service";
+import {DatabaseService} from "../../../src/database/service/DatabaseService";
 import * as process from "process";
 
-describe("DatabaseService", () => {
+describe("DatabaseService (integration)", () => {
   let service: DatabaseService;
 
   beforeEach(async () => {

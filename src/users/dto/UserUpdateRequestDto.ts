@@ -1,5 +1,5 @@
 import {Matches} from "class-validator";
-import {usernameRegex} from "../../regex/regex";
+import {usernameRegex} from "../../common/regex/regex";
 
 export class UserUpdateRequestDto {
   @Matches(usernameRegex, {message: "Invalid username format"})

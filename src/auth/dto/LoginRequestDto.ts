@@ -1,5 +1,5 @@
 import {Matches} from "class-validator";
-import {emailRegex, passwordRegex} from "../../regex/regex";
+import {emailRegex, passwordRegex} from "../../common/regex/regex";
 
 export class LoginRequestDto {
   @Matches(emailRegex, {message: "Invalid email format"})

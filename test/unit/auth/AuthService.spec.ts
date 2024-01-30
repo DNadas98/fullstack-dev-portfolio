@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from './AuthService';
-import {DatabaseService} from "../database/database.service";
-import {IPasswordEncoder} from "./IPasswordEncoder";
-import {IJwtService} from "./IJwtService";
+import { AuthService } from '../../../src/auth/service/AuthService';
+import {DatabaseService} from "../../../src/database/service/DatabaseService";
+import {IPasswordEncoder} from "../../../src/auth/service/IPasswordEncoder";
+import {IJwtService} from "../../../src/auth/service/IJwtService";
 
 describe('AuthService', () => {
   let service: AuthService;

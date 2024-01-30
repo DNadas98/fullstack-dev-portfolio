@@ -1,10 +1,10 @@
 import {Module} from "@nestjs/common";
-import {AuthService} from "./AuthService";
-import {IPasswordEncoder} from "./IPasswordEncoder";
-import {BcryptPasswordEncoder} from "./BcryptPasswordEncoder";
-import {DatabaseModule} from "../database/database.module";
+import {AuthService} from "./service/AuthService";
+import {IPasswordEncoder} from "./service/IPasswordEncoder";
+import {BcryptPasswordEncoder} from "./service/BcryptPasswordEncoder";
+import {DatabaseModule} from "../database/DatabaseModule";
 import {UsersModule} from "../users/UsersModule";
-import {AuthController} from "./AuthController";
+import {AuthController} from "./controller/AuthController";
 import {CustomJwtModule} from "./CustomJwtModule";
 import {ConfigModule} from "@nestjs/config";
 

@@ -1,5 +1,5 @@
 import {Matches} from "class-validator";
-import {emailRegex} from "../../regex/regex";
+import {emailRegex} from "../../common/regex/regex";
 
 export class JwtPayloadDto {
   @Matches(emailRegex, {message: "Invalid credentials"})

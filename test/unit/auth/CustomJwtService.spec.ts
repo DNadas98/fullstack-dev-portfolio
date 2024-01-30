@@ -1,7 +1,7 @@
 import {Test, TestingModule} from "@nestjs/testing";
-import {CustomJwtService} from "./CustomJwtService";
+import {CustomJwtService} from "../../../src/auth/service/CustomJwtService";
 import {JwtService} from "@nestjs/jwt";
-import {JwtPayloadDto} from "./dto/JwtPayloadDto";
+import {JwtPayloadDto} from "../../../src/auth/dto/JwtPayloadDto";
 import {ConfigService} from "@nestjs/config";
 
 describe("CustomJwtServiceService", () => {
