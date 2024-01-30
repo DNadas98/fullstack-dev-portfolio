@@ -1,4 +1,4 @@
-import {JwtPayloadDto} from "../dto/JwtPayloadDto";
+import { JwtPayloadDto } from "../dto/JwtPayloadDto";
 
 export abstract class IJwtService {
   abstract signBearerToken(payloadDto: JwtPayloadDto): Promise<string>;

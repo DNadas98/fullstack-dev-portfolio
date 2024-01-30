@@ -1,10 +1,10 @@
-import {Injectable} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {createTransport, Transporter} from "nodemailer";
-import {TransporterCreationError} from "../error/TransporterCreationError";
-import {MailOptionsDto} from "../dto/MailOptionsDto";
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { createTransport, Transporter } from "nodemailer";
+import { TransporterCreationError } from "../error/TransporterCreationError";
+import { MailOptionsDto } from "../dto/MailOptionsDto";
 import Mail from "nodemailer/lib/mailer";
-import {MailSendingError} from "../error/MailSendingError";
+import { MailSendingError } from "../error/MailSendingError";
 
 @Injectable()
 export class MailService {
@@ -53,8 +53,8 @@ export class MailService {
       subject: mailOptions.subject
     };
     mailOptions.isHtml
-      ? options.html = mailOptions.content
-      : options.text = mailOptions.content;
+      ? (options.html = mailOptions.content)
+      : (options.text = mailOptions.content);
 
     try {
       await this.transporter.sendMail(options);

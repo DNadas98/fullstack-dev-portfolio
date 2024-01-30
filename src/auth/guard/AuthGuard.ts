@@ -1,19 +1,17 @@
-import {
-  CanActivate,
-  ExecutionContext,
-  Injectable
-} from "@nestjs/common";
-import {Request} from "express";
-import {IJwtService} from "../service/IJwtService";
-import {UnauthorizedError} from "../error/UnauthorizedError";
-import {UserService} from "../../users/service/UserService";
-import {JwtPayloadDto} from "../dto/JwtPayloadDto";
-import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
+import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { Request } from "express";
+import { IJwtService } from "../service/IJwtService";
+import { UnauthorizedError } from "../error/UnauthorizedError";
+import { UserService } from "../../users/service/UserService";
+import { JwtPayloadDto } from "../dto/JwtPayloadDto";
+import { UserResponsePrivateDto } from "../../users/dto/UserResponsePrivateDto";
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: IJwtService, private userService: UserService) {
-  }
+  constructor(
+    private jwtService: IJwtService,
+    private userService: UserService
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -22,8 +20,11 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedError();
     }
     try {
-      const payload: JwtPayloadDto = await this.jwtService.verifyBearerToken(bearerToken);
-      const user: UserResponsePrivateDto = await this.userService.readByEmail(payload.email);
+      const payload: JwtPayloadDto =
+        await this.jwtService.verifyBearerToken(bearerToken);
+      const user: UserResponsePrivateDto = await this.userService.readByEmail(
+        payload.email
+      );
       request["user"] = user;
     } catch {
       throw new UnauthorizedError();

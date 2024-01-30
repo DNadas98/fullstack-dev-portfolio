@@ -1,23 +1,26 @@
 import {
   CanActivate,
   ExecutionContext,
-  Injectable, SetMetadata
+  Injectable,
+  SetMetadata
 } from "@nestjs/common";
-import {UnauthorizedError} from "../error/UnauthorizedError";
-import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
-import {Role} from "@prisma/client";
-import {Reflector} from "@nestjs/core";
+import { UnauthorizedError } from "../error/UnauthorizedError";
+import { UserResponsePrivateDto } from "../../users/dto/UserResponsePrivateDto";
+import { Role } from "@prisma/client";
+import { Reflector } from "@nestjs/core";
 
 const ROLES_KEY = "roles";
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);
 
 @Injectable()
 export class RoleGuard implements CanActivate {
-  constructor(private reflector: Reflector) {
-  }
+  constructor(private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const requiredRoles = this.reflector.get<Role[]>(ROLES_KEY, context.getHandler());
+    const requiredRoles = this.reflector.get<Role[]>(
+      ROLES_KEY,
+      context.getHandler()
+    );
     if (!requiredRoles) {
       return true;
     }

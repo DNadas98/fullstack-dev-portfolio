@@ -1,7 +1,7 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {UserController} from "../../../src/users/controller/UserController";
-import {UserService} from "../../../src/users/service/UserService";
-import {IJwtService} from "../../../src/auth/service/IJwtService";
+import { Test, TestingModule } from "@nestjs/testing";
+import { UserController } from "../../../src/users/controller/UserController";
+import { UserService } from "../../../src/users/service/UserService";
+import { IJwtService } from "../../../src/auth/service/IJwtService";
 
 describe("UsersController", () => {
   let controller: UserController;
@@ -17,8 +17,8 @@ describe("UsersController", () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UserController],
       providers: [
-        {provide: UserService, useValue: mockUserService},
-        {provide: IJwtService, useValue: mockJwtService}
+        { provide: UserService, useValue: mockUserService },
+        { provide: IJwtService, useValue: mockJwtService }
       ]
     }).compile();
 

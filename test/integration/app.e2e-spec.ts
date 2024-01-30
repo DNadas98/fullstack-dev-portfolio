@@ -1,6 +1,6 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {INestApplication} from "@nestjs/common";
-import {AppModule} from "../../src/AppModule";
+import { Test, TestingModule } from "@nestjs/testing";
+import { INestApplication } from "@nestjs/common";
+import { AppModule } from "../../src/AppModule";
 
 describe("App context (integration)", () => {
   let app: INestApplication;

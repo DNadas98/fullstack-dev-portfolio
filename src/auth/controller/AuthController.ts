@@ -1,13 +1,13 @@
-import {Body, Controller, HttpStatus, Post, Req, Res} from "@nestjs/common";
-import {AuthService} from "../service/AuthService";
-import {RegisterRequestDto} from "../dto/RegisterRequestDto";
-import {CookieOptions, Request, Response} from "express";
-import {LoginRequestDto} from "../dto/LoginRequestDto";
-import {UnauthorizedError} from "../error/UnauthorizedError";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {ErrorResponseDto} from "../../common/dto/ErrorResponseDto";
-import {ConfigService} from "@nestjs/config";
+import { Body, Controller, HttpStatus, Post, Req, Res } from "@nestjs/common";
+import { AuthService } from "../service/AuthService";
+import { RegisterRequestDto } from "../dto/RegisterRequestDto";
+import { CookieOptions, Request, Response } from "express";
+import { LoginRequestDto } from "../dto/LoginRequestDto";
+import { UnauthorizedError } from "../error/UnauthorizedError";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
+import { ErrorResponseDto } from "../../common/dto/ErrorResponseDto";
+import { ConfigService } from "@nestjs/config";
 
 @Controller("/api/v1/auth")
 export class AuthController {
@@ -16,25 +16,37 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService
-  ) {
-  }
+  ) {}
 
   @Post("register")
-  async register(@Body() registerDto: RegisterRequestDto, @Res() response: Response) {
+  async register(
+    @Body() registerDto: RegisterRequestDto,
+    @Res() response: Response
+  ) {
     const userDto = await this.authService.register(registerDto, true);
-    return response.status(HttpStatus.CREATED).json(new MessageResponseDto(
-      `User account with username ${userDto.username} created successfully`));
+    return response
+      .status(HttpStatus.CREATED)
+      .json(
+        new MessageResponseDto(
+          `User account with username ${userDto.username} created successfully`
+        )
+      );
   }
 
   @Post("login")
-  async login(@Body() loginRequestDto: LoginRequestDto, @Res() response: Response) {
+  async login(
+    @Body() loginRequestDto: LoginRequestDto,
+    @Res() response: Response
+  ) {
     const loginResponseDto = await this.authService.login(loginRequestDto);
     const refreshToken = loginResponseDto.refreshToken;
     const loginResponse = {
       user: loginResponseDto.user,
       bearerToken: loginResponseDto.bearerToken
     };
-    return this.addRefreshCookie(response, refreshToken).status(HttpStatus.OK).json(loginResponse);
+    return this.addRefreshCookie(response, refreshToken)
+      .status(HttpStatus.OK)
+      .json(loginResponse);
   }
 
   @Post("refresh")
@@ -45,23 +57,25 @@ export class AuthController {
         throw new UnauthorizedError();
       }
       const bearerToken = await this.authService.refresh(refreshToken);
-      return response.status(HttpStatus.OK).json(new DataResponseDto({
-        bearerToken: bearerToken
-      }));
+      return response.status(HttpStatus.OK).json(
+        new DataResponseDto({
+          bearerToken: bearerToken
+        })
+      );
     } catch (e) {
       console.error(e);
-      return this.removeRefreshCookie(response).status(HttpStatus.UNAUTHORIZED).json(new ErrorResponseDto(
-        new UnauthorizedError().message
-      ));
+      return this.removeRefreshCookie(response)
+        .status(HttpStatus.UNAUTHORIZED)
+        .json(new ErrorResponseDto(new UnauthorizedError().message));
     }
   }
 
   @Post("logout")
   async logout(@Req() request: Request, @Res() response: Response) {
     if (this.getRefreshCookie(request)) {
-      return this.removeRefreshCookie(response).status(HttpStatus.OK).json(new MessageResponseDto(
-        "User account signed out successfully"
-      ));
+      return this.removeRefreshCookie(response)
+        .status(HttpStatus.OK)
+        .json(new MessageResponseDto("User account signed out successfully"));
     }
     return response.status(HttpStatus.NO_CONTENT).send();
   }
@@ -75,19 +89,26 @@ export class AuthController {
       httpOnly: true,
       secure: true,
       sameSite: "none",
-      maxAge: Number(this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN"))
+      maxAge: Number(
+        this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN")
+      )
     };
   }
 
   private addRefreshCookie(response: Response, value: string): Response {
-    response.cookie(this.refreshCookieName, value, this.getRefreshCookieOptions());
+    response.cookie(
+      this.refreshCookieName,
+      value,
+      this.getRefreshCookieOptions()
+    );
     return response;
   }
 
   private removeRefreshCookie(response: Response): Response {
     const options = this.getRefreshCookieOptions();
     response.cookie(this.refreshCookieName, "", {
-      ...options, maxAge: 0
+      ...options,
+      maxAge: 0
     });
     return response;
   }

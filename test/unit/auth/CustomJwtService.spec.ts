@@ -1,8 +1,8 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {CustomJwtService} from "../../../src/auth/service/CustomJwtService";
-import {JwtService} from "@nestjs/jwt";
-import {JwtPayloadDto} from "../../../src/auth/dto/JwtPayloadDto";
-import {ConfigService} from "@nestjs/config";
+import { Test, TestingModule } from "@nestjs/testing";
+import { CustomJwtService } from "../../../src/auth/service/CustomJwtService";
+import { JwtService } from "@nestjs/jwt";
+import { JwtPayloadDto } from "../../../src/auth/dto/JwtPayloadDto";
+import { ConfigService } from "@nestjs/config";
 
 describe("CustomJwtServiceService", () => {
   let service: CustomJwtService;
@@ -23,9 +23,14 @@ describe("CustomJwtServiceService", () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [{
-        provide: ConfigService, useValue: mockConfigService
-      }, CustomJwtService, JwtService]
+      providers: [
+        {
+          provide: ConfigService,
+          useValue: mockConfigService
+        },
+        CustomJwtService,
+        JwtService
+      ]
     }).compile();
 
     service = module.get<CustomJwtService>(CustomJwtService);
@@ -62,5 +67,4 @@ describe("CustomJwtServiceService", () => {
     const verifiedPayload = await service.verifyRefreshToken(token);
     expect(verifiedPayload.email).toEqual(payload.email);
   });
-
 });

@@ -1,14 +1,14 @@
-import {Injectable} from "@nestjs/common";
-import {IJwtService} from "./IJwtService";
-import {JwtPayloadDto} from "../dto/JwtPayloadDto";
+import { Injectable } from "@nestjs/common";
+import { IJwtService } from "./IJwtService";
+import { JwtPayloadDto } from "../dto/JwtPayloadDto";
 import {
   JwtService,
   JwtSignOptions,
   JwtVerifyOptions,
   TokenExpiredError
 } from "@nestjs/jwt";
-import {JwtExpiredError} from "../error/JwtExpiredError";
-import {ConfigService} from "@nestjs/config";
+import { JwtExpiredError } from "../error/JwtExpiredError";
+import { ConfigService } from "@nestjs/config";
 
 /**
  * @link https://docs.nestjs.com/security/authentication#jwt-token
@@ -16,9 +16,10 @@ import {ConfigService} from "@nestjs/config";
  */
 @Injectable()
 export class CustomJwtService implements IJwtService {
-
-  constructor(private readonly jwt: JwtService, private readonly configService: ConfigService) {
-  }
+  constructor(
+    private readonly jwt: JwtService,
+    private readonly configService: ConfigService
+  ) {}
 
   async signBearerToken(payloadDto: JwtPayloadDto): Promise<string> {
     const options: JwtSignOptions = {
@@ -26,7 +27,7 @@ export class CustomJwtService implements IJwtService {
       expiresIn: this.configService.get("PORTFOLIO_BEARER_TOKEN_EXPIRES_IN"),
       algorithm: "HS256"
     };
-    return await this.jwt.signAsync({...payloadDto}, options);
+    return await this.jwt.signAsync({ ...payloadDto }, options);
   }
 
   async signRefreshToken(payloadDto: JwtPayloadDto): Promise<string> {
@@ -35,7 +36,7 @@ export class CustomJwtService implements IJwtService {
       expiresIn: this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN"),
       algorithm: "HS256"
     };
-    return await this.jwt.signAsync({...payloadDto}, options);
+    return await this.jwt.signAsync({ ...payloadDto }, options);
   }
 
   async verifyBearerToken(bearerToken: string): Promise<JwtPayloadDto> {

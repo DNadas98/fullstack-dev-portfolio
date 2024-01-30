@@ -1,10 +1,10 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { AuthService } from '../../../src/auth/service/AuthService';
-import {DatabaseService} from "../../../src/database/service/DatabaseService";
-import {IPasswordEncoder} from "../../../src/auth/service/IPasswordEncoder";
-import {IJwtService} from "../../../src/auth/service/IJwtService";
+import { Test, TestingModule } from "@nestjs/testing";
+import { AuthService } from "../../../src/auth/service/AuthService";
+import { DatabaseService } from "../../../src/database/service/DatabaseService";
+import { IPasswordEncoder } from "../../../src/auth/service/IPasswordEncoder";
+import { IJwtService } from "../../../src/auth/service/IJwtService";
 
-describe('AuthService', () => {
+describe("AuthService", () => {
   let service: AuthService;
   const mockDatabaseService = {
     //TODO: impl
@@ -20,7 +20,8 @@ describe('AuthService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService,
+      providers: [
+        AuthService,
         {
           provide: DatabaseService,
           useValue: mockDatabaseService
@@ -32,13 +33,14 @@ describe('AuthService', () => {
         {
           provide: IJwtService,
           useValue: mockJwtService
-        }],
+        }
+      ]
     }).compile();
 
     service = module.get<AuthService>(AuthService);
   });
 
-  it('should be defined', () => {
+  it("should be defined", () => {
     expect(service).toBeDefined();
   });
 });

@@ -1,5 +1,5 @@
-import {IsNotEmpty, IsString, Matches, MaxLength} from "class-validator";
-import {emailRegex} from "../../common/regex/regex";
+import { IsNotEmpty, IsString, Matches, MaxLength } from "class-validator";
+import { emailRegex } from "../../common/regex/regex";
 
 /**
  * @param to should be a valid email
@@ -8,7 +8,7 @@ import {emailRegex} from "../../common/regex/regex";
  * @param isHtml
  */
 export class MailOptionsDto {
-  @Matches(emailRegex, {message: "Invalid email format"})
+  @Matches(emailRegex, { message: "Invalid email format" })
   readonly to: string;
 
   @IsString()

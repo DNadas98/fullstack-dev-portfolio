@@ -1,4 +1,4 @@
-import {Role} from "@prisma/client";
+import { Role } from "@prisma/client";
 
 export class UserResponsePrivateDto {
   readonly id: number;
@@ -10,7 +10,16 @@ export class UserResponsePrivateDto {
   readonly enabled: boolean;
   readonly active: boolean;
 
-  constructor(id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean) {
+  constructor(
+    id: number,
+    createdAt: Date,
+    updatedAt: Date,
+    email: string,
+    username: string,
+    role: Role,
+    enabled: boolean,
+    active: boolean
+  ) {
     this.id = id;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;

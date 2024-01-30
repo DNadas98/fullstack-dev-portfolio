@@ -7,16 +7,15 @@ import {
   Param,
   UseGuards
 } from "@nestjs/common";
-import {UserService} from "../service/UserService";
-import {AuthGuard} from "../../auth/guard/AuthGuard";
-import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
+import { UserService } from "../service/UserService";
+import { AuthGuard } from "../../auth/guard/AuthGuard";
+import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("api/v1/admin")
 export class AdminController {
-  constructor(private readonly userService: UserService) {
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Get("users/:id")
   @Roles("ADMIN")
