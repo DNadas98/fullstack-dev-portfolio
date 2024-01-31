@@ -1,23 +1,17 @@
-[![Contributors][contributors-shield]][contributors-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
-
-[contributors-shield]: https://img.shields.io/github/contributors/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge
-
-[contributors-url]: https://github.com/DNadas98/portfolio-backend-nestjs/graphs/contributors
-
-[issues-shield]: https://img.shields.io/github/issues/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge
-
-[issues-url]: https://github.com/DNadas98/portfolio-backend-nestjs/issues
-
-[license-shield]: https://img.shields.io/github/license/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge
-
-[license-url]: https://github.com/DNadas98/portfolio-backend-nestjs/blob/master/LICENSE.txt
-
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-
-[linkedin-url]: https://linkedin.com/in/daniel-nadas
+<p align="center">
+  <a href="https://github.com/DNadas98/portfolio-backend-nestjs/graphs/contributors">
+    <img src="https://img.shields.io/github/contributors/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge" alt="Contributors">
+  </a>
+  <a href="https://github.com/DNadas98/portfolio-backend-nestjs/issues">
+    <img src="https://img.shields.io/github/issues/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge" alt="Issues">
+  </a>
+  <a href="https://github.com/DNadas98/portfolio-backend-nestjs/blob/master/LICENSE.txt">
+    <img src="https://img.shields.io/github/license/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge" alt="License">
+  </a>
+  <a href="https://linkedin.com/in/daniel-nadas">
+    <img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555" alt="LinkedIn">
+  </a>
+</p>
 
 <br xmlns="http://www.w3.org/1999/html"/>
 <div align="center">
@@ -31,14 +25,12 @@
     <br />
     <a href="https://github.com/users/DNadas98/projects/3"><strong>View the Project Board »</strong></a>
     <br />
+    <a href="https://www.postman.com/cc-tasx/workspace/dnadas98-public/documentation/30693601-153ba7e4-663e-46da-b37c-7c6e95493b00"><strong>Read the API Documentation »</strong></a>
     <br />
-    <!--
-    <a href="https://github.com/DNadas98/portfolio-backend-nestjs">View Demo</a>
-    ·
+    <br />
     <a href="https://github.com/DNadas98/portfolio-backend-nestjs/issues">Report Bug</a>
     ·
     <a href="https://github.com/DNadas98/portfolio-backend-nestjs/issues">Request Feature</a>
-  -->
   </p>
 </div>
 
@@ -79,7 +71,7 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 <div>
   <a href="https://react.dev/" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
+    <figure>
       <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-react-js-100.webp" alt="React JS" style="height:40px;">
       <figcaption>React JS</figcaption>
     </figure>
@@ -89,20 +81,20 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 ### Backend
 
 <div>
-  <a href="https://nodejs.org/en" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-node-js-96.webp" alt="Node.js" style="height:40px;width:auto;;">
-      <figcaption>Node.js</figcaption>
-    </figure>
-  </a>
+  <figure>
+    <a href="https://nodejs.org/en" target="_blank" referrerpolicy="no-referrer">
+      <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-node-js-96.webp" alt="Node.js" style="height:40px;width:auto;">
+        <figcaption>Node.js</figcaption>
+      </figure>
+    </a>
   <a href="https://www.typescriptlang.org/" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="Typescript" style="height:40px;width:auto;;">
+    <figure>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="Typescript" style="height:40px;width:auto;">
       <figcaption>Typescript</figcaption>
     </figure>
   </a>
   <a href="https://nestjs.com/" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
+    <figure>
       <img src="https://nestjs.com/logo-small.ede75a6b.svg" alt="NestJS" style="height:40px;">
       <figcaption>NestJS</figcaption>
     </figure>
@@ -113,13 +105,13 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 <div>
   <a href="https://www.mysql.com/" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
+    <figure>
       <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-mysql-96-1.webp" alt="MySQL" style="height:40px;width:auto;">
       <figcaption>MySQL</figcaption>
     </figure>
   </a>
   <a href="https://www.prisma.io/" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
+    <figure>
       <img src="https://cdn.freelogovectors.net/wp-content/uploads/2022/01/prisma_logo-freelogovectors.net_-330x400.png" alt="Prisma" style="height:40px;width:auto;">
       <figcaption>Prisma ORM</figcaption>
     </figure>
@@ -130,8 +122,8 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 <div>
   <a href="https://github.com/features/actions" target="_blank" referrerpolicy="no-referrer">
-    <figure style="display: inline-block; margin-right: 20px;">
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/GitHub-Actions.webp" alt="Github Actions" style="height:40px;width:auto;;">
+    <figure>
+      <img src="https://dnadas.net/wp-content/uploads/2023/12/GitHub-Actions.webp" alt="Github Actions" style="height:40px;width:auto;">
       <figcaption>GitHub Actions</figcaption>
     </figure>
   </a>
