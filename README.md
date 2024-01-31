@@ -71,66 +71,20 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 ## Tech Stack
 
 ### Frontend
-
-<div>
-  <a href="https://react.dev/" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-react-js-100.webp" alt="React JS" style="height:40px;">
-      <figcaption>React JS</figcaption>
-    </figure>
-  </a>
-</div>
+[![React JS](https://img.shields.io/badge/-React_JS-60D9FA?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 
 ### Backend
-
-<div>
-  <figure>
-    <a href="https://nodejs.org/en" target="_blank" referrerpolicy="no-referrer">
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-node-js-96.webp" alt="Node.js" style="height:40px;width:auto;">
-        <figcaption>Node.js</figcaption>
-      </figure>
-    </a>
-  <a href="https://www.typescriptlang.org/" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" alt="Typescript" style="height:40px;width:auto;">
-      <figcaption>Typescript</figcaption>
-    </figure>
-  </a>
-  <a href="https://nestjs.com/" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://nestjs.com/logo-small.ede75a6b.svg" alt="NestJS" style="height:40px;">
-      <figcaption>NestJS</figcaption>
-    </figure>
-  </a>
-</div>
+[![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=black)](https://nodejs.org/en)
+[![Typescript](https://img.shields.io/badge/-Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/-NestJS-E02329?style=for-the-badge&logo=nestjs&logoColor=black)](https://nestjs.com/)
 
 ### Database, ORM
-
-<div>
-  <a href="https://www.mysql.com/" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/icons8-mysql-96-1.webp" alt="MySQL" style="height:40px;width:auto;">
-      <figcaption>MySQL</figcaption>
-    </figure>
-  </a>
-  <a href="https://www.prisma.io/" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://cdn.freelogovectors.net/wp-content/uploads/2022/01/prisma_logo-freelogovectors.net_-330x400.png" alt="Prisma" style="height:40px;width:auto;">
-      <figcaption>Prisma ORM</figcaption>
-    </figure>
-  </a>
-</div>
+[![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=black)](https://www.mysql.com/)
+[![Prisma ORM](https://img.shields.io/badge/-Prisma_ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=black)](https://www.prisma.io/)
 
 ### Integration
+[![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=black)](https://github.com/features/actions)
 
-<div>
-  <a href="https://github.com/features/actions" target="_blank" referrerpolicy="no-referrer">
-    <figure>
-      <img src="https://dnadas.net/wp-content/uploads/2023/12/GitHub-Actions.webp" alt="Github Actions" style="height:40px;width:auto;">
-      <figcaption>GitHub Actions</figcaption>
-    </figure>
-  </a>
-</div>
 
 ## Getting Started
 
