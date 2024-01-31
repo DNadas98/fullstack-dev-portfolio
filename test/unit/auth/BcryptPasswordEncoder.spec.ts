@@ -1,5 +1,5 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { BcryptPasswordEncoder } from "../../../src/auth/service/BcryptPasswordEncoder";
+import {Test, TestingModule} from "@nestjs/testing";
+import {BcryptPasswordEncoder} from "../../../src/auth/service/BcryptPasswordEncoder";
 
 describe("PasswordEncoderService", () => {
   let service: BcryptPasswordEncoder;
@@ -36,5 +36,19 @@ describe("PasswordEncoderService", () => {
     const hash = await service.hash(password);
     const result = await service.compare(wrongPassword, hash);
     expect(result).toBe(false);
+  });
+
+  it("should generate unique hashes for the same password", async () => {
+    const password = "testPassword";
+    const hash1 = await service.hash(password);
+    const hash2 = await service.hash(password);
+    expect(hash1).not.toBe(hash2);
+  });
+
+  it("should throw errors for invalid password types", async () => {
+    await expect(service.hash(null)).rejects.toThrow(Error);
+    await expect(service.hash(undefined)).rejects.toThrow(Error);
+    await expect(service.hash({} as string)).rejects.toThrow(Error);
+    await expect(service.hash([] as unknown as string)).rejects.toThrow(Error);
   });
 });
