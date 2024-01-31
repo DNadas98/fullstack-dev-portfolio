@@ -46,8 +46,8 @@ describe("PasswordEncoderService", () => {
   });
 
   it("should throw errors for invalid password types", async () => {
-    await expect(service.hash(null)).rejects.toThrow(Error);
-    await expect(service.hash(undefined)).rejects.toThrow(Error);
+    await expect(service.hash(null as unknown as string)).rejects.toThrow(Error);
+    await expect(service.hash(undefined as unknown as string)).rejects.toThrow(Error);
     await expect(service.hash({} as string)).rejects.toThrow(Error);
     await expect(service.hash([] as unknown as string)).rejects.toThrow(Error);
   });
