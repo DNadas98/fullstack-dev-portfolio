@@ -1,4 +1,7 @@
 <p align="center">
+  <a href="https://github.com/DNadas98/portfolio-backend-nestjs/actions/workflows/nodejs.yml">
+    <img src="https://img.shields.io/github/actions/workflow/status/DNadas98/portfolio-backend-nestjs/nodejs.yml?style=for-the-badge" alt="Build">
+  </a>
   <a href="https://github.com/DNadas98/portfolio-backend-nestjs/graphs/contributors">
     <img src="https://img.shields.io/github/contributors/DNadas98/portfolio-backend-nestjs.svg?style=for-the-badge" alt="Contributors">
   </a>
