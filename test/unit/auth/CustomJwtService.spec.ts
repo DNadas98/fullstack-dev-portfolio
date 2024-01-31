@@ -1,14 +1,14 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {CustomJwtService} from "../../../src/auth/service/CustomJwtService";
-import {JwtService} from "@nestjs/jwt";
-import {JwtPayloadDto} from "../../../src/auth/dto/JwtPayloadDto";
-import {ConfigService} from "@nestjs/config";
-import {JwtExpiredError} from "../../../src/auth/error/JwtExpiredError";
+import { Test, TestingModule } from "@nestjs/testing";
+import { CustomJwtService } from "../../../src/auth/service/CustomJwtService";
+import { JwtService } from "@nestjs/jwt";
+import { JwtPayloadDto } from "../../../src/auth/dto/JwtPayloadDto";
+import { ConfigService } from "@nestjs/config";
+import { JwtExpiredError } from "../../../src/auth/error/JwtExpiredError";
 
 describe("CustomJwtServiceService", () => {
   let service: CustomJwtService;
 
-  const mockConfigService = {get: jest.fn()};
+  const mockConfigService = { get: jest.fn() };
   let testBearerTokenExpiration = 10 * 60 * 1000; // 10min
   let testRefreshTokenExpiration = 10 * 60 * 60 * 1000; // 10h
 
@@ -74,7 +74,9 @@ describe("CustomJwtServiceService", () => {
     const payload = new JwtPayloadDto("test.test@test.test");
     testBearerTokenExpiration = 0;
     const token = await service.signBearerToken(payload);
-    await expect(service.verifyBearerToken(token)).rejects.toThrow(JwtExpiredError);
+    await expect(service.verifyBearerToken(token)).rejects.toThrow(
+      JwtExpiredError
+    );
   });
 
   it("should verify a valid refresh token", async () => {
@@ -100,6 +102,8 @@ describe("CustomJwtServiceService", () => {
     const payload = new JwtPayloadDto("test.test@test.test");
     testRefreshTokenExpiration = 0;
     const token = await service.signRefreshToken(payload);
-    await expect(service.verifyRefreshToken(token)).rejects.toThrow(JwtExpiredError);
+    await expect(service.verifyRefreshToken(token)).rejects.toThrow(
+      JwtExpiredError
+    );
   });
 });

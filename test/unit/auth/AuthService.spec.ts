@@ -1,20 +1,20 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {AuthService} from "../../../src/auth/service/AuthService";
-import {DatabaseService} from "../../../src/database/service/DatabaseService";
-import {IPasswordEncoder} from "../../../src/auth/service/IPasswordEncoder";
-import {IJwtService} from "../../../src/auth/service/IJwtService";
-import {createMockContext, MockContext} from "../database/mock/context";
-import {RegisterRequestDto} from "../../../src/auth/dto/RegisterRequestDto";
-import {UserResponsePrivateDto} from "../../../src/users/dto/UserResponsePrivateDto";
-import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
-import {UniqueConstraintError} from "../../../src/common/error/UniqueConstraintError";
-import {LoginRequestDto} from "../../../src/auth/dto/LoginRequestDto";
-import {LoginResponseDto} from "../../../src/auth/dto/LoginResponseDto";
-import {InvalidCredentialsError} from "../../../src/auth/error/InvalidCredentialsError";
-import {AccountDeactivatedError} from "../../../src/auth/error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../../../src/auth/error/AccountNotEnabledError";
-import {Role} from "@prisma/client";
-import {JwtPayloadDto} from "../../../src/auth/dto/JwtPayloadDto";
+import { Test, TestingModule } from "@nestjs/testing";
+import { AuthService } from "../../../src/auth/service/AuthService";
+import { DatabaseService } from "../../../src/database/service/DatabaseService";
+import { IPasswordEncoder } from "../../../src/auth/service/IPasswordEncoder";
+import { IJwtService } from "../../../src/auth/service/IJwtService";
+import { createMockContext, MockContext } from "../database/mock/context";
+import { RegisterRequestDto } from "../../../src/auth/dto/RegisterRequestDto";
+import { UserResponsePrivateDto } from "../../../src/users/dto/UserResponsePrivateDto";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { UniqueConstraintError } from "../../../src/common/error/UniqueConstraintError";
+import { LoginRequestDto } from "../../../src/auth/dto/LoginRequestDto";
+import { LoginResponseDto } from "../../../src/auth/dto/LoginResponseDto";
+import { InvalidCredentialsError } from "../../../src/auth/error/InvalidCredentialsError";
+import { AccountDeactivatedError } from "../../../src/auth/error/AccountDeactivatedError";
+import { AccountNotEnabledError } from "../../../src/auth/error/AccountNotEnabledError";
+import { Role } from "@prisma/client";
+import { JwtPayloadDto } from "../../../src/auth/dto/JwtPayloadDto";
 
 describe("AuthService", () => {
   let service: AuthService;
@@ -56,9 +56,9 @@ describe("AuthService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthService,
-        {provide: DatabaseService, useValue: mockPrismaCtx.prisma},
-        {provide: IPasswordEncoder, useValue: mockPasswordEncoder},
-        {provide: IJwtService, useValue: mockJwtService}
+        { provide: DatabaseService, useValue: mockPrismaCtx.prisma },
+        { provide: IPasswordEncoder, useValue: mockPasswordEncoder },
+        { provide: IJwtService, useValue: mockJwtService }
       ]
     }).compile();
 
@@ -76,7 +76,9 @@ describe("AuthService", () => {
   describe("AuthService register", () => {
     it("should correctly register an enabled user account", async () => {
       const registerRequestDto = new RegisterRequestDto(
-        mockUser.email, mockPassword, mockUser.username
+        mockUser.email,
+        mockPassword,
+        mockUser.username
       );
       const expectedRegisterResponseDto = new UserResponsePrivateDto(
         mockUser.id,
@@ -90,7 +92,8 @@ describe("AuthService", () => {
       );
       // Mock ORM response
       mockPrismaCtx.prisma.user.create.mockResolvedValue({
-        ...expectedRegisterResponseDto, password: mockHashedPassword
+        ...expectedRegisterResponseDto,
+        password: mockHashedPassword
       });
 
       // Act
@@ -98,7 +101,9 @@ describe("AuthService", () => {
 
       // Assert
       expect(result).toEqual(expectedRegisterResponseDto);
-      expect(mockPasswordEncoder.hash).toHaveBeenCalledWith(registerRequestDto.password);
+      expect(mockPasswordEncoder.hash).toHaveBeenCalledWith(
+        registerRequestDto.password
+      );
       expect(mockPrismaCtx.prisma.user.create).toHaveBeenCalledWith({
         data: {
           username: registerRequestDto.username,
@@ -111,7 +116,9 @@ describe("AuthService", () => {
 
     it("should correctly register a disabled user account", async () => {
       const registerRequestDto = new RegisterRequestDto(
-        "test@test.test", "TestPassword1", "TestUser1"
+        "test@test.test",
+        "TestPassword1",
+        "TestUser1"
       );
       const expectedRegisterResponseDto = new UserResponsePrivateDto(
         mockUser.id,
@@ -124,13 +131,16 @@ describe("AuthService", () => {
         mockUser.active
       );
       mockPrismaCtx.prisma.user.create.mockResolvedValue({
-        ...expectedRegisterResponseDto, password: mockHashedPassword
+        ...expectedRegisterResponseDto,
+        password: mockHashedPassword
       });
 
       const result = await service.register(registerRequestDto, false);
 
       expect(result).toEqual(expectedRegisterResponseDto);
-      expect(mockPasswordEncoder.hash).toHaveBeenCalledWith(registerRequestDto.password);
+      expect(mockPasswordEncoder.hash).toHaveBeenCalledWith(
+        registerRequestDto.password
+      );
       expect(mockPrismaCtx.prisma.user.create).toHaveBeenCalledWith({
         data: {
           username: registerRequestDto.username,
@@ -143,15 +153,22 @@ describe("AuthService", () => {
 
     it("should correctly handle unique constraint error at registration", async () => {
       const registerRequestDto = new RegisterRequestDto(
-        mockUser.email, mockUser.password, mockUser.username
+        mockUser.email,
+        mockUser.password,
+        mockUser.username
       );
-      const ormError = new PrismaClientKnownRequestError("Unique constraint ORM error", {
-        code: "P2002",
-        clientVersion: "clientVersion"
-      });
+      const ormError = new PrismaClientKnownRequestError(
+        "Unique constraint ORM error",
+        {
+          code: "P2002",
+          clientVersion: "clientVersion"
+        }
+      );
       mockPrismaCtx.prisma.user.create.mockRejectedValue(ormError);
 
-      await expect(service.register(registerRequestDto, true)).rejects.toThrow(UniqueConstraintError);
+      await expect(service.register(registerRequestDto, true)).rejects.toThrow(
+        UniqueConstraintError
+      );
     });
   });
 
@@ -174,37 +191,44 @@ describe("AuthService", () => {
     it("should throw InvalidCredentialsError if user not found", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.login(new LoginRequestDto(mockUser.email, mockPassword)))
-        .rejects.toThrow(InvalidCredentialsError);
+      await expect(
+        service.login(new LoginRequestDto(mockUser.email, mockPassword))
+      ).rejects.toThrow(InvalidCredentialsError);
     });
 
     it("should throw InvalidCredentialsError on password mismatch", async () => {
       mockPasswordEncoder.compare.mockResolvedValue(false);
 
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue({
-        ...mockUser, password: "non-matching-hash"
+        ...mockUser,
+        password: "non-matching-hash"
       });
 
-      await expect(service.login(new LoginRequestDto(mockUser.email, mockPassword)))
-        .rejects.toThrow(InvalidCredentialsError);
+      await expect(
+        service.login(new LoginRequestDto(mockUser.email, mockPassword))
+      ).rejects.toThrow(InvalidCredentialsError);
     });
 
     it("should throw AccountDeactivatedError if account is not active", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue({
-        ...mockUser, active: false
+        ...mockUser,
+        active: false
       });
 
-      await expect(service.login(new LoginRequestDto(mockUser.email, mockPassword)))
-        .rejects.toThrow(AccountDeactivatedError);
+      await expect(
+        service.login(new LoginRequestDto(mockUser.email, mockPassword))
+      ).rejects.toThrow(AccountDeactivatedError);
     });
 
     it("should throw AccountNotEnabledError if account is not enabled", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue({
-        ...mockUser, enabled: false
+        ...mockUser,
+        enabled: false
       });
 
-      await expect(service.login(new LoginRequestDto(mockUser.email, mockPassword)))
-        .rejects.toThrow(AccountNotEnabledError);
+      await expect(
+        service.login(new LoginRequestDto(mockUser.email, mockPassword))
+      ).rejects.toThrow(AccountNotEnabledError);
     });
 
     it("should check credentials first and throw InvalidCredentialsError if also deactivated and not enabled", async () => {
@@ -217,8 +241,9 @@ describe("AuthService", () => {
         enabled: false
       });
 
-      await expect(service.login(new LoginRequestDto(mockUser.email, mockPassword)))
-        .rejects.toThrow(InvalidCredentialsError);
+      await expect(
+        service.login(new LoginRequestDto(mockUser.email, mockPassword))
+      ).rejects.toThrow(InvalidCredentialsError);
     });
   });
 
@@ -236,8 +261,12 @@ describe("AuthService", () => {
       const newBearerToken = await service.refresh(mockRefreshToken);
 
       expect(newBearerToken).toEqual(mockSignedBearerToken);
-      expect(mockJwtService.verifyRefreshToken).toHaveBeenCalledWith(mockRefreshToken);
-      expect(mockJwtService.signBearerToken).toHaveBeenCalledWith(new JwtPayloadDto(mockUser.email));
+      expect(mockJwtService.verifyRefreshToken).toHaveBeenCalledWith(
+        mockRefreshToken
+      );
+      expect(mockJwtService.signBearerToken).toHaveBeenCalledWith(
+        new JwtPayloadDto(mockUser.email)
+      );
     });
 
     it("should throw an error if refresh token is invalid", async () => {
@@ -245,29 +274,39 @@ describe("AuthService", () => {
         throw new InvalidCredentialsError();
       });
 
-      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(InvalidCredentialsError);
+      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(
+        InvalidCredentialsError
+      );
     });
 
     it("should throw InvalidCredentialsError if user not found", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(InvalidCredentialsError);
+      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(
+        InvalidCredentialsError
+      );
     });
 
     it("should throw AccountDeactivatedError if account is not active", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue({
-        ...mockUser, active: false
+        ...mockUser,
+        active: false
       });
 
-      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(AccountDeactivatedError);
+      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(
+        AccountDeactivatedError
+      );
     });
 
     it("should throw AccountNotEnabledError if account is not enabled", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue({
-        ...mockUser, enabled: false
+        ...mockUser,
+        enabled: false
       });
 
-      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(AccountNotEnabledError);
+      await expect(service.refresh(mockRefreshToken)).rejects.toThrow(
+        AccountNotEnabledError
+      );
     });
   });
 });
