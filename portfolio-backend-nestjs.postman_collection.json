@@ -2,8 +2,10 @@
 	"info": {
 		"_postman_id": "153ba7e4-663e-46da-b37c-7c6e95493b00",
 		"name": "portfolio-backend-nestjs",
+		"description": "### Backend API for my Full-stack Web Developer Portfolio.\n\nSee the [GitHub repository ](https://github.com/DNadas98/portfolio-backend-nestjs) for project description, source code and updates.\n\n### Authentication, authorization\n\nThe API uses JWTs (JSON Web Tokens) for authentication. After a successful login at the Login endpoint, the user receives a Bearer Token in the response body, and a Refresh Token as a cookie named `jwtrefresh`. This cookie is `HTTPOnly, SameSite = \"strict\", Secure`)\n\nSecured endpoints can be accessed by supplying the Bearer Token in the `Authorization` header as `\"Bearer \"`.\n\nIf the access token has expired, a new access token can be requested using the Refresh endpoint, as long as the Refresh Token is still valid and available as a cookie.\n\nThe API uses a simple form of Role Based Access Control, current valid roles are \"USER\" and \"ADMIN\". A list of allowed roles is defined for all secured endpoints. For example, both users with \"USER\" or \"ADMIN\" role can access their own account details, but the details of other accounts are only accessible with \"ADMIN\" role.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30693601"
+		"_exporter_id": "30693601",
+		"_collection_link": "https://www.postman.com/cc-tasx/workspace/dnadas98-public/collection/30693601-153ba7e4-663e-46da-b37c-7c6e95493b00?action=share&source=collection_link&creator=30693601"
 	},
 	"item": [
 		{
@@ -32,7 +34,8 @@
 								"auth",
 								"register"
 							]
-						}
+						},
+						"description": "Registers a new user.\n\nThe e-mail address must be unique.\n\nSuccess response:\n\n- 201 - Created\n- `{ message: \"User account with username created successfully\" }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the e-mail, username or password is missing or provided in invalid format\n- 409 - Conflict: If the provided e-mail address is already taken"
 					},
 					"response": []
 				},
@@ -43,7 +46,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"email\":\"testuser@test.test\",\n    \"password\":\"testPä$$word1\"\n}",
+							"raw": "{\n    \"email\":\"updated.email@test.test\",\n    \"password\":\"UpdatedTestPassword123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -59,7 +62,8 @@
 								"auth",
 								"login"
 							]
-						}
+						},
+						"description": "Retrieves the user by the provided e-mail address from the database, validates the provided password, and if valid, signs a Bearer Token that is used for authentication at the secured endpoints, and sets a Refresh Token cookie, that can be used to request a new Bearer Token.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { user: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }, bearerToken: \"< Bearer Token >\" } }`\n- Cookie: `jwtrefresh: \"< Refresh Token >\"`: HttpOnly, SameSite = \"strict\", Secure session cookie\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the e-mail or password is missing or provided in invalid format\n- 401 - Unauthorized: If the provided credentials are invalid\n- 403 - Forbidden: If the account is deactivated or not enabled"
 					},
 					"response": []
 				},
@@ -77,7 +81,8 @@
 								"auth",
 								"refresh"
 							]
-						}
+						},
+						"description": "Verifies the refresh cookie, if valid and belongs to an existing user, signs a new bearer token.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { bearerToken: \"bearer token\" }`\n    \n\nSpecific error responses:\n\n- 401 - Unauthorized: If the provided token is missing or invalid\n- 403 - Forbidden: If the account is deactivated or not enabled"
 					},
 					"response": []
 				},
@@ -104,14 +109,16 @@
 								"auth",
 								"logout"
 							]
-						}
+						},
+						"description": "Logs out the user by clearing the HttpOnly refresh cookie and setting it's max age to 0.\n\nSuccess response:\n\n- 200 - Ok\n    \n- `{ data: { bearerToken: \"bearer token\" }`\n    \n\nSpecific error responses:\n\n- 401 - Unauthorized: If the provided token is missing or invalid\n    \n- 403 - Forbidden: If the account is deactivated or not enabled"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "The \\`auth\\` API endpoints provide authentication-related functionalities including user registration, login, token refresh, and logout."
 		},
 		{
-			"name": "users",
+			"name": "user",
 			"item": [
 				{
 					"name": "getOwnUserDetails",
@@ -121,7 +128,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QudGVzdCIsImlhdCI6MTcwNjYxMTQ0NSwiZXhwIjoxNzA2NjEyMDQ1fQ.OsDgerPQMdJtOSAPr5OO17jBpoyoVF19Vl4ycRG0p0A",
+									"value": "bearer-token",
 									"type": "string"
 								}
 							]
@@ -129,19 +136,163 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/users/details",
+							"raw": "{{BASE_URL}}/user/",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
-								"users",
-								"details"
+								"user",
+								""
 							]
-						}
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed roles: \"USER\" or \"ADMIN\"\n\nResponds with the user account details.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }`\n    \n\nSpecific error responses:\n\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n    \n- 403 - Forbidden: If the account is deactivated or not enabled"
+					},
+					"response": []
+				},
+				{
+					"name": "updateOwnEmail",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"updated.email@test.test\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/email",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"email"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed roles: \"USER\" or \"ADMIN\"\n\nVerifies the provided email, updates the user and responds with the user account details.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the provided email is missing or invalid\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n    \n- 403 - Forbidden: If the account is deactivated or not enabled\n- 409 - Conflict: If a user with the provided e-mail address already exists"
+					},
+					"response": []
+				},
+				{
+					"name": "updateOwnUsername",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\":\"NewUsername\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/username",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"username"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed roles: \"USER\" or \"ADMIN\"\n\nVerifies the provided username, updates the user and responds with the user account details.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the provided username is missing or invalid\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n    \n- 403 - Forbidden: If the account is deactivated or not enabled"
+					},
+					"response": []
+				},
+				{
+					"name": "updateOwnPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"UpdatedTestPassword123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/user/password",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user",
+								"password"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed roles: \"USER\" or \"ADMIN\"\n\nVerifies the provided password, updates the user and responds with the user account details.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the provided password is missing or invalid\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the account is deactivated or not enabled"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteOwnAccount",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/user",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"user"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed roles: \"USER\" or \"ADMIN\"\n\nDeletes the user and responds with a success message.\n\nSuccess response:\n\n- 200 - Ok\n- `{ message: \"User account has been deleted successfully.\" }`\n    \n\nSpecific error responses:\n\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the account is deactivated or not enabled"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Provides functionalities related to user account details."
 		},
 		{
 			"name": "admin",
@@ -154,7 +305,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QudGVzdCIsImlhdCI6MTcwNjYxMTQ0NSwiZXhwIjoxNzA2NjEyMDQ1fQ.OsDgerPQMdJtOSAPr5OO17jBpoyoVF19Vl4ycRG0p0A",
+									"value": "bearer-token",
 									"type": "string"
 								}
 							]
@@ -162,20 +313,117 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}/admin/users/2",
+							"raw": "{{BASE_URL}}/admin/users/1",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"path": [
 								"admin",
 								"users",
-								"2"
+								"1"
 							]
-						}
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed role: \"ADMIN\"\n\nResponds with the details of the requestet user account.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean } }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the user account ID parameter is missing or invalid\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the admin account is deactivated or not enabled\n- 404 - Not Found: If the requested user account does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "getAllUsers",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"users"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed role: \"ADMIN\"\n\nResponds with a list of all user accounts.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: [ { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean }, ...] }`\n    \n\nSpecific error responses:\n\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the admin account is deactivated or not enabled"
+					},
+					"response": []
+				},
+				{
+					"name": "updateIsActiveById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/users/3?setActive=<boolean>",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"3"
+							],
+							"query": [
+								{
+									"key": "setActive",
+									"value": "<boolean>"
+								}
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed role: \"ADMIN\"\n\nVerifies the URL query parameter, it should either be \"true\" or \"false\". Updates the active status of the user with the provided ID to the boolean specified in the query parameter, responds with the details of the requestet user account.\n\nSuccess response:\n\n- 200 - Ok\n- `{ data: { id: number, createdAt: Date, updatedAt: Date, email: string, username: string, role: Role, enabled: boolean, active: boolean } }`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the user account ID parameter is missing or invalid, or the URL query parameter is missing or invalid\n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the admin account is deactivated or not enabled\n- 404 - Not Found: If the requested user account does not exist"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUserById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/admin/users/4",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"admin",
+								"users",
+								"4"
+							]
+						},
+						"description": "Requires Bearer Token authentication.\n\nAllowed role: \"ADMIN\"\n\nDeletes the user with the provided ID, responds with a success message.\n\nSuccess response:\n\n- 200 - Ok\n- `{ message: { \"User account with ID has been deleted successfully`\" `}`\n    \n\nSpecific error responses:\n\n- 400 - Bad Request: If the user account ID parameter is missing or invalid\n    \n- 401 - Unauthorized: If the provided token is missing or invalid, or the role is insufficient\n- 403 - Forbidden: If the admin account is deactivated or not enabled\n- 404 - Not Found: If the requested user account does not exist"
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "Provides functionalities for administrators, such as reading user account details by ID"
 		},
 		{
 			"name": "mail",
@@ -203,11 +451,13 @@
 								"mail",
 								"test"
 							]
-						}
+						},
+						"description": "Test endpoint to be able to try the SMTP config and Nodemailer, will be removed for deployment."
 					},
 					"response": []
 				}
-			]
+			],
+			"description": "A test endpoint for sending e-mails using Nodemailer, will be used later for the contact form"
 		}
 	],
 	"event": [
