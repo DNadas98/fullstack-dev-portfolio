@@ -1,13 +1,21 @@
-import { Body, Controller, HttpStatus, Post, Req, Res } from "@nestjs/common";
-import { AuthService } from "../service/AuthService";
-import { RegisterRequestDto } from "../dto/RegisterRequestDto";
-import { CookieOptions, Request, Response } from "express";
-import { LoginRequestDto } from "../dto/LoginRequestDto";
-import { UnauthorizedError } from "../error/UnauthorizedError";
-import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
-import { DataResponseDto } from "../../common/dto/DataResponseDto";
-import { ErrorResponseDto } from "../../common/dto/ErrorResponseDto";
-import { ConfigService } from "@nestjs/config";
+import {
+  Body,
+  Controller,
+  HttpStatus,
+  InternalServerErrorException,
+  Post,
+  Req,
+  Res
+} from "@nestjs/common";
+import {AuthService} from "../service/AuthService";
+import {RegisterRequestDto} from "../dto/RegisterRequestDto";
+import {CookieOptions, Request, Response} from "express";
+import {LoginRequestDto} from "../dto/LoginRequestDto";
+import {UnauthorizedError} from "../error/UnauthorizedError";
+import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
+import {DataResponseDto} from "../../common/dto/DataResponseDto";
+import {ErrorResponseDto} from "../../common/dto/ErrorResponseDto";
+import {ConfigService} from "@nestjs/config";
 
 @Controller("/api/v1/auth")
 export class AuthController {
@@ -16,7 +24,8 @@ export class AuthController {
   constructor(
     private readonly authService: AuthService,
     private readonly configService: ConfigService
-  ) {}
+  ) {
+  }
 
   @Post("register")
   async register(
@@ -85,13 +94,15 @@ export class AuthController {
   }
 
   private getRefreshCookieOptions(): CookieOptions {
+    const expirationMs = this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN");
+    if (!expirationMs || isNaN(parseInt(expirationMs))) {
+      throw new InternalServerErrorException();
+    }
     return {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
-      maxAge: Number(
-        this.configService.get("PORTFOLIO_REFRESH_TOKEN_EXPIRES_IN")
-      )
+      sameSite: "strict",
+      maxAge: expirationMs
     };
   }
 
