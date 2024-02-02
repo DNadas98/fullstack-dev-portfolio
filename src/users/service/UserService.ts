@@ -7,6 +7,8 @@ import {AccountDeactivatedError} from "../../auth/error/AccountDeactivatedError"
 import {AccountNotEnabledError} from "../../auth/error/AccountNotEnabledError";
 import {UserResponsePublicDto} from "../dto/UserResponsePublicDto";
 import {IPasswordEncoder} from "../../auth/service/IPasswordEncoder";
+import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
+import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
 
 @Injectable()
 export class UserService {
@@ -52,12 +54,6 @@ export class UserService {
     if (!user) {
       throw new AccountNotFoundError();
     }
-    if (!user.active) {
-      throw new AccountDeactivatedError();
-    }
-    if (!user.enabled) {
-      throw new AccountNotEnabledError();
-    }
     return this.toUserResponsePrivateDto(user);
   }
 
@@ -97,22 +93,31 @@ export class UserService {
   }
 
   async updateEmailById(id: number, email: string) {
-    const updated = await this.prisma.$transaction(async (tx) => {
-      const user = await tx.user.findUnique({
-        where: {id}
+    try {
+      const updated = await this.prisma.$transaction(async (tx) => {
+        const user = await tx.user.findUnique({
+          where: {id}
+        });
+        if (!user) {
+          throw new AccountNotFoundError();
+        }
+        if (!user.active) {
+          throw new AccountDeactivatedError();
+        }
+        if (!user.enabled) {
+          throw new AccountNotEnabledError();
+        }
+        return tx.user.update({where: {id}, data: {email}});
       });
-      if (!user) {
-        throw new AccountNotFoundError();
+      return this.toUserResponsePrivateDto(updated);
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
+        throw new UniqueConstraintError(
+          "A User account with the provided e-mail address already exists"
+        );
       }
-      if (!user.active) {
-        throw new AccountDeactivatedError();
-      }
-      if (!user.enabled) {
-        throw new AccountNotEnabledError();
-      }
-      return tx.user.update({where: {id}, data: {email}});
-    });
-    return this.toUserResponsePrivateDto(updated);
+      throw e;
+    }
   }
 
   async updatePasswordById(id: number, password: string) {
