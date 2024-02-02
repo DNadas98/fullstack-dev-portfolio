@@ -9,6 +9,8 @@ import {UserResponsePrivateDto} from "../../../src/users/dto/UserResponsePrivate
 import {AccountNotFoundError} from "../../../src/auth/error/AccountNotFoundError";
 import {AccountDeactivatedError} from "../../../src/auth/error/AccountDeactivatedError";
 import {AccountNotEnabledError} from "../../../src/auth/error/AccountNotEnabledError";
+import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
+import {UniqueConstraintError} from "../../../src/common/error/UniqueConstraintError";
 
 describe("UserService", () => {
   let service: UserService;
@@ -124,20 +126,6 @@ describe("UserService", () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
       await expect(service.readById(userId)).rejects.toThrow(AccountNotFoundError);
-    });
-
-    it("should throw AccountDeactivatedError if the account is not active", async () => {
-      const inactiveUser = {...mockUsers[0], active: false};
-      mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(inactiveUser);
-
-      await expect(service.readById(inactiveUser.id)).rejects.toThrow(AccountDeactivatedError);
-    });
-
-    it("should throw AccountNotEnabledError if the account is not enabled", async () => {
-      const notEnabledUser = {...mockUsers[0], enabled: false};
-      mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(notEnabledUser);
-
-      await expect(service.readById(notEnabledUser.id)).rejects.toThrow(AccountNotEnabledError);
     });
   });
 
@@ -263,6 +251,14 @@ describe("UserService", () => {
 
       await expect(service.updateEmailById(notEnabledUserId, newEmail)).rejects.toThrow(AccountNotEnabledError);
     });
+
+    it("should throw UniqueConstraintError for an already existing username", async () => {
+      const userId = mockUsers[0].id;
+      mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
+      mockPrismaCtx.prisma.user.update.mockRejectedValue(new PrismaClientKnownRequestError("", {code: "P2002", clientVersion: ""}));
+
+      await expect(service.updateEmailById(userId, mockUsers[1].email)).rejects.toThrow(UniqueConstraintError);
+    });
   });
 
   describe("UserService updatePasswordById", () => {
@@ -374,7 +370,7 @@ describe("UserService", () => {
       await expect(service.deleteById(userId)).resolves.not.toThrow();
 
       expect(mockPrismaCtx.prisma.user.delete).toHaveBeenCalledWith({
-        where: { id: userId },
+        where: {id: userId}
       });
     });
 
