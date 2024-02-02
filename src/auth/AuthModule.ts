@@ -1,19 +1,18 @@
-import { Module } from "@nestjs/common";
-import { AuthService } from "./service/AuthService";
-import { IPasswordEncoder } from "./service/IPasswordEncoder";
-import { BcryptPasswordEncoder } from "./service/BcryptPasswordEncoder";
-import { DatabaseModule } from "../database/DatabaseModule";
-import { UsersModule } from "../users/UsersModule";
-import { AuthController } from "./controller/AuthController";
-import { CustomJwtModule } from "./CustomJwtModule";
-import { ConfigModule } from "@nestjs/config";
+import {Module} from "@nestjs/common";
+import {AuthService} from "./service/AuthService";
+import {DatabaseModule} from "../database/DatabaseModule";
+import {UsersModule} from "../users/UsersModule";
+import {AuthController} from "./controller/AuthController";
+import {CustomJwtModule} from "./CustomJwtModule";
+import {ConfigModule} from "@nestjs/config";
+import {PasswordEncoderModule} from "./PasswordEncoderModule";
 
 @Module({
-  imports: [ConfigModule, DatabaseModule, UsersModule, CustomJwtModule],
+  imports: [ConfigModule, DatabaseModule, UsersModule, CustomJwtModule, PasswordEncoderModule],
   providers: [
-    AuthService,
-    { provide: IPasswordEncoder, useClass: BcryptPasswordEncoder }
+    AuthService
   ],
   controllers: [AuthController]
 })
-export class AuthModule {}
+export class AuthModule {
+}
