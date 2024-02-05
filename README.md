@@ -53,7 +53,14 @@
         <li><a href="#setup--run">Setup and run</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li>
+      <a href="#usage">Usage</a>
+      <ul>
+        <li><a href="#configuration-of-default-api-security-middlewares">Configuration of default API security middlewares</a></li>
+        <li><a href="#authentication-authorization">Authentication, authorization</a></li>
+        <li><a href="#api-documentation">API Documentation</a></li>
+      </ul>
+    </li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -158,7 +165,7 @@ and "ADMIN". A list of allowed roles is defined for all secured endpoints. For e
 both users with "USER" or "ADMIN" role can access their own account details, but the
 details of other accounts are only accessible with "ADMIN" role.
 
-### API Endpoints, request, response examples, error types
+### API Documentation
 
 See
 the [API Documentation](https://www.postman.com/cc-tasx/workspace/dnadas98-public/documentation/30693601-153ba7e4-663e-46da-b37c-7c6e95493b00)
