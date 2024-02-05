@@ -21,8 +21,8 @@ async function bootstrap() {
   const allowedOrigins = [
     `https://localhost`,
     `http://localhost`,
-    `http://localhost:${port}`,
-    `https://localhost:${port}`
+    `https://localhost:${port}`,
+    `http://localhost:${port}`
   ];
   app.enableCors(getCorsConfig(allowedOrigins));
 
