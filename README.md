@@ -71,33 +71,38 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 ## Tech Stack
 
 ### Frontend
+
 [![React JS](https://img.shields.io/badge/-React_JS-60D9FA?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
 
 ### Backend
+
 [![Node.js](https://img.shields.io/badge/-Node.js-339933?style=for-the-badge&logo=node.js&logoColor=black)](https://nodejs.org/en)
 [![Typescript](https://img.shields.io/badge/-Typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=black)](https://www.typescriptlang.org/)
 [![NestJS](https://img.shields.io/badge/-NestJS-E02329?style=for-the-badge&logo=nestjs&logoColor=black)](https://nestjs.com/)
 
 ### Database, ORM
+
 [![MySQL](https://img.shields.io/badge/-MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=black)](https://www.mysql.com/)
 [![Prisma ORM](https://img.shields.io/badge/-Prisma_ORM-2D3748?style=for-the-badge&logo=prisma&logoColor=black)](https://www.prisma.io/)
 
 ### Integration and Deployment
+
 [![Docker](https://img.shields.io/badge/-Docker-1d63ed?style=for-the-badge&logo=docker&logoColor=black)](https://www.docker.com/)
 [![GitHub Actions](https://img.shields.io/badge/-GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=black)](https://github.com/features/actions)
-
 
 ## Getting Started
 
 ### Prerequisites
 
 - [Node.js, NPM](https://nodejs.org/en/download)
-  - The project uses Node.js `v20.10.0` and NPM `10.2.3` versions. 
-  - This is the latest available version right now at the web hosting service I will 
-    deploy to, but feel free to try other versions, and please post an issue or 
+  - The project uses Node.js `v20.10.0` and NPM `10.2.3` versions.
+  - This is the latest available version right now at the web hosting service I will
+    deploy to, but feel free to try other versions, and please post an issue or
     contact me if you run into any problems
-- [Docker](https://www.docker.com/) for the Docker Compose MySQL database setup, or 
-  feel free to use any of the [databases compatible with Prisma ORM](https://www.prisma.io/docs/orm/reference/supported-databases) in any form
+- [Docker](https://www.docker.com/) for the Docker Compose MySQL database setup, or
+  feel free to use any of
+  the [databases compatible with Prisma ORM](https://www.prisma.io/docs/orm/reference/supported-databases)
+  in any form
 
 ### Setup & Run
 
@@ -128,7 +133,36 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 ## Usage
 
-See the [API Documentation](https://www.postman.com/cc-tasx/workspace/dnadas98-public/documentation/30693601-153ba7e4-663e-46da-b37c-7c6e95493b00)
+### Configuration of default API Security middlewares:
+
+- Security headers like Content Security Policy are configured in
+  `src/common/config/helmetConfig.ts`. The middleware is enabled in `src/main.ts`
+- CORS (Cross Origin Resource Sharing) is configured in`src/common/config/corsConfig.ts`.
+  The origins allowed by CORS are set and the middleware is enabled in `src/main.ts`
+- Rate limiters are configured in`src/common/config/rateLimiterOptions.ts`.
+  The global one is enabled globally in `src/AppModule.ts`, others can be applied for
+  specific controllers or requests inside controllers, as overrides of the default
+  using `@Throttler({ default: xyzRateLimiter })`
+
+### Authentication, authorization
+
+The API uses JWTs (JSON Web Tokens) for authentication. After a successful login at the
+Login endpoint, the user receives a Bearer Token in the response body, and a Refresh Token
+as a cookie named `jwtrefresh`. This cookie is HTTPOnly, SameSite = "strict", Secure)
+Secured endpoints can be accessed by supplying the Bearer Token in the Authorization
+header as "Bearer ".
+If the access token has expired, a new access token can be requested using the Refresh
+endpoint, as long as the Refresh Token is still valid and available as a cookie.
+The API uses a simple form of Role Based Access Control, current valid roles are "USER"
+and "ADMIN". A list of allowed roles is defined for all secured endpoints. For example,
+both users with "USER" or "ADMIN" role can access their own account details, but the
+details of other accounts are only accessible with "ADMIN" role.
+
+### API Endpoints, request, response examples, error types
+
+See
+the [API Documentation](https://www.postman.com/cc-tasx/workspace/dnadas98-public/documentation/30693601-153ba7e4-663e-46da-b37c-7c6e95493b00)
+for available endpoints and API usage guide
 
 ## Roadmap
 
@@ -150,6 +184,7 @@ Dániel Nádas
 - E-mail: [daniel.nadas@dnadas.net](mailto:daniel.nadas@dnadas.net)
 - LinkedIn: [Dániel Nádas](https://www.linkedin.com/in/daniel-nadas)
 
-Project Link: [https://github.com/DNadas98/portfolio-backend-nestjs](https://github.com/DNadas98/portfolio-backend-nestjs)
+Project
+Link: [https://github.com/DNadas98/portfolio-backend-nestjs](https://github.com/DNadas98/portfolio-backend-nestjs)
 
 
