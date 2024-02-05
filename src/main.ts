@@ -5,6 +5,7 @@ import * as cookieParser from "cookie-parser";
 import {ValidationPipe} from "@nestjs/common";
 import helmet from "helmet";
 import {helmetConfig} from "./common/config/helmetConfig";
+import {getCorsConfig} from "./common/config/corsConfig";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -15,6 +16,15 @@ async function bootstrap() {
 
   // Set security headers
   app.use(helmet(helmetConfig));
+
+  // CORS configuration
+  const allowedOrigins = [
+    `https://localhost`,
+    `http://localhost`,
+    `http://localhost:${port}`,
+    `https://localhost:${port}`
+  ];
+  app.enableCors(getCorsConfig(allowedOrigins));
 
   // Cookie parser
   app.use(cookieParser());
