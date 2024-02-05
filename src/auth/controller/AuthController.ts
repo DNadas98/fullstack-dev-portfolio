@@ -16,6 +16,8 @@ import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
 import {DataResponseDto} from "../../common/dto/DataResponseDto";
 import {ErrorResponseDto} from "../../common/dto/ErrorResponseDto";
 import {ConfigService} from "@nestjs/config";
+import {Throttle} from "@nestjs/throttler";
+import {authRateLimiterOptions} from "../../common/config/rateLimiterOptions";
 
 @Controller("/api/v1/auth")
 export class AuthController {
@@ -27,6 +29,7 @@ export class AuthController {
   ) {
   }
 
+  @Throttle({default: authRateLimiterOptions})
   @Post("register")
   async register(
     @Body() registerDto: RegisterRequestDto,
@@ -42,6 +45,7 @@ export class AuthController {
       );
   }
 
+  @Throttle({default: authRateLimiterOptions})
   @Post("login")
   async login(
     @Body() loginRequestDto: LoginRequestDto,
