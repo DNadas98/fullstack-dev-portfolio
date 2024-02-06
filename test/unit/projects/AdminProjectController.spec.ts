@@ -1,22 +1,22 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import {ProjectController} from "../../../src/projects/controller/ProjectController";
+import {AdminProjectController} from "../../../src/projects/controller/AdminProjectController";
 import {ProjectService} from "../../../src/projects/service/ProjectService";
 
-describe("ProjectController", () => {
-  let controller: ProjectController;
+describe("AdminProjectController", () => {
+  let controller: AdminProjectController;
   const mockProjectService = {
     //TODO:Impl
   };
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ProjectController],
+      controllers: [AdminProjectController],
       providers: [
         { provide: ProjectService, useValue: mockProjectService },
       ]
     }).compile();
 
-    controller = module.get<ProjectController>(ProjectController);
+    controller = module.get<AdminProjectController>(AdminProjectController);
   });
 
   it("should be defined", () => {
