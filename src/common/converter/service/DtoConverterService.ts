@@ -38,10 +38,14 @@ export class DtoConverterService {
   }
 
   toGithubUserResponseDto(githubUser: GithubUser): GithubUserResponseDto {
-    return new GithubUserResponseDto(githubUser.id, githubUser.githubUsername, githubUser.userId);
+    return new GithubUserResponseDto(
+      githubUser.id, githubUser.githubUsername, githubUser.userId
+    );
   }
 
-  toGithubCodeSnippetResponseDto(codeSnippet: GithubCodeSnippet): GithubCodeSnippetResponseDto {
+  toGithubCodeSnippetResponseDto(
+    codeSnippet: GithubCodeSnippet
+  ): GithubCodeSnippetResponseDto {
     return new GithubCodeSnippetResponseDto(codeSnippet.id, codeSnippet.createdAt,
       codeSnippet.updatedAt, codeSnippet.displayName, codeSnippet.filePath,
       codeSnippet.format, codeSnippet.startLine, codeSnippet.endLine,
@@ -52,14 +56,23 @@ export class DtoConverterService {
     return new ProjectImageResponseDto(image.id, image.src, image.githubRepositoryId);
   }
 
-  toProjectResponseDto(project: GithubRepository, contributors: GithubUser[], codeSnippets: GithubCodeSnippet[], images: ProjectImage[]): ProjectResponseDto {
-    const contributorDtos = contributors.map(contributor => this.toGithubUserResponseDto(contributor));
-    const codeSnippetDtos = codeSnippets.map(codeSnippet => this.toGithubCodeSnippetResponseDto(codeSnippet));
-    const imageDtos = images.map(images => this.toProjectImageResponseDto(images));
-    return new ProjectResponseDto(project.id, project.createdAt, project.updatedAt,
-      project.ownerId, contributorDtos, project.name, project.branchName, codeSnippetDtos,
-      imageDtos, project.readmePath ?? undefined, project.readmeFormat ?? undefined,
-      project.licensePath ?? undefined, project.licenseFormat ?? undefined,
-      project.deploymentUrl ?? undefined);
+  toProjectResponseDto(
+    project: GithubRepository, contributors: GithubUser[],
+    codeSnippets: GithubCodeSnippet[], images: ProjectImage[]
+  ): ProjectResponseDto {
+    const contributorDtos = contributors?.map(
+      contributor => contributor.id
+    ) ?? [];
+    const codeSnippetDtos = codeSnippets?.map(
+      codeSnippet => codeSnippet.id
+    ) ?? [];
+    const imageDtos = images?.map(image => image.id
+    ) ?? [];
+    return new ProjectResponseDto(
+      project.id, project.createdAt, project.updatedAt, project.ownerId, contributorDtos,
+      project.name, project.branchName, codeSnippetDtos, imageDtos,
+      project.readmePath ?? null, project.readmeFormat ?? null,
+      project.licensePath ?? null, project.licenseFormat ?? null,
+      project.deploymentUrl ?? null);
   }
 }
