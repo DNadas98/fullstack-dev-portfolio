@@ -35,8 +35,8 @@ model GithubRepository {
   readmeFormat  String?
   licensePath   String?
   licenseFormat String?
-  codeSnippets  GithubCodeSnippet[]
   deploymentUrl String?
+  codeSnippets  GithubCodeSnippet[]
   images        ProjectImage[]
 }
 
