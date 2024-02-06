@@ -13,22 +13,25 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  email     String   @unique
-  username  String
-  password  String
-  role      Role     @default(USER)
-  enabled   Boolean  @default(false)
-  active    Boolean  @default(true)
+  id         Int         @id @default(autoincrement())
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  email      String      @unique
+  username   String
+  password   String
+  role       Role        @default(USER)
+  enabled    Boolean     @default(false)
+  active     Boolean     @default(true)
+  githubUser GithubUser?
 }
 
 model GithubRepository {
   id            Int                 @id @default(autoincrement())
   createdAt     DateTime            @default(now())
   updatedAt     DateTime            @updatedAt
-  user          String
+  owner         GithubUser          @relation(name: "Owner", fields: [ownerId], references: [id])
+  ownerId       Int                 @unique
+  contributors  GithubUser[]        @relation(name: "Contributors")
   name          String              @unique
   branchName    String
   readmePath    String?
@@ -38,6 +41,15 @@ model GithubRepository {
   deploymentUrl String?
   codeSnippets  GithubCodeSnippet[]
   images        ProjectImage[]
+}
+
+model GithubUser {
+  id                      Int                @id @default(autoincrement())
+  githubUsername          String
+  account                 User?              @relation(fields: [userId], references: [id])
+  ownedRepositories       GithubRepository[] @relation("Owner")
+  contributedRepositories GithubRepository[] @relation("Contributors")
+  userId                  Int                @unique
 }
 
 model GithubCodeSnippet {
@@ -50,13 +62,13 @@ model GithubCodeSnippet {
   startLine          Int
   endLine            Int
   description        String
-  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }
 
 model ProjectImage {
   id                 Int              @id @default(autoincrement())
   src                String           @unique
-  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }
