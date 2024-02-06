@@ -23,3 +23,40 @@ model User {
   enabled   Boolean  @default(false)
   active    Boolean  @default(true)
 }
+
+model GithubRepository {
+  id            Int                 @id @default(autoincrement())
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  user          String
+  name          String              @unique
+  branchName    String
+  readmePath    String?
+  readmeFormat  String?
+  licensePath   String?
+  licenseFormat String?
+  codeSnippets  GithubCodeSnippet[]
+  deploymentUrl String?
+  images        ProjectImage[]
+}
+
+model ProjectImage {
+  id                 Int              @id @default(autoincrement())
+  src                String           @unique
+  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepositoryId Int
+}
+
+model GithubCodeSnippet {
+  id                 Int              @id @default(autoincrement())
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+  displayName        String
+  filePath           String
+  format             String
+  startLine          Int
+  endLine            Int
+  description        String
+  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepositoryId Int
+}
