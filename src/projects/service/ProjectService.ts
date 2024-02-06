@@ -5,7 +5,7 @@ import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
 import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
 import {DatabaseService} from "../../database/service/DatabaseService";
 import {GithubUserNotFoundError} from "../error/GithubUserNotFoundError";
-import {GithubUser, Prisma} from "@prisma/client";
+import {Prisma} from "@prisma/client";
 import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
 import {ProjectNotFoundError} from "../error/ProjectNotFoundError";
 import {ProjectResponseDto} from "../dto/ProjectResponseDto";
