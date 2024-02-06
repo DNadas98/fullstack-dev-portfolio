@@ -1,18 +1,11 @@
-import {UserResponsePublicDto} from "../../users/dto/UserResponsePublicDto";
-import {ProjectResponseDto} from "./ProjectResponseDto";
-
 export class GithubUserResponseDto {
   readonly id: number;
-  readonly githubUsername: number;
-  readonly account:UserResponsePublicDto;
-  readonly ownedRepositories?:ProjectResponseDto;
-  readonly contributedRepositories:ProjectResponseDto[];
+  readonly githubUsername: string;
+  readonly accountId: number;
 
-  constructor(id: number, githubUsername: number, account: UserResponsePublicDto, ownedRepositories: ProjectResponseDto, contributedRepositories: ProjectResponseDto[]) {
+  constructor(id: number, githubUsername: string, accountId: number) {
     this.id = id;
     this.githubUsername = githubUsername;
-    this.account = account;
-    this.ownedRepositories = ownedRepositories;
-    this.contributedRepositories = contributedRepositories;
+    this.accountId = accountId;
   }
 }

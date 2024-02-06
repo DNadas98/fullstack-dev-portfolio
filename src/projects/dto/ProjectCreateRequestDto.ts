@@ -1,7 +1,5 @@
-import {GithubUserResponseDto} from "./GithubUserResponseDto";
-
 export class ProjectCreateRequestDto {
-  readonly owner: GithubUserResponseDto;
+  readonly ownerId: number;
   readonly name: string;
   readonly branchName: string;
   readonly readmePath?: string;
@@ -10,9 +8,8 @@ export class ProjectCreateRequestDto {
   readonly licenseFormat?: string;
   readonly deploymentUrl?: string;
 
-
-  constructor(owner: GithubUserResponseDto, name: string, branchName: string, readmePath: string, readmeFormat: string, licensePath: string, licenseFormat: string, deploymentUrl: string) {
-    this.owner = owner;
+  constructor(ownerId: number, name: string, branchName: string, readmePath: string, readmeFormat: string, licensePath: string, licenseFormat: string, deploymentUrl: string) {
+    this.ownerId = ownerId;
     this.name = name;
     this.branchName = branchName;
     this.readmePath = readmePath;

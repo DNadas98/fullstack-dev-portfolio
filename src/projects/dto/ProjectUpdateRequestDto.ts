@@ -1,8 +1,6 @@
-import {GithubUserResponseDto} from "./GithubUserResponseDto";
-
 export class ProjectUpdateRequestDto {
-  readonly owner?: GithubUserResponseDto;
-  readonly contributors?: GithubUserResponseDto[];
+  readonly ownerId?: number;
+  readonly contributorId?: number[];
   readonly name?: string;
   readonly branchName?: string;
   readonly readmePath?: string;
