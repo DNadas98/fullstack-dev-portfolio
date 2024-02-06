@@ -5,9 +5,10 @@ import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
 import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
 import {DatabaseService} from "../../database/service/DatabaseService";
 import {GithubUserNotFoundError} from "../error/GithubUserNotFoundError";
-import {GithubUser} from "@prisma/client";
+import {GithubUser, Prisma} from "@prisma/client";
 import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
 import {ProjectNotFoundError} from "../error/ProjectNotFoundError";
+import {ProjectResponseDto} from "../dto/ProjectResponseDto";
 
 @Injectable()
 export class ProjectService {
@@ -19,16 +20,19 @@ export class ProjectService {
     this.dtoConverter = dtoConverter;
   }
 
-  async findAll() {
+  async findAll(): Promise<ProjectResponseDto[]> {
     const projects = await this.prisma.githubRepository.findMany({
       include: {
         contributors: true, codeSnippets: true, images: true
       }
     });
-    return projects.map(project => this.dtoConverter.toProjectResponseDto(project, project.contributors, project.codeSnippets, project.images));
+    return projects.map(
+      project => this.dtoConverter.toProjectResponseDto(
+        project, project.contributors, project.codeSnippets, project.images
+      ));
   }
 
-  async findOne(id: number) {
+  async findById(id: number): Promise<ProjectResponseDto> {
     const project = await this.prisma.githubRepository.findUnique({
       where: {id},
       include: {
@@ -40,10 +44,12 @@ export class ProjectService {
     if (!project) {
       throw new ProjectNotFoundError();
     }
-    return this.dtoConverter.toProjectResponseDto(project, project.contributors, project.codeSnippets, project.images);
+    return this.dtoConverter.toProjectResponseDto(
+      project, project.contributors, project.codeSnippets, project.images
+    );
   }
 
-  async create(createProjectDto: ProjectCreateRequestDto) {
+  async create(createProjectDto: ProjectCreateRequestDto): Promise<ProjectResponseDto> {
     try {
       const created = await this.prisma.githubRepository.create({
         data: {
@@ -51,11 +57,11 @@ export class ProjectService {
           contributors: {connect: [{id: createProjectDto.ownerId}]},
           name: createProjectDto.name,
           branchName: createProjectDto.branchName,
-          readmePath: createProjectDto.readmePath ?? undefined,
-          readmeFormat: createProjectDto.readmeFormat ?? undefined,
-          licensePath: createProjectDto.licensePath ?? undefined,
-          licenseFormat: createProjectDto.licenseFormat ?? undefined,
-          deploymentUrl: createProjectDto.deploymentUrl ?? undefined
+          readmePath: createProjectDto.readmePath ?? null,
+          readmeFormat: createProjectDto.readmeFormat ?? null,
+          licensePath: createProjectDto.licensePath ?? null,
+          licenseFormat: createProjectDto.licenseFormat ?? null,
+          deploymentUrl: createProjectDto.deploymentUrl ?? null
         },
         include: {
           contributors: true,
@@ -65,63 +71,77 @@ export class ProjectService {
       });
       return this.dtoConverter.toProjectResponseDto(created, created.contributors, created.codeSnippets, created.images);
     } catch (e) {
-      if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
-        throw new UniqueConstraintError(
-          "A Github Repository with the provided name already exists"
-        );
-      }
-      throw e;
-    }
-  }
-
-  async update(id: number, updateProjectDto: ProjectUpdateRequestDto) {
-    try {
-      const updated = await this.prisma.$transaction(async (tx) => {
-        let owner: GithubUser | null = null;
-        if (updateProjectDto.ownerId) {
-          owner = await tx.githubUser.findUnique({
-            where: {id}
-          });
-          if (!owner) {
-            throw new GithubUserNotFoundError("Github user account of the repository owner" +
-              " was not found");
-          }
+      if (e instanceof PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          throw new UniqueConstraintError(
+            "A Github Repository with the provided name already exists"
+          );
+        } else if (e.code === "P2003") {
+          throw new GithubUserNotFoundError();
         }
-        return tx.githubRepository.update({
-          where: {id},
-          data: {
-            owner: {connect: {id: updateProjectDto.ownerId}},
-            contributors: {connect: [{id: updateProjectDto.ownerId}]},
-            name: updateProjectDto.name,
-            branchName: updateProjectDto.branchName,
-            readmePath: updateProjectDto.readmePath ?? undefined,
-            readmeFormat: updateProjectDto.readmeFormat ?? undefined,
-            licensePath: updateProjectDto.licensePath ?? undefined,
-            licenseFormat: updateProjectDto.licenseFormat ?? undefined,
-            deploymentUrl: updateProjectDto.deploymentUrl ?? undefined
-          },
-          include: {
-            contributors: true,
-            codeSnippets: true,
-            images: true
-          }
-        });
-      });
-      return this.dtoConverter.toProjectResponseDto(updated, updated.contributors, updated.codeSnippets, updated.images);
-    } catch (e) {
-      if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
-        throw new UniqueConstraintError(
-          "A Github Repository with the provided name already exists"
-        );
       }
       throw e;
     }
   }
 
-  async remove(id: number) {
-    const deleted = await this.prisma.githubRepository.delete({
-      where: {id}, include: {contributors: true, codeSnippets: true, images: true}
-    });
-    return this.dtoConverter.toProjectResponseDto(deleted, deleted.contributors, deleted.codeSnippets, deleted.images);
+  async updateById(id: number, updateProjectDto: ProjectUpdateRequestDto): Promise<ProjectResponseDto> {
+    try {
+      const updateData: Partial<Prisma.GithubRepositoryCreateInput> = this.getUpdateData(
+        updateProjectDto
+      );
+      const updated = await this.prisma.githubRepository.update({
+        where: {id},
+        data: updateData,
+        include: {
+          contributors: true,
+          codeSnippets: true,
+          images: true
+        }
+      });
+      return this.dtoConverter.toProjectResponseDto(
+        updated, updated.contributors, updated.codeSnippets, updated.images
+      );
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          throw new UniqueConstraintError(
+            "A Github Repository with the provided name already exists"
+          );
+        } else if (e.code === "P2003") {
+          throw new GithubUserNotFoundError();
+        } else if (e.code === "P2025") {
+          throw new ProjectNotFoundError();
+        }
+      }
+      throw e;
+    }
+  }
+
+  private getUpdateData(
+    updateProjectDto: ProjectUpdateRequestDto
+  ): Partial<Prisma.GithubRepositoryCreateInput> {
+    const updateData: Partial<Prisma.GithubRepositoryCreateInput> = {};
+    if (updateProjectDto.name) updateData.name = updateProjectDto.name;
+    if (updateProjectDto.branchName) updateData.branchName = updateProjectDto.branchName;
+    if (updateProjectDto.ownerId) updateData.owner = {connect: {id: updateProjectDto.ownerId}};
+    if (updateProjectDto.readmePath) updateData.readmePath = updateProjectDto.readmePath;
+    if (updateProjectDto.readmeFormat) updateData.readmeFormat = updateProjectDto.readmeFormat;
+    if (updateProjectDto.licensePath) updateData.licensePath = updateProjectDto.licensePath;
+    if (updateProjectDto.licenseFormat) updateData.licenseFormat = updateProjectDto.licenseFormat;
+    if (updateProjectDto.deploymentUrl) updateData.deploymentUrl = updateProjectDto.deploymentUrl;
+    return updateData;
+  }
+
+  async deleteById(id: number): Promise<void> {
+    try {
+      await this.prisma.githubRepository.delete({
+        where: {id}
+      });
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {
+        throw new ProjectNotFoundError();
+      }
+      throw e;
+    }
   }
 }
