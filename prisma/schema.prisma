@@ -40,13 +40,6 @@ model GithubRepository {
   images        ProjectImage[]
 }
 
-model ProjectImage {
-  id                 Int              @id @default(autoincrement())
-  src                String           @unique
-  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
-  githubRepositoryId Int
-}
-
 model GithubCodeSnippet {
   id                 Int              @id @default(autoincrement())
   createdAt          DateTime         @default(now())
@@ -57,6 +50,13 @@ model GithubCodeSnippet {
   startLine          Int
   endLine            Int
   description        String
+  GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepositoryId Int
+}
+
+model ProjectImage {
+  id                 Int              @id @default(autoincrement())
+  src                String           @unique
   GithubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }
