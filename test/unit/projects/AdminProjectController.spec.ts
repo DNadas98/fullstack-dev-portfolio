@@ -1,10 +1,20 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import {AdminProjectController} from "../../../src/projects/controller/AdminProjectController";
 import {ProjectService} from "../../../src/projects/service/ProjectService";
+import {IJwtService} from "../../../src/auth/service/IJwtService";
+import {UserService} from "../../../src/users/service/UserService";
 
 describe("AdminProjectController", () => {
   let controller: AdminProjectController;
   const mockProjectService = {
+    //TODO:Impl
+  };
+
+  const mockJwtService = {
+    //TODO:Impl
+  };
+
+  const mockUserService = {
     //TODO:Impl
   };
 
@@ -13,6 +23,8 @@ describe("AdminProjectController", () => {
       controllers: [AdminProjectController],
       providers: [
         { provide: ProjectService, useValue: mockProjectService },
+        { provide: IJwtService, useValue: mockJwtService },
+        { provide: UserService, useValue: mockUserService }
       ]
     }).compile();
 
