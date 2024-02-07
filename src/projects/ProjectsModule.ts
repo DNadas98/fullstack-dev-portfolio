@@ -7,11 +7,15 @@ import {CustomJwtModule} from "../auth/CustomJwtModule";
 import {UsersModule} from "../users/UsersModule";
 import {GithubUserService} from "./service/GithubUserService";
 import {AdminGithubUserController} from "./controller/AdminGithubUserController";
+import {GithubCodeSnippetService} from "./service/GithubCodeSnippetService";
+import {
+  AdminGithubCodeSnippetController
+} from "./controller/AdminGithubCodeSnippetController";
 
 @Module({
   imports: [DatabaseModule, ConverterModule, CustomJwtModule, UsersModule],
-  providers: [ProjectService, GithubUserService],
-  controllers: [AdminProjectController,AdminGithubUserController]
+  providers: [ProjectService, GithubUserService, GithubCodeSnippetService],
+  controllers: [AdminProjectController,AdminGithubUserController,AdminGithubCodeSnippetController]
 })
 export class ProjectsModule {
 }

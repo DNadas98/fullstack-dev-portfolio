@@ -789,6 +789,176 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "github-code-snippets",
+			"item": [
+				{
+					"name": "findAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/github-code-snippets",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"github-code-snippets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/github-code-snippets/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"github-code-snippets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\":\"TestCodeSnippetName\",\n    \"filePath\":\"test/test.java\",\n    \"format\":\"java\",\n    \"startLine\":1,\n    \"endLine\":2,\n    \"description\":\"Test description\",\n    \"githubRepositoryId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/github-code-snippets",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"github-code-snippets"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"displayName\":\"TestCodeSnippetName-Updated\",\n    \"filePath\":\"test/test.java\",\n    \"format\":\"java\",\n    \"startLine\":1,\n    \"endLine\":2,\n    \"description\":\"Test description\",\n    \"githubRepositoryId\":1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/github-code-snippets/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"github-code-snippets",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "bearer-token",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/github-code-snippets/2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"github-code-snippets",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
