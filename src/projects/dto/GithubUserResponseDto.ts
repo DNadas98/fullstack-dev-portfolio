@@ -1,11 +1,9 @@
 export class GithubUserResponseDto {
   readonly id: number;
   readonly githubUsername: string;
-  readonly accountId: number;
 
-  constructor(id: number, githubUsername: string, accountId: number) {
+  constructor(id: number, githubUsername: string) {
     this.id = id;
     this.githubUsername = githubUsername;
-    this.accountId = accountId;
   }
 }

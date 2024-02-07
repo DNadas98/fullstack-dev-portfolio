@@ -1,9 +1,12 @@
-export class GithubUserCreateRequestDto {
-  readonly githubUsername: number;
-  readonly accountId:number;
+import {IsNotEmpty, IsString} from "class-validator";
 
-  constructor(githubUsername: number, accountId: number) {
+export class GithubUserCreateRequestDto {
+
+  @IsNotEmpty({message: "GitHub username is missing"})
+  @IsString({message: "Invalid GitHub username format"})
+  readonly githubUsername: string;
+
+  constructor(githubUsername: string) {
     this.githubUsername = githubUsername;
-    this.accountId = accountId;
   }
 }
