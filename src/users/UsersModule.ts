@@ -8,7 +8,8 @@ import {PasswordEncoderModule} from "../auth/PasswordEncoderModule";
 import {ConverterModule} from "../common/converter/ConverterModule";
 
 @Module({
-  imports: [DatabaseModule, CustomJwtModule, PasswordEncoderModule, ConverterModule],
+  imports: [DatabaseModule, CustomJwtModule, PasswordEncoderModule,
+    ConverterModule],
   providers: [UserService],
   controllers: [UserController, AdminController],
   exports: [UserService]

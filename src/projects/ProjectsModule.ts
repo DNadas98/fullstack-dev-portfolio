@@ -15,7 +15,7 @@ import {
 @Module({
   imports: [DatabaseModule, ConverterModule, CustomJwtModule, UsersModule],
   providers: [ProjectService, GithubUserService, GithubCodeSnippetService],
-  controllers: [AdminProjectController,AdminGithubUserController,AdminGithubCodeSnippetController]
+  controllers: [AdminProjectController, AdminGithubUserController, AdminGithubCodeSnippetController]
 })
 export class ProjectsModule {
 }

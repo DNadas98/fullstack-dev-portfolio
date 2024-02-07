@@ -9,7 +9,7 @@ import {
   UseGuards, HttpCode, HttpStatus
 } from "@nestjs/common";
 import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {validateId} from "../../common/regex/validators";
+import {validateId} from "../../common/validator/validator";
 import {AuthGuard} from "../../auth/guard/AuthGuard";
 import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
 import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
