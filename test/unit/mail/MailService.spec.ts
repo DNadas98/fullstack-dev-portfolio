@@ -1,8 +1,9 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { MailService } from "../../../src/mail/service/MailService";
-import { ConfigService } from "@nestjs/config";
-import { MailOptionsDto } from "../../../src/mail/dto/MailOptionsDto";
-import { MailSendingError } from "../../../src/mail/error/MailSendingError";
+import {Test, TestingModule} from "@nestjs/testing";
+import {MailService} from "../../../src/mail/service/MailService";
+import {ConfigService} from "@nestjs/config";
+import {MailOptionsDto} from "../../../src/mail/dto/MailOptionsDto";
+import {MailSendingError} from "../../../src/mail/error/MailSendingError";
+import {ContactFormRequestDto} from "../../../src/mail/dto/ContactFormRequestDto";
 
 describe("MailService", () => {
   let service: MailService;
@@ -14,7 +15,9 @@ describe("MailService", () => {
       } else if (key === "PORTFOLIO_SMTP_SERVER_PORT") {
         return 465;
       } else if (key === "PORTFOLIO_SMTP_EMAIL") {
-        return "smtpEmail";
+        return "nonexistentemail";
+      } else if (key === "PORTFOLIO_CONTACT_EMAIL") {
+        return "nonexistentemail";
       } else if (key === "PORTFOLIO_SMTP_PASSWORD") {
         return "smtpPassword";
       }
@@ -24,7 +27,7 @@ describe("MailService", () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        { provide: ConfigService, useValue: mockConfigService },
+        {provide: ConfigService, useValue: mockConfigService},
         MailService
       ]
     }).compile();
@@ -36,16 +39,32 @@ describe("MailService", () => {
     expect(service).toBeDefined();
   });
 
-  it("should attempt to send e-mail and throw error", async () => {
-    await expect(
-      service.sendMail(
-        new MailOptionsDto(
-          "dani@web-dev-test.hu",
-          `Test ${Date.now()} Nodemailer NestJS`,
-          `Test 1 ${Date.now()} content`,
-          false
+  describe("MailService sendMail", () => {
+    it("should attempt to send e-mail and throw error", async () => {
+      await expect(
+        service.sendMail(
+          new MailOptionsDto(
+            "nonexistentemail",
+            `Test ${Date.now()} Nodemailer NestJS`,
+            `Test 1 ${Date.now()} content`,
+            false
+          )
         )
-      )
-    ).rejects.toThrow(MailSendingError);
+      ).rejects.toThrow(MailSendingError);
+    });
+  });
+
+  describe("MailService sendContactFormMail", () => {
+    it("should attempt to send e-mail and throw error", async () => {
+      await expect(
+        service.sendContactFormMail(
+          new ContactFormRequestDto(
+            `Test ${Date.now()} Nodemailer NestJS`,
+            `Test 1 ${Date.now()} content`,
+            false
+          )
+        )
+      ).rejects.toThrow(MailSendingError);
+    });
   });
 });

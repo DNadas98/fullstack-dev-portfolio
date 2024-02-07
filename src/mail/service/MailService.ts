@@ -1,10 +1,11 @@
-import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { createTransport, Transporter } from "nodemailer";
-import { TransporterCreationError } from "../error/TransporterCreationError";
-import { MailOptionsDto } from "../dto/MailOptionsDto";
+import {Injectable} from "@nestjs/common";
+import {ConfigService} from "@nestjs/config";
+import {createTransport, Transporter} from "nodemailer";
+import {TransporterCreationError} from "../error/TransporterCreationError";
+import {MailOptionsDto} from "../dto/MailOptionsDto";
 import Mail from "nodemailer/lib/mailer";
-import { MailSendingError } from "../error/MailSendingError";
+import {MailSendingError} from "../error/MailSendingError";
+import {ContactFormRequestDto} from "../dto/ContactFormRequestDto";
 
 @Injectable()
 export class MailService {
@@ -59,6 +60,19 @@ export class MailService {
     try {
       await this.transporter.sendMail(options);
       return mailOptions;
+    } catch (e) {
+      throw new MailSendingError();
+    }
+  }
+
+  async sendContactFormMail(contactFormRequestDto: ContactFormRequestDto) {
+    const contactEmail = this.configService.get("PORTFOLIO_CONTACT_EMAIL");
+    try {
+      const options = new MailOptionsDto(
+        contactEmail, contactFormRequestDto.subject,
+        contactFormRequestDto.content, contactFormRequestDto.isHtml
+      );
+      return await this.sendMail(options);
     } catch (e) {
       throw new MailSendingError();
     }
