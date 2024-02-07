@@ -13,8 +13,14 @@ import {ProjectImageResponseDto} from "../../../projects/dto/ProjectImageRespons
 import {
   GithubCodeSnippetResponseDto
 } from "../../../projects/dto/GithubCodeSnippetResponseDto";
+import {MailOptionsDto} from "../../../mail/dto/MailOptionsDto";
+import {ContactFormRequestDto} from "../../../mail/dto/ContactFormRequestDto";
 
 export class DtoConverterService {
+  /**
+   * users
+   */
+
   toUserResponsePrivateDto(user: User): UserResponsePrivateDto {
     return new UserResponsePrivateDto(
       user.id,
@@ -36,6 +42,10 @@ export class DtoConverterService {
       user.role
     );
   }
+
+  /**
+   * projects
+   */
 
   toGithubUserResponseDto(githubUser: GithubUser): GithubUserResponseDto {
     return new GithubUserResponseDto(
@@ -75,4 +85,15 @@ export class DtoConverterService {
       project.licensePath ?? null, project.licenseFormat ?? null,
       project.deploymentUrl ?? null);
   }
+
+  /**
+   * mail
+   */
+
+  toMailOptionsDto(contactFormDto: ContactFormRequestDto, contactEmail: string) {
+    return new MailOptionsDto(
+      contactEmail, contactFormDto.subject, contactFormDto.content, contactFormDto.isHtml
+    );
+  }
+
 }

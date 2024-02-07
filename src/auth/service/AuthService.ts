@@ -1,32 +1,36 @@
-import { Injectable } from "@nestjs/common";
-import { IPasswordEncoder } from "./IPasswordEncoder";
-import { RegisterRequestDto } from "../dto/RegisterRequestDto";
-import { UserResponsePrivateDto } from "../../users/dto/UserResponsePrivateDto";
-import { LoginResponseDto } from "../dto/LoginResponseDto";
-import { DatabaseService } from "../../database/service/DatabaseService";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { UniqueConstraintError } from "../../common/error/UniqueConstraintError";
-import { LoginRequestDto } from "../dto/LoginRequestDto";
-import { InvalidCredentialsError } from "../error/InvalidCredentialsError";
-import { AccountDeactivatedError } from "../error/AccountDeactivatedError";
-import { AccountNotEnabledError } from "../error/AccountNotEnabledError";
-import { IJwtService } from "./IJwtService";
-import { JwtPayloadDto } from "../dto/JwtPayloadDto";
+import {Injectable} from "@nestjs/common";
+import {IPasswordEncoder} from "./IPasswordEncoder";
+import {RegisterRequestDto} from "../dto/RegisterRequestDto";
+import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
+import {LoginResponseDto} from "../dto/LoginResponseDto";
+import {DatabaseService} from "../../database/service/DatabaseService";
+import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
+import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
+import {LoginRequestDto} from "../dto/LoginRequestDto";
+import {InvalidCredentialsError} from "../error/InvalidCredentialsError";
+import {AccountDeactivatedError} from "../error/AccountDeactivatedError";
+import {AccountNotEnabledError} from "../error/AccountNotEnabledError";
+import {IJwtService} from "./IJwtService";
+import {JwtPayloadDto} from "../dto/JwtPayloadDto";
+import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
 
 @Injectable()
 export class AuthService {
   private readonly prisma: DatabaseService;
   private readonly passwordEncoder: IPasswordEncoder;
   private readonly jwtService: IJwtService;
+  private readonly dtoConverter: DtoConverterService;
 
   constructor(
     databaseService: DatabaseService,
     passwordEncoder: IPasswordEncoder,
-    jwtService: IJwtService
+    jwtService: IJwtService,
+    dtoConverter: DtoConverterService
   ) {
     this.prisma = databaseService;
     this.passwordEncoder = passwordEncoder;
     this.jwtService = jwtService;
+    this.dtoConverter = dtoConverter;
   }
 
   async register(
@@ -45,16 +49,7 @@ export class AuthService {
           enabled: enabled
         }
       });
-      return new UserResponsePrivateDto(
-        created.id,
-        created.createdAt,
-        created.updatedAt,
-        created.email,
-        created.username,
-        created.role,
-        created.enabled,
-        created.active
-      );
+      return this.dtoConverter.toUserResponsePrivateDto(created);
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
         throw new UniqueConstraintError(
@@ -87,16 +82,7 @@ export class AuthService {
     if (!user.enabled) {
       throw new AccountNotEnabledError();
     }
-    const userDto = new UserResponsePrivateDto(
-      user.id,
-      user.createdAt,
-      user.updatedAt,
-      user.email,
-      user.username,
-      user.role,
-      user.enabled,
-      user.active
-    );
+    const userDto = this.dtoConverter.toUserResponsePrivateDto(user);
 
     const bearerToken = await this.jwtService.signBearerToken(
       new JwtPayloadDto(user.email)
@@ -112,7 +98,7 @@ export class AuthService {
     const payload = await this.jwtService.verifyRefreshToken(refreshToken);
 
     const user = await this.prisma.user.findUnique({
-      where: { email: payload.email }
+      where: {email: payload.email}
     });
     if (!user) {
       throw new InvalidCredentialsError();

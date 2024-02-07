@@ -4,6 +4,9 @@ import {ConfigService} from "@nestjs/config";
 import {MailOptionsDto} from "../../../src/mail/dto/MailOptionsDto";
 import {MailSendingError} from "../../../src/mail/error/MailSendingError";
 import {ContactFormRequestDto} from "../../../src/mail/dto/ContactFormRequestDto";
+import {
+  DtoConverterService
+} from "../../../src/common/converter/service/DtoConverterService";
 
 describe("MailService", () => {
   let service: MailService;
@@ -28,7 +31,7 @@ describe("MailService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         {provide: ConfigService, useValue: mockConfigService},
-        MailService
+        MailService, DtoConverterService
       ]
     }).compile();
 

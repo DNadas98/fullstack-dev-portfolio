@@ -1,7 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
 import {DatabaseService} from "../../database/service/DatabaseService";
-import {User} from "@prisma/client";
 import {AccountNotFoundError} from "../../auth/error/AccountNotFoundError";
 import {AccountDeactivatedError} from "../../auth/error/AccountDeactivatedError";
 import {AccountNotEnabledError} from "../../auth/error/AccountNotEnabledError";
@@ -9,42 +8,22 @@ import {UserResponsePublicDto} from "../dto/UserResponsePublicDto";
 import {IPasswordEncoder} from "../../auth/service/IPasswordEncoder";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
 import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
+import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
 
 @Injectable()
 export class UserService {
   private readonly prisma: DatabaseService;
   private readonly passwordEncoder: IPasswordEncoder;
+  private readonly dtoConverter: DtoConverterService;
 
-  constructor(prisma: DatabaseService, passwordEncoder: IPasswordEncoder) {
+  constructor(prisma: DatabaseService, passwordEncoder: IPasswordEncoder, dtoConverter: DtoConverterService) {
     this.prisma = prisma;
     this.passwordEncoder = passwordEncoder;
+    this.dtoConverter = dtoConverter;
   }
-
-  private toUserResponsePrivateDto(user: User): UserResponsePrivateDto {
-    return new UserResponsePrivateDto(
-      user.id,
-      user.createdAt,
-      user.updatedAt,
-      user.email,
-      user.username,
-      user.role,
-      user.enabled,
-      user.active
-    );
-  }
-
-  private toUserResponsePublicDto(user: User): UserResponsePublicDto {
-    return new UserResponsePublicDto(
-      user.id,
-      user.email,
-      user.username,
-      user.role
-    );
-  }
-
   async readAll(): Promise<UserResponsePublicDto[]> {
     const users = await this.prisma.user.findMany();
-    return users.map((user) => this.toUserResponsePublicDto(user));
+    return users.map((user) => this.dtoConverter.toUserResponsePublicDto(user));
   }
 
   async readById(id: number): Promise<UserResponsePrivateDto> {
@@ -54,7 +33,7 @@ export class UserService {
     if (!user) {
       throw new AccountNotFoundError();
     }
-    return this.toUserResponsePrivateDto(user);
+    return this.dtoConverter.toUserResponsePrivateDto(user);
   }
 
   async readByEmail(email: string): Promise<UserResponsePrivateDto> {
@@ -70,7 +49,7 @@ export class UserService {
     if (!user.enabled) {
       throw new AccountNotEnabledError();
     }
-    return this.toUserResponsePrivateDto(user);
+    return this.dtoConverter.toUserResponsePrivateDto(user);
   }
 
   async updateUsernameById(id: number, username: string) {
@@ -89,7 +68,7 @@ export class UserService {
       }
       return tx.user.update({where: {id}, data: {username}});
     });
-    return this.toUserResponsePrivateDto(updated);
+    return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
 
   async updateEmailById(id: number, email: string) {
@@ -109,7 +88,7 @@ export class UserService {
         }
         return tx.user.update({where: {id}, data: {email}});
       });
-      return this.toUserResponsePrivateDto(updated);
+      return this.dtoConverter.toUserResponsePrivateDto(updated);
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
         throw new UniqueConstraintError(
@@ -138,7 +117,7 @@ export class UserService {
       }
       return tx.user.update({where: {id}, data: {password: hashedPassword}});
     });
-    return this.toUserResponsePrivateDto(updated);
+    return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
 
   async updateIsActive(id: number, isActive: boolean): Promise<UserResponsePrivateDto> {
@@ -154,7 +133,7 @@ export class UserService {
         data: {active: isActive}
       });
     });
-    return this.toUserResponsePrivateDto(updated);
+    return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
 
   async updateIsEnabled(id: number, isEnabled: boolean): Promise<UserResponsePrivateDto> {
@@ -170,7 +149,7 @@ export class UserService {
         data: {enabled: isEnabled}
       });
     });
-    return this.toUserResponsePrivateDto(updated);
+    return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
 
   async deleteById(id: number): Promise<void> {
