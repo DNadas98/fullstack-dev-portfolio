@@ -11,6 +11,9 @@ import {AccountDeactivatedError} from "../../../src/auth/error/AccountDeactivate
 import {AccountNotEnabledError} from "../../../src/auth/error/AccountNotEnabledError";
 import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
 import {UniqueConstraintError} from "../../../src/common/error/UniqueConstraintError";
+import {
+  DtoConverterService
+} from "../../../src/common/converter/service/DtoConverterService";
 
 describe("UserService", () => {
   let service: UserService;
@@ -59,7 +62,7 @@ describe("UserService", () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UserService,
+        UserService, DtoConverterService,
         {provide: DatabaseService, useValue: mockPrismaCtx.prisma},
         {provide: IPasswordEncoder, useValue: mockPasswordEncoder}
       ]
@@ -255,7 +258,10 @@ describe("UserService", () => {
     it("should throw UniqueConstraintError for an already existing username", async () => {
       const userId = mockUsers[0].id;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
-      mockPrismaCtx.prisma.user.update.mockRejectedValue(new PrismaClientKnownRequestError("", {code: "P2002", clientVersion: ""}));
+      mockPrismaCtx.prisma.user.update.mockRejectedValue(new PrismaClientKnownRequestError("", {
+        code: "P2002",
+        clientVersion: ""
+      }));
 
       await expect(service.updateEmailById(userId, mockUsers[1].email)).rejects.toThrow(UniqueConstraintError);
     });
