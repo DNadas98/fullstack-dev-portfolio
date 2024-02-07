@@ -1,7 +1,7 @@
-import {Injectable} from "@nestjs/common";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
 import {ConfigService} from "@nestjs/config";
 import {Request} from "express";
-import axios, {AxiosRequestConfig} from "axios";
+import axios, {AxiosError, AxiosRequestConfig} from "axios";
 
 @Injectable()
 export class ForwardService {
@@ -15,16 +15,32 @@ export class ForwardService {
    * @link https://docs.github.com/en/rest?apiVersion=2022-11-28
    * @see axios.request
    * @see AxiosRequestConfig
-   * @throws AxiosError
+   * @throws HttpException
    */
   async forwardGitHubApiRequest(req: Request, path: string): Promise<any> {
-    const baseUrl = this.configService.get("PORTFOLIO_GITHUB_API_BASE_URL");
-    const token = this.configService.get("PORTFOLIO_GITHUB_API_TOKEN");
+    try {
+      const baseUrl = this.configService.get("PORTFOLIO_GITHUB_API_BASE_URL");
+      const token = this.configService.get("PORTFOLIO_GITHUB_API_TOKEN");
 
-    const config = this.getGitHubRequestConfig(req, baseUrl, path, token);
+      const config = this.getGitHubRequestConfig(req, baseUrl, path, token);
 
-    const apiResponse = await axios.request(config);
-    return apiResponse.data;
+      const apiResponse = await axios.request(config);
+      return apiResponse.data;
+    } catch (e) {
+      if (e instanceof AxiosError) {
+        const message = "Failed to retrieve resource from GitHub REST API";
+        const statusText = e?.response?.statusText;
+        const status = e?.response?.status;
+        throw new HttpException(
+          statusText ? {
+            message: message,
+            error: statusText,
+            statusCode: status
+          } : message,
+          status ?? HttpStatus.SERVICE_UNAVAILABLE);
+      }
+      throw e;
+    }
   }
 
   private getGitHubRequestConfig(
