@@ -7,6 +7,7 @@ import {MailModule} from "./mail/MailModule";
 import {ThrottlerGuard, ThrottlerModule} from "@nestjs/throttler";
 import {globalRateLimiterOptions} from "./common/config/rateLimiterOptions";
 import {APP_GUARD} from "@nestjs/core";
+import {ProjectsModule} from "./projects/ProjectsModule";
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import {APP_GUARD} from "@nestjs/core";
     DatabaseModule,
     AuthModule,
     UsersModule,
-    MailModule
+    MailModule,
+    ProjectsModule
   ],
   providers: [
     {provide: APP_GUARD, useClass: ThrottlerGuard}
