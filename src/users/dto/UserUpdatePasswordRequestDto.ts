@@ -1,5 +1,5 @@
 import {Matches} from "class-validator";
-import {passwordRegex} from "../../common/regex/regex";
+import {passwordRegex} from "../../common/validator/validator";
 
 export class UserUpdatePasswordRequestDto {
   @Matches(passwordRegex, {message: "Invalid password format"})

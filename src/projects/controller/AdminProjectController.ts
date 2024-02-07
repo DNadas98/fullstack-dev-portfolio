@@ -12,10 +12,10 @@ import {ProjectService} from "../service/ProjectService";
 import {ProjectCreateRequestDto} from "../dto/ProjectCreateRequestDto";
 import {ProjectUpdateRequestDto} from "../dto/ProjectUpdateRequestDto";
 import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {validateId} from "../../common/regex/validators";
 import {AuthGuard} from "../../auth/guard/AuthGuard";
 import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
 import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
+import {validateId} from "../../common/validator/validator";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("/api/v1/projects")

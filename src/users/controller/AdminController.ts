@@ -12,6 +12,7 @@ import {AuthGuard} from "../../auth/guard/AuthGuard";
 import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
 import {DataResponseDto} from "../../common/dto/DataResponseDto";
 import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
+import {validateId} from "../../common/validator/validator";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("api/v1/admin")
@@ -31,9 +32,7 @@ export class AdminController {
   @HttpCode(HttpStatus.OK)
   @Roles("ADMIN")
   async getUserDetailsById(@Param("id") id: string) {
-    if (!id || isNaN(parseInt(id))) {
-      throw new BadRequestException();
-    }
+    validateId(id);
     const userDetails = await this.userService.readById(+id);
     return new DataResponseDto(userDetails);
   }
@@ -42,9 +41,7 @@ export class AdminController {
   @HttpCode(HttpStatus.OK)
   @Roles("ADMIN")
   async updateIsActiveById(@Param("id") id: string, @Query("setActive") setActive: string) {
-    if (!id || isNaN(parseInt(id))) {
-      throw new BadRequestException();
-    }
+    validateId(id);
     if (!setActive || (setActive !== "true" && setActive !== "false")) {
       throw new BadRequestException();
     }
@@ -57,9 +54,7 @@ export class AdminController {
   @HttpCode(HttpStatus.OK)
   @Roles("ADMIN")
   async deleteUserById(@Param("id") id: string) {
-    if (!id || isNaN(parseInt(id))) {
-      throw new BadRequestException();
-    }
+    validateId(id);
     await this.userService.deleteById(+id);
     return new MessageResponseDto(`User account with ID ${id} has been deleted successfully`);
   }
