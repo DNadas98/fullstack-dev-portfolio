@@ -39,7 +39,7 @@ export class DtoConverterService {
 
   toGithubUserResponseDto(githubUser: GithubUser): GithubUserResponseDto {
     return new GithubUserResponseDto(
-      githubUser.id, githubUser.githubUsername, githubUser.userId
+      githubUser.id, githubUser.githubUsername
     );
   }
 
