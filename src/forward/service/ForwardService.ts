@@ -21,13 +21,13 @@ export class ForwardService {
     const baseUrl = this.configService.get("PORTFOLIO_GITHUB_API_BASE_URL");
     const token = this.configService.get("PORTFOLIO_GITHUB_API_TOKEN");
 
-    const config = this.getRequestConfig(req, baseUrl, path, token);
+    const config = this.getGitHubRequestConfig(req, baseUrl, path, token);
 
     const apiResponse = await axios.request(config);
     return apiResponse.data;
   }
 
-  private getRequestConfig(
+  private getGitHubRequestConfig(
     req: Request, baseUrl: string, path: string, token: string
   ): AxiosRequestConfig {
     return {
