@@ -6,15 +6,18 @@ import {MailOptionsDto} from "../dto/MailOptionsDto";
 import Mail from "nodemailer/lib/mailer";
 import {MailSendingError} from "../error/MailSendingError";
 import {ContactFormRequestDto} from "../dto/ContactFormRequestDto";
+import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
 
 @Injectable()
 export class MailService {
   private readonly transporter: Transporter;
   private readonly configService: ConfigService;
+  private readonly dtoConverter: DtoConverterService;
 
-  constructor(configService: ConfigService) {
+  constructor(configService: ConfigService, dtoConverter: DtoConverterService) {
     this.configService = configService;
     this.transporter = this.initTransporter();
+    this.dtoConverter = dtoConverter;
   }
 
   /**
@@ -68,9 +71,8 @@ export class MailService {
   async sendContactFormMail(contactFormRequestDto: ContactFormRequestDto) {
     const contactEmail = this.configService.get("PORTFOLIO_CONTACT_EMAIL");
     try {
-      const options = new MailOptionsDto(
-        contactEmail, contactFormRequestDto.subject,
-        contactFormRequestDto.content, contactFormRequestDto.isHtml
+      const options = this.dtoConverter.toMailOptionsDto(
+        contactFormRequestDto, contactEmail
       );
       return await this.sendMail(options);
     } catch (e) {
