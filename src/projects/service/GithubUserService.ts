@@ -61,10 +61,14 @@ export class GithubUserService {
       });
       return this.dtoConverter.toGithubUserResponseDto(updated);
     } catch (e) {
-      if (e instanceof PrismaClientKnownRequestError && e.code === "P2002") {
-        throw new UniqueConstraintError(
-          "A GitHub User with the provided username already exists"
-        );
+      if (e instanceof PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          throw new UniqueConstraintError(
+            "A GitHub User with the provided username already exists"
+          );
+        } else if (e.code === "P2025") {
+          throw new GithubUserNotFoundError();
+        }
       }
       throw e;
     }
