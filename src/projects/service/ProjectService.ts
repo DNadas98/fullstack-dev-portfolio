@@ -76,7 +76,7 @@ export class ProjectService {
           throw new UniqueConstraintError(
             "A Github Repository with the provided name already exists"
           );
-        } else if (e.code === "P2003") {
+        } else if (e.code === "P2025") {
           throw new GithubUserNotFoundError();
         }
       }
@@ -107,9 +107,10 @@ export class ProjectService {
           throw new UniqueConstraintError(
             "A Github Repository with the provided name already exists"
           );
-        } else if (e.code === "P2003") {
-          throw new GithubUserNotFoundError();
         } else if (e.code === "P2025") {
+          if (e?.meta?.cause && e.meta.cause.toString().includes("GithubUser")) {
+            throw new GithubUserNotFoundError();
+          }
           throw new ProjectNotFoundError();
         }
       }

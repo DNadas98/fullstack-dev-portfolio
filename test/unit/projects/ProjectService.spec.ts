@@ -223,7 +223,7 @@ describe("ProjectService", () => {
     it("should throw GithubUserNotFoundError when the owner with the provided id does" +
       " not exist", async () => {
       mockPrismaCtx.prisma.githubRepository.create.mockRejectedValue(new PrismaClientKnownRequestError(
-        "", {code: "P2003", clientVersion: "1"}
+        "", {code: "P2025", clientVersion: "1"}
       ));
       await expect(service.create(createProjectDto)).rejects.toThrow(GithubUserNotFoundError);
     });
@@ -284,11 +284,24 @@ describe("ProjectService", () => {
     it("should throw GithubUserNotFoundError when the owner with the provided id does not exist", async () => {
       mockPrismaCtx.prisma.githubRepository.update.mockRejectedValue(
         new PrismaClientKnownRequestError(
-          "", {code: "P2003", clientVersion: "1"})
+          "", {code: "P2025", clientVersion: "1",
+            meta:{cause:"test123 GithubUser test123"}})
       );
 
       await expect(service.updateById(mockProjects[0].id, updateProjectDto))
         .rejects.toThrow(GithubUserNotFoundError);
+    });
+
+    it("should throw ProjectNotFoundError when the project with the provided id does" +
+      " not exist", async () => {
+      mockPrismaCtx.prisma.githubRepository.update.mockRejectedValue(
+        new PrismaClientKnownRequestError(
+          "", {code: "P2025", clientVersion: "1",
+            meta:{cause:"test123 test123"}})
+      );
+
+      await expect(service.updateById(mockProjects[0].id, updateProjectDto))
+        .rejects.toThrow(ProjectNotFoundError);
     });
   });
 
