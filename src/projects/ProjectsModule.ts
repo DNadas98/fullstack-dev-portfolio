@@ -11,9 +11,10 @@ import {GithubCodeSnippetService} from "./service/GithubCodeSnippetService";
 import {
   AdminGithubCodeSnippetController
 } from "./controller/AdminGithubCodeSnippetController";
+import {ForwardModule} from "../forward/ForwardModule";
 
 @Module({
-  imports: [DatabaseModule, ConverterModule, CustomJwtModule, UsersModule],
+  imports: [DatabaseModule, ConverterModule, CustomJwtModule, UsersModule, ForwardModule],
   providers: [ProjectService, GithubUserService, GithubCodeSnippetService],
   controllers: [AdminProjectController, AdminGithubUserController, AdminGithubCodeSnippetController]
 })
