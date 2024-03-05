@@ -118,10 +118,12 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 #### API
 
-- Optional: install NestJS
+- Optional: install NestJS globally
   CLI - `npm i -g @nestjs/cli` - See [NestJS docs](https://docs.nestjs.com/#installation)
+- Change directory to the backend folder
 - Run `npm install` to install the project
 - Run `npm build` to compile typescript
+- Optional: `npm run test` to run unit tests
 - Set up and start the database (required to start the server on purpose)
 - `npm start` or `node dist/main`
 - See `package.json` for test, lint and other commands
@@ -131,12 +133,20 @@ GitHub. A secure admin dashboard is also implemented to manage stored projects
 
 - Option 1: Start the dockerized database using `docker compose up -d`
 - Option 2: Set up a MySQL database and a user with all privileges in that database
+- Change directory to the backend folder
 - Modify the connection string in the `.env`
 - `npx prisma generate` to generate `PrismaClient`
 - `npx prisma db push` in development mode only (!), or use migrations to syncronize the
   database with the ORM
   - See the difference between development and production commands in
     the [Prisma docs](https://www.prisma.io/docs/orm/prisma-migrate/workflows/development-and-production)
+
+#### Frontend
+
+- Change directory to the frontend folder
+- Run `npm install` to install the project
+- Run `npm run dev` to run the Vite JS development server
+- Set up and start the database (required to start the server on purpose)
 
 ## Usage
 
