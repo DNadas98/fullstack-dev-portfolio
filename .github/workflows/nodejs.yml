@@ -42,6 +42,7 @@ jobs:
       - name: Set Environment Variables
         run: |
           echo "PORTFOLIO_DB_URL=mysql://root:root@localhost:3306/testdb" >> $GITHUB_ENV
+      - run: cd backend
       - run: npm ci
       - run: npm test
       - run: npm run test:e2e
