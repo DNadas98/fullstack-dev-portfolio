@@ -1,4 +1,4 @@
-import {AppBar, Toolbar, Typography, useMediaQuery, useTheme} from "@mui/material";
+import {AppBar, Divider, Toolbar, Typography, useMediaQuery, useTheme} from "@mui/material";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
 import {publicMenuRoutes} from "../../common/config/menu/publicMenuRoutes.tsx";
 import ThemePaletteModeSwitch
@@ -14,7 +14,7 @@ export default function PublicHeader() {
   const menu: IMenuRoutes = publicMenuRoutes;
 
   return (
-    <AppBar position="static" sx={{marginBottom: 4}}>
+    <AppBar position="static">
       <Toolbar>
         <Typography variant={"h6"} flexGrow={1}>
           {siteName}
@@ -25,6 +25,7 @@ export default function PublicHeader() {
         }
         <ThemePaletteModeSwitch/>
       </Toolbar>
+      <Divider color={theme.palette.secondary.main}/>
     </AppBar>
   );
 }
