@@ -8,6 +8,7 @@ import RequireAuthentication
 import {Role} from "../../authentication/dto/Role.ts";
 import UserLayout from "../../user/layout/UserLayout.tsx";
 import {userMenuProfileRoutes} from "../config/menu/userMenuProfileRoutes.tsx";
+import Login from "../../authentication/pages/login/Login.tsx";
 
 const appRouter = createBrowserRouter([
   /* public */
@@ -17,15 +18,14 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       ...publicMenuRoutes.elements,
-      {
-        path: "/*", element: <NotFound/>
-      }
+      {path: "/login", element: <Login/>},
+      {path: "/*", element: <NotFound/>}
     ]
   },
   /* user */
   {
     path: "/user/",
-    element: <RequireAuthentication allowedRoles={[Role.USER,Role.ADMIN]}/>,
+    element: <RequireAuthentication allowedRoles={[Role.USER, Role.ADMIN]}/>,
     errorElement: <ErrorPage/>,
     children: [
       {
