@@ -2,8 +2,9 @@ import {
   Avatar, Button, Card, CardContent, Grid, Stack, TextField, Typography
 } from "@mui/material";
 import {FormEventHandler} from "react";
-import {MailOutline} from "@mui/icons-material";
+import {GitHub, LinkedIn, MailOutline} from "@mui/icons-material";
 import ContactFormRequestDto from "../../../dto/ContactFormRequestDto.ts";
+import ContactElement from "./ContactElement.tsx";
 
 interface ContactMePageProps {
   handleSubmit: FormEventHandler<HTMLFormElement> | undefined,
@@ -14,11 +15,40 @@ interface ContactMePageProps {
 
 export default function ContactMePage(props: ContactMePageProps) {
   return (
-    <Grid container justifyContent={"center"} alignItems={"center"} flexGrow={1} marginBottom={-4}>
-      <Grid item xs={10} sm={9} md={8} lg={7}>
+    <Grid container justifyContent={"center"} alignItems={"center"} flexGrow={1}
+          spacing={2} sx={{mt: 2, mb: 4}} minWidth={"fit-content"}>
+      <Grid item xs={11} sm={11} md={10} lg={9}>
         <Card sx={{
-          paddingTop: 4, textAlign: "center",
-          maxWidth: 800, width: "100%",
+          paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
+          minWidth: "fit-content", marginLeft: "auto", marginRight: "auto"
+        }}>
+          <Typography variant={"h5"} mb={4}>My Contacts</Typography>
+          <Grid container justifyContent={"space-around"} spacing={1}
+                minWidth={"fit-content"} paddingBottom={2}>
+            <Grid item xs={10} md={3}>
+              <ContactElement icon={<MailOutline/>}
+                              text={"E-mail"}
+                              link={"mailto:daniel.nadas@dnadas.net"}
+                              linkText={"daniel.nadas@dnadas.net"}/>
+            </Grid>
+            <Grid item xs={10} md={3}>
+              <ContactElement icon={<LinkedIn/>}
+                              text={"LinkedIn"}
+                              link={"https://linkedin.com/in/danielnadas"}
+                              linkText={"Dániel Nádas"}/>
+            </Grid>
+            <Grid item xs={10} md={3}>
+              <ContactElement icon={<GitHub/>}
+                              text={"GitHub"}
+                              link={"https://github.com/DNadas98"}
+                              linkText={"DNadas98"}/>
+            </Grid>
+          </Grid>
+        </Card>
+      </Grid>
+      <Grid item xs={11} sm={11} md={10} lg={9}>
+        <Card sx={{
+          paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
           marginLeft: "auto", marginRight: "auto"
         }}>
           <Stack
@@ -40,7 +70,7 @@ export default function ContactMePage(props: ContactMePageProps) {
               textAlign: "center",
               gap: "2rem"
             }}>
-              <Grid item xs={10} sm={9} md={7} lg={6}
+              <Grid item xs={12}
                     sx={{borderColor: "secondary.main"}}>
                 {props.sentContactMail
                   ? <Stack spacing={2}>
@@ -49,7 +79,8 @@ export default function ContactMePage(props: ContactMePageProps) {
                     </Typography>
                     <Stack spacing={2} textAlign={"left"}>
                       <Typography variant={"body1"}>
-                        Your message was saved successfully, I will get back to you soon.
+                        Your message was saved successfully, I will get back to you
+                        soon.
                       </Typography>
                       <Typography variant={"body1"}>
                         Message Details:
