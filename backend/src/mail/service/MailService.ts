@@ -54,11 +54,17 @@ export class MailService {
     const options: Mail.Options = {
       from: this.configService.get("PORTFOLIO_SMTP_EMAIL"),
       to: mailOptions.to,
-      subject: mailOptions.subject
+      subject: mailOptions.subject,
+      replyTo: mailOptions.replyTo
     };
+
+    const formattedContent: string = `From: ${mailOptions.name}, ${mailOptions.replyTo}${mailOptions.isHtml
+        ? "<br/>"
+        : "\n"}${mailOptions.content}`;
+
     mailOptions.isHtml
-      ? (options.html = mailOptions.content)
-      : (options.text = mailOptions.content);
+      ? (options.html = formattedContent)
+      : (options.text = formattedContent);
 
     try {
       await this.transporter.sendMail(options);

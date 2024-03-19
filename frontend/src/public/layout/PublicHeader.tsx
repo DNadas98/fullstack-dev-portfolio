@@ -1,4 +1,11 @@
-import {AppBar, Divider, Toolbar, Typography, useMediaQuery, useTheme} from "@mui/material";
+import {
+  AppBar,
+  Divider,
+  Toolbar,
+  Typography,
+  useMediaQuery,
+  useTheme
+} from "@mui/material";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
 import {publicMenuRoutes} from "../../common/config/menu/publicMenuRoutes.tsx";
 import ThemePaletteModeSwitch

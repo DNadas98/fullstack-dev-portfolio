@@ -1,6 +1,4 @@
-import {
-  Controller, Get, Param, Req
-} from "@nestjs/common";
+import {Controller, Get, Param, Req} from "@nestjs/common";
 import {Request} from "express";
 import {ProjectService} from "../service/ProjectService";
 import {DataResponseDto} from "../../common/dto/DataResponseDto";

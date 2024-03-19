@@ -1,12 +1,12 @@
 import {
+  Avatar,
   Card,
   CardContent,
+  CardHeader,
+  List,
   ListItem,
   ListItemIcon,
-  List,
-  CardHeader,
   Typography,
-  Avatar,
   useTheme
 } from "@mui/material";
 import {ReactNode} from "react";

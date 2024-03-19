@@ -1,10 +1,13 @@
 import {
   BadRequestException,
-  Controller, Delete,
+  Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
-  Param, Patch, Query,
+  Param,
+  Patch,
+  Query,
   UseGuards
 } from "@nestjs/common";
 import {UserService} from "../service/UserService";

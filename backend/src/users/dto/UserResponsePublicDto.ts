@@ -1,4 +1,4 @@
-import { Role } from "@prisma/client";
+import {Role} from "@prisma/client";
 
 export class UserResponsePublicDto {
   private readonly _id: number;

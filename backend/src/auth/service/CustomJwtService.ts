@@ -1,14 +1,14 @@
-import { Injectable } from "@nestjs/common";
-import { IJwtService } from "./IJwtService";
-import { JwtPayloadDto } from "../dto/JwtPayloadDto";
+import {Injectable} from "@nestjs/common";
+import {IJwtService} from "./IJwtService";
+import {JwtPayloadDto} from "../dto/JwtPayloadDto";
 import {
   JwtService,
   JwtSignOptions,
   JwtVerifyOptions,
   TokenExpiredError
 } from "@nestjs/jwt";
-import { JwtExpiredError } from "../error/JwtExpiredError";
-import { ConfigService } from "@nestjs/config";
+import {JwtExpiredError} from "../error/JwtExpiredError";
+import {ConfigService} from "@nestjs/config";
 
 /**
  * @link https://docs.nestjs.com/security/authentication#jwt-token

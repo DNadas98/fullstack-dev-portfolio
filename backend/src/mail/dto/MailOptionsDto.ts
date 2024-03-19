@@ -1,5 +1,4 @@
-import {IsNotEmpty, IsString, Matches, MaxLength} from "class-validator";
-import {emailRegex} from "../../common/validator/validator";
+import {IsEmail, IsNotEmpty, IsString, MaxLength} from "class-validator";
 
 /**
  * @param to should be a valid email
@@ -8,8 +7,20 @@ import {emailRegex} from "../../common/validator/validator";
  * @param isHtml
  */
 export class MailOptionsDto {
-  @Matches(emailRegex, {message: "Invalid email format"})
+  @IsEmail()
+  @IsNotEmpty()
+  @MaxLength(50)
   readonly to: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  @MaxLength(50)
+  readonly replyTo: string;
+
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  readonly name: string;
 
   @IsString()
   @IsNotEmpty()
@@ -23,10 +34,12 @@ export class MailOptionsDto {
 
   readonly isHtml: boolean;
 
-  constructor(to: string, subject: string, content: string, isHtml: boolean) {
+  constructor(to: string, subject: string, content: string, isHtml: boolean, replyTo: string, name: string) {
     this.to = to;
+    this.replyTo = replyTo;
     this.subject = subject;
     this.content = content;
     this.isHtml = isHtml;
+    this.name = name;
   }
 }
