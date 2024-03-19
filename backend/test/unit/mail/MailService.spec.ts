@@ -50,7 +50,9 @@ describe("MailService", () => {
             "nonexistentemail",
             `Test ${Date.now()} Nodemailer NestJS`,
             `Test 1 ${Date.now()} content`,
-            false
+            false,
+            "test.test@test.test",
+            "Test Mail Sender"
           )
         )
       ).rejects.toThrow(MailSendingError);

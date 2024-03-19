@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength } from "class-validator";
+import {IsEmail, IsNotEmpty, IsString, MaxLength} from "class-validator";
 
 /**
  * @param subject required, max 50 characters
@@ -6,6 +6,16 @@ import { IsNotEmpty, IsString, MaxLength } from "class-validator";
  * @param isHtml
  */
 export class ContactFormRequestDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(50)
+  readonly name: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  @MaxLength(50)
+  readonly email: string;
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(50)

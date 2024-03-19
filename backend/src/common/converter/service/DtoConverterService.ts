@@ -92,8 +92,8 @@ export class DtoConverterService {
 
   toMailOptionsDto(contactFormDto: ContactFormRequestDto, contactEmail: string) {
     return new MailOptionsDto(
-      contactEmail, contactFormDto.subject, contactFormDto.content, contactFormDto.isHtml
+      contactEmail, contactFormDto.subject, contactFormDto.content, contactFormDto.isHtml,
+      contactFormDto.email, contactFormDto.name
     );
   }
-
 }
