@@ -34,7 +34,7 @@ export default function ContactMePage(props: ContactMePageProps) {
             <Grid item xs={10} md={3}>
               <ContactElement icon={<LinkedIn/>}
                               text={"LinkedIn"}
-                              link={"https://linkedin.com/in/danielnadas"}
+                              link={"https://linkedin.com/in/daniel-nadas"}
                               linkText={"Dániel Nádas"}/>
             </Grid>
             <Grid item xs={10} md={3}>
