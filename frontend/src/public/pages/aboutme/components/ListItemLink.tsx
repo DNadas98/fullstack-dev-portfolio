@@ -18,7 +18,7 @@ export function ListItemLink(props: ListItemLinkProps) {
     <ListItemIcon>
       <Code sx={{color: "text.primary"}}/>
     </ListItemIcon>
-    <ListItemText>
+    <ListItemText sx={{marginLeft: -2}}>
       {props.text}
     </ListItemText>
   </ListItem>;

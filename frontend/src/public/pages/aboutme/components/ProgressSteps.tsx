@@ -61,7 +61,14 @@ export default function ProgressSteps(props: CodecoolStudyProgressProps) {
         {props.steps.map((step, index) => (
           <Step key={step.title}
                 completed={progress >= ((index + 1) * 100 / props.steps.length)}>
-            <StepLabel>
+            <StepLabel StepIconProps={{
+              sx: {
+                padding: 0.2,
+                borderRadius: "50%",
+                backgroundColor: `${theme.palette.text.primary}`,
+                color: `${theme.palette.primary.main}`
+              }
+            }}>
               <Card
                 sx={{maxWidth: isSmallScreen ? "20rem" : "100%", margin: "0 auto"}}>
                 <CardHeader title={step.title} titleTypographyProps={{variant: "body1"}}/>

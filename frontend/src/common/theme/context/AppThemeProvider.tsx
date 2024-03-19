@@ -15,38 +15,6 @@ export function AppThemeProvider({children}: AppThemeProviderProps) {
       ? lightPalette
       : darkPalette,
     components: {
-      MuiTypography: {
-        styleOverrides: {
-          body1: {
-            textShadow: `1px 1px 5px ${
-              paletteMode === "light"
-                ? lightPalette.primary?.main
-                : darkPalette.primary?.main
-            }`
-          },
-          body2: {
-            textShadow: `1px 1px 5px ${
-              paletteMode === "light"
-                ? lightPalette.primary?.main
-                : darkPalette.primary?.main
-            }`
-          },
-          h4: {
-            textShadow: `1px 1px 5px ${
-              paletteMode === "light"
-                ? lightPalette.primary?.main
-                : darkPalette.primary?.main
-            }`
-          },
-          h6: {
-            textShadow: `1px 1px 5px ${
-              paletteMode === "light"
-                ? lightPalette.primary?.main
-                : darkPalette.primary?.main
-            }`
-          }
-        }
-      },
       MuiCssBaseline: {
         styleOverrides: {
           body: {
