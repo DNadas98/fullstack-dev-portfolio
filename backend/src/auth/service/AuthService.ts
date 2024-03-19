@@ -13,7 +13,7 @@ import {AccountNotEnabledError} from "../error/AccountNotEnabledError";
 import {IJwtService} from "./IJwtService";
 import {JwtPayloadDto} from "../dto/JwtPayloadDto";
 import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
-import { RefreshResponseDto } from "../dto/RefreshResponseDto";
+import {RefreshResponseDto} from "../dto/RefreshResponseDto";
 
 @Injectable()
 export class AuthService {

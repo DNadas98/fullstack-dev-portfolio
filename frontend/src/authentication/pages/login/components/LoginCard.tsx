@@ -1,12 +1,4 @@
-import {
-  Avatar,
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  Stack,
-  Typography
-} from "@mui/material";
+import {Avatar, Button, Card, CardContent, Grid, Stack, Typography} from "@mui/material";
 import {Lock} from "@mui/icons-material";
 import EmailInput from "../../../components/inputs/EmailInput.tsx";
 import PasswordInput from "../../../components/inputs/PasswordInput.tsx";

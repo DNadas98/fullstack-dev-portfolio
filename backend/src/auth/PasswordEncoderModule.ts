@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import {Module} from "@nestjs/common";
 import {IPasswordEncoder} from "./service/IPasswordEncoder";
 import {BcryptPasswordEncoder} from "./service/BcryptPasswordEncoder";
 

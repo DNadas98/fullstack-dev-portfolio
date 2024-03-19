@@ -2,6 +2,7 @@ import {IMenuRoutes} from "../../routing/IMenuRoutes.ts";
 import AboutMe from "../../../public/pages/aboutme/AboutMe.tsx";
 import ContactMe from "../../../public/pages/contactme/ContactMe.tsx";
 import Projects from "../../../public/pages/projects/Projects.tsx";
+
 export const publicMenuRoutes: IMenuRoutes = {
   routePrefix: "/",
   elements: [

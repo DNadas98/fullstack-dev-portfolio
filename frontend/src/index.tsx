@@ -13,7 +13,7 @@ import {RouterProvider} from "react-router-dom";
 import {
   NotificationProvider
 } from "./common/notification/context/NotificationProvider.tsx";
-import "./index.css"
+import "./index.css";
 import {DialogProvider} from "./common/dialog/context/DialogProvider.tsx";
 import {AdapterDateFns} from "@mui/x-date-pickers/AdapterDateFns";
 import {LocalizationProvider} from "@mui/x-date-pickers";

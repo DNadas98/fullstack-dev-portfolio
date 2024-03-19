@@ -1,5 +1,4 @@
-import {IsEmail, IsNotEmpty, IsString, Matches, MaxLength} from "class-validator";
-import {emailRegex} from "../../common/validator/validator";
+import {IsEmail, IsNotEmpty, IsString, MaxLength} from "class-validator";
 
 /**
  * @param to should be a valid email

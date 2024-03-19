@@ -1,10 +1,19 @@
 import {
-  Avatar, Box, Button, Card, CardContent, CardHeader, Grid, Stack, Typography, useTheme
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Grid,
+  Stack,
+  Typography,
+  useTheme
 } from "@mui/material";
 import {Mail, Security, Storage} from "@mui/icons-material";
 import ProgressSteps from "./components/ProgressSteps";
 import CardGrid from "./components/CardGrid";
-import {ListWithLinks} from "./components/ListWithLinks";
+/*import {ListWithLinks} from "./components/ListWithLinks";*/
 import {Link} from "react-router-dom";
 
 const AboutMe = () => {
@@ -33,8 +42,7 @@ const AboutMe = () => {
                   sx={{height: "8rem", width: "8rem"}}/>
         </Grid>
       </Grid>
-
-      <Grid container justifyContent={"center"} textAlign={"center"}>
+      {/*<Grid container justifyContent={"center"} textAlign={"center"}>
         <Grid item>
           <Typography variant={"h6"}>
             I'm currently working on:
@@ -50,10 +58,10 @@ const AboutMe = () => {
             }
           ]}/>
         </Grid>
-      </Grid>
+      </Grid>*/}
       <Grid container justifyContent={"center"} spacing={2} paddingLeft={2}
             paddingRight={2}>
-        <Grid item md={12} lg={10} textAlign={"center"} mt={4}>
+        <Grid item md={12} lg={10} textAlign={"center"} mt={-4}>
           <Typography variant={"h4"} gutterBottom>
             Current Studies
           </Typography>
@@ -63,7 +71,7 @@ const AboutMe = () => {
                     rel={"noopener noreferrer"}
                     target={"_blank"}
                     variant={"text"}>
-              <img src={"/codecool.webp"} height={30}/>
+              <img src={"/codecool.webp"} alt={"Codecool"} height={30}/>
               <Typography color={"text.primary"} variant={"body1"}>
                 CodeCool
               </Typography>

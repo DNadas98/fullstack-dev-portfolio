@@ -1,5 +1,12 @@
 import {
-  Avatar, Button, Card, CardContent, Grid, Stack, TextField, Typography
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Stack,
+  TextField,
+  Typography
 } from "@mui/material";
 import {FormEventHandler} from "react";
 import {GitHub, LinkedIn, MailOutline} from "@mui/icons-material";
