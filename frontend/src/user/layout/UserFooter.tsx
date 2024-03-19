@@ -1,4 +1,4 @@
-import {AppBar, IconButton, Toolbar, Typography} from "@mui/material";
+import {AppBar, Divider, IconButton, Toolbar, Typography, useTheme} from "@mui/material";
 import {userMenuProfileRoutes} from "../../common/config/menu/userMenuProfileRoutes.tsx";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
 import {GitHub} from "@mui/icons-material";
@@ -12,11 +12,12 @@ export default function UserFooter() {
   const {siteName, githubRepoUrl} = siteConfig;
   const menu: IMenuRoutes = userMenuProfileRoutes;
   const publicMenu:IMenuRoutes = userMenuRoutes;
-
+  const theme = useTheme();
   return (
     <AppBar position="sticky"
             color="primary"
             sx={{top: "auto", bottom: 0, marginTop: 4}}>
+      <Divider color={theme.palette.secondary.main}/>
       <Toolbar sx={{justifyContent: "center", flexWrap: "wrap"}}>
         <MenuSmall menu={publicMenu}/>
         <MenuUserSmall menu={menu}/>

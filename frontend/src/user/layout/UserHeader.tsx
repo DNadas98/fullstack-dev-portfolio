@@ -16,7 +16,7 @@ export default function UserHeader() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <AppBar position="static" sx={{marginBottom: 4}}>
+    <AppBar position="static">
       <Toolbar>
         <SiteNameH6/>
         {isSmallScreen
