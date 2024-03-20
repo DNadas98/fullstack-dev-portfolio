@@ -80,7 +80,7 @@ export class DtoConverterService {
     ) ?? [];
     return new ProjectResponseDto(
       project.id, project.createdAt, project.updatedAt, project.ownerId, contributorDtos,
-      project.name, project.branchName, codeSnippetDtos, imageDtos,
+      project.name, project.displayName, project.branchName, codeSnippetDtos, imageDtos,
       project.readmePath ?? null, project.readmeFormat ?? null,
       project.licensePath ?? null, project.licenseFormat ?? null,
       project.deploymentUrl ?? null);

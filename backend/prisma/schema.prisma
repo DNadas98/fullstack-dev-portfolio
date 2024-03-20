@@ -32,6 +32,7 @@ model GithubRepository {
   ownerId       Int
   contributors  GithubUser[]        @relation(name: "Contributors")
   name          String              @unique
+  displayName   String
   branchName    String
   readmePath    String?
   readmeFormat  String?

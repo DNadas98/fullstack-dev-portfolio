@@ -12,6 +12,12 @@ export class ProjectUpdateRequestDto {
   readonly name?: string | null;
 
   @IsOptional()
+  @IsNotEmpty({message: "Project display name is missing"})
+  @IsString({message: "Invalid project display name format"})
+  readonly displayName?: string | null;
+
+
+  @IsOptional()
   @IsNotEmpty({message: "Branch name is missing"})
   @IsString({message: "Invalid branch name format"})
   readonly branchName?: string | null;
@@ -40,6 +46,7 @@ export class ProjectUpdateRequestDto {
   constructor(
     ownerId: number | null = null,
     name: string | null = null,
+    displayName: string | null = null,
     branchName: string | null = null,
     readmePath: string | null = null,
     readmeFormat: string | null = null,
@@ -49,6 +56,7 @@ export class ProjectUpdateRequestDto {
   ) {
     this.ownerId = ownerId;
     this.name = name;
+    this.displayName = displayName;
     this.branchName = branchName;
     this.readmePath = readmePath;
     this.readmeFormat = readmeFormat;

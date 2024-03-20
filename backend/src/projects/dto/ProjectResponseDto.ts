@@ -5,6 +5,7 @@ export class ProjectResponseDto {
   readonly ownerId: number;
   readonly contributorIds: number[];
   readonly name: string;
+  readonly displayName: string;
   readonly branchName: string;
   readonly codeSnippetIds: number[];
   readonly imageIds: number[];
@@ -16,7 +17,7 @@ export class ProjectResponseDto {
 
   constructor(
     id: number, createdAt: Date, updatedAt: Date, ownerId: number,
-    contributorIds: number[], name: string, branchName: string, codeSnippetIds: number[],
+    contributorIds: number[], name: string, displayName: string, branchName: string, codeSnippetIds: number[],
     imageIds: number[], readmePath: string | null = null,
     readmeFormat: string | null = null, licensePath: string | null = null,
     licenseFormat: string | null = null, deploymentUrl: string | null = null
@@ -27,6 +28,7 @@ export class ProjectResponseDto {
     this.ownerId = ownerId;
     this.contributorIds = contributorIds;
     this.name = name;
+    this.displayName = displayName;
     this.branchName = branchName;
     this.codeSnippetIds = codeSnippetIds;
     this.imageIds = imageIds;

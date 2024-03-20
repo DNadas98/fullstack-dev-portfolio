@@ -56,6 +56,7 @@ export class ProjectService {
           owner: {connect: {id: createProjectDto.ownerId}},
           contributors: {connect: [{id: createProjectDto.ownerId}]},
           name: createProjectDto.name,
+          displayName: createProjectDto.displayName,
           branchName: createProjectDto.branchName,
           readmePath: createProjectDto.readmePath ?? null,
           readmeFormat: createProjectDto.readmeFormat ?? null,
@@ -123,6 +124,7 @@ export class ProjectService {
   ): Partial<Prisma.GithubRepositoryCreateInput> {
     const updateData: Partial<Prisma.GithubRepositoryCreateInput> = {};
     if (updateProjectDto.name) updateData.name = updateProjectDto.name;
+    if (updateProjectDto.displayName) updateData.displayName = updateProjectDto.displayName;
     if (updateProjectDto.branchName) updateData.branchName = updateProjectDto.branchName;
     if (updateProjectDto.ownerId) updateData.owner = {connect: {id: updateProjectDto.ownerId}};
     if (updateProjectDto.readmePath) updateData.readmePath = updateProjectDto.readmePath;

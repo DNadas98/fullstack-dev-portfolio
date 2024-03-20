@@ -9,6 +9,10 @@ export class ProjectCreateRequestDto {
   @IsString({message: "Invalid project name format"})
   readonly name: string;
 
+  @IsNotEmpty({message: "Project display name is missing"})
+  @IsString({message: "Invalid project display name format"})
+  readonly displayName: string;
+
   @IsNotEmpty({message: "Branch name is missing"})
   @IsString({message: "Invalid branch name format"})
   readonly branchName: string;
@@ -34,13 +38,14 @@ export class ProjectCreateRequestDto {
   readonly deploymentUrl?: string | null;
 
   constructor(
-    ownerId: number, name: string, branchName: string,
+    ownerId: number, name: string, displayName: string, branchName: string,
     readmePath: string | null = null, readmeFormat: string | null = null,
     licensePath: string | null = null, licenseFormat: string | null = null,
     deploymentUrl: string | null = null
   ) {
     this.ownerId = ownerId;
     this.name = name;
+    this.displayName = displayName;
     this.branchName = branchName;
     this.readmePath = readmePath;
     this.readmeFormat = readmeFormat;

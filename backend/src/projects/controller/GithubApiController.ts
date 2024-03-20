@@ -29,6 +29,25 @@ export class GithubApiController {
     return new DataResponseDto(githubUserData);
   }
 
+  @Get("projects")
+  @Throttle({default: githubApiRateLimiterOptions})
+  async getProjects(@Req() req: Request) {
+    const projects = await this.projectService.findAll();
+    const githubProjects: any[] = [];
+    for (const project of projects) {
+      try {
+        const projectOwner = await this.githubUserService.findById(project.ownerId);
+        const githubProjectData = await this.forwardService.forwardGitHubApiRequest(
+          req, `repos/${projectOwner.githubUsername}/${project.name}`);
+        githubProjectData.displayName=project.displayName;
+        githubProjects.push(githubProjectData);
+      }catch (e){
+        console.error(e);
+      }
+    }
+    return new DataResponseDto(githubProjects);
+  }
+
   @Get("projects/:id")
   @Throttle({default: githubApiRateLimiterOptions})
   async getProjectById(@Req() req: Request, @Param("id") id: string) {
