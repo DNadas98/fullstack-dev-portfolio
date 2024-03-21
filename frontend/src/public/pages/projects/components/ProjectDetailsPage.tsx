@@ -34,10 +34,9 @@ interface ProjectDetailsPageProps {
 }
 
 export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
-  console.log(props.selectedFile);
   return (
     <Grid container height={"100%"} flexGrow={1} justifyContent={"center"}
-          alignItems={"top"} mt={4} whiteSpace={"break-all"}>
+          alignItems={"top"} mt={4} whiteSpace={"break-all"} maxWidth={1000}>
       <Grid item xs={11}>
         {props.loading
           ? <LoadingSpinner/>
@@ -61,7 +60,7 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                 </Typography>
               </Stack>
               {/* Stats */}
-              <Grid container spacing={2}>
+              <Grid container spacing={2} justifyContent={"center"}>
                 <Grid item>
                   <Button variant={"outlined"} disabled startIcon={
                     <Star sx={{height: "1.5rem", color: "darkgoldenrod"}}/>}
@@ -140,7 +139,7 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                 {props.codeSnippets?.length
                   ? <TabPanel value={"3"} sx={{width: "100%"}}>
                     {/* Code Snippet Selector */}
-                    <Grid container spacing={1}>
+                    <Grid container spacing={1} justifyContent={"center"}>
                       <Grid item>
                         {props.codeSnippets.map(codeSnippet =>
                           <Button key={codeSnippet.id} onClick={() => {
@@ -178,7 +177,7 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                               <Typography>
                                 {props.selectedFile.displayedDescription}
                               </Typography>
-                              <Grid container justifyContent={"center"}>
+                              <Grid container justifyContent={"center"} rowSpacing={2}>
                                 <Grid item width={"fit-content"} maxWidth={"80vw"}>
                                   <CodeBlock
                                     text={
@@ -194,11 +193,20 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                                     theme={nord}
                                     customStyle={{"padding": "1rem"}}/>
                                 </Grid>
+                                <Grid item xs={12} textAlign={"center"}>
+                                  <Button onClick={props.handleCodeSnippetClose}>
+                                    Close
+                                  </Button>
+                                </Grid>
                               </Grid>
                             </Stack>
-                            : <Typography mt={4} variant={"body2"}>
-                              Select a code snippet to view its details!
-                            </Typography>}
+                            : <Grid container textAlign={"center"}>
+                              <Grid item xs={12}>
+                                <Typography mt={4} variant={"body2"}>
+                                  Select a code snippet to view its details!
+                                </Typography>
+                              </Grid></Grid>
+                        }
                       </Grid>
                     </Grid>
                   </TabPanel>
