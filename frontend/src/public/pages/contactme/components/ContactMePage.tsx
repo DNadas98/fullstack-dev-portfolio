@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import {FormEventHandler} from "react";
 import {GitHub, LinkedIn, MailOutline} from "@mui/icons-material";
-import ContactFormRequestDto from "../../../dto/ContactFormRequestDto.ts";
+import ContactFormRequestDto from "../dto/ContactFormRequestDto.ts";
 import ContactElement from "./ContactElement.tsx";
 
 interface ContactMePageProps {

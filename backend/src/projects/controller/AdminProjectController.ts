@@ -10,20 +10,19 @@ import {
   Post,
   UseGuards
 } from "@nestjs/common";
-import {ProjectService} from "../service/ProjectService";
-import {ProjectCreateRequestDto} from "../dto/ProjectCreateRequestDto";
-import {ProjectUpdateRequestDto} from "../dto/ProjectUpdateRequestDto";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {AuthGuard} from "../../auth/guard/AuthGuard";
-import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
-import {validateId} from "../../common/validator/validator";
+import { ProjectService } from "../service/ProjectService";
+import { ProjectCreateRequestDto } from "../dto/ProjectCreateRequestDto";
+import { ProjectUpdateRequestDto } from "../dto/ProjectUpdateRequestDto";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
+import { AuthGuard } from "../../auth/guard/AuthGuard";
+import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
+import { validateId } from "../../common/validator/validator";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("/api/v1/projects")
 export class AdminProjectController {
-  constructor(private readonly projectService: ProjectService) {
-  }
+  constructor(private readonly projectService: ProjectService) {}
 
   @Get()
   @Roles("ADMIN")
@@ -49,7 +48,10 @@ export class AdminProjectController {
 
   @Patch(":id")
   @Roles("ADMIN")
-  async updateById(@Param("id") id: string, @Body() updateProjectDto: ProjectUpdateRequestDto) {
+  async updateById(
+    @Param("id") id: string,
+    @Body() updateProjectDto: ProjectUpdateRequestDto
+  ) {
     validateId(id);
     const updated = await this.projectService.updateById(+id, updateProjectDto);
     return new DataResponseDto(updated);
@@ -60,6 +62,8 @@ export class AdminProjectController {
   async deleteById(@Param("id") id: string) {
     validateId(id);
     await this.projectService.deleteById(+id);
-    return new MessageResponseDto(`Project with ID ${id} has been deleted successfully`);
+    return new MessageResponseDto(
+      `Project with ID ${id} has been deleted successfully`
+    );
   }
 }

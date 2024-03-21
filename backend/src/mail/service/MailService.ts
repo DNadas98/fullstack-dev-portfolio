@@ -1,12 +1,12 @@
-import {Injectable} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {createTransport, Transporter} from "nodemailer";
-import {TransporterCreationError} from "../error/TransporterCreationError";
-import {MailOptionsDto} from "../dto/MailOptionsDto";
+import { Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { createTransport, Transporter } from "nodemailer";
+import { TransporterCreationError } from "../error/TransporterCreationError";
+import { MailOptionsDto } from "../dto/MailOptionsDto";
 import Mail from "nodemailer/lib/mailer";
-import {MailSendingError} from "../error/MailSendingError";
-import {ContactFormRequestDto} from "../dto/ContactFormRequestDto";
-import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
+import { MailSendingError } from "../error/MailSendingError";
+import { ContactFormRequestDto } from "../dto/ContactFormRequestDto";
+import { DtoConverterService } from "../../common/converter/service/DtoConverterService";
 
 @Injectable()
 export class MailService {
@@ -58,9 +58,9 @@ export class MailService {
       replyTo: mailOptions.replyTo
     };
 
-    const formattedContent: string = `From: ${mailOptions.name}, ${mailOptions.replyTo}${mailOptions.isHtml
-        ? "<br/>"
-        : "\n"}${mailOptions.content}`;
+    const formattedContent: string = `From: ${mailOptions.name}, ${mailOptions.replyTo}${
+      mailOptions.isHtml ? "<br/>" : "\n"
+    }${mailOptions.content}`;
 
     mailOptions.isHtml
       ? (options.html = formattedContent)
@@ -78,7 +78,8 @@ export class MailService {
     const contactEmail = this.configService.get("PORTFOLIO_CONTACT_EMAIL");
     try {
       const options = this.dtoConverter.toMailOptionsDto(
-        contactFormRequestDto, contactEmail
+        contactFormRequestDto,
+        contactEmail
       );
       return await this.sendMail(options);
     } catch (e) {

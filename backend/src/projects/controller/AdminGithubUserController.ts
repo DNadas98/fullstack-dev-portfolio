@@ -10,20 +10,19 @@ import {
   Post,
   UseGuards
 } from "@nestjs/common";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {validateId} from "../../common/validator/validator";
-import {AuthGuard} from "../../auth/guard/AuthGuard";
-import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
-import {GithubUserService} from "../service/GithubUserService";
-import {GithubUserCreateRequestDto} from "../dto/GithubUserCreateRequestDto";
-import {GithubUserUpdateRequestDto} from "../dto/GithubUserUpdateRequestDto";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
+import { validateId } from "../../common/validator/validator";
+import { AuthGuard } from "../../auth/guard/AuthGuard";
+import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
+import { GithubUserService } from "../service/GithubUserService";
+import { GithubUserCreateRequestDto } from "../dto/GithubUserCreateRequestDto";
+import { GithubUserUpdateRequestDto } from "../dto/GithubUserUpdateRequestDto";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("/api/v1/github-users")
 export class AdminGithubUserController {
-  constructor(private readonly githubUserService: GithubUserService) {
-  }
+  constructor(private readonly githubUserService: GithubUserService) {}
 
   @Get()
   @Roles("ADMIN")
@@ -49,9 +48,15 @@ export class AdminGithubUserController {
 
   @Patch(":id")
   @Roles("ADMIN")
-  async updateById(@Param("id") id: string, @Body() updateGithubUserDto: GithubUserUpdateRequestDto) {
+  async updateById(
+    @Param("id") id: string,
+    @Body() updateGithubUserDto: GithubUserUpdateRequestDto
+  ) {
     validateId(id);
-    const updated = await this.githubUserService.updateById(+id, updateGithubUserDto);
+    const updated = await this.githubUserService.updateById(
+      +id,
+      updateGithubUserDto
+    );
     return new DataResponseDto(updated);
   }
 
@@ -60,6 +65,8 @@ export class AdminGithubUserController {
   async deleteById(@Param("id") id: string) {
     validateId(id);
     await this.githubUserService.deleteById(+id);
-    return new MessageResponseDto(`GitHub user with ID ${id} has been deleted successfully`);
+    return new MessageResponseDto(
+      `GitHub user with ID ${id} has been deleted successfully`
+    );
   }
 }

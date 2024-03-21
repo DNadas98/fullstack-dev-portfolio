@@ -10,22 +10,19 @@ import {
   Post,
   UseGuards
 } from "@nestjs/common";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {validateId} from "../../common/validator/validator";
-import {AuthGuard} from "../../auth/guard/AuthGuard";
-import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
-import {GithubCodeSnippetService} from "../service/GithubCodeSnippetService";
-import {
-  GithubCodeSnippetCreateRequestDto
-} from "../dto/GithubCodeSnippetCreateRequestDto";
-import {GithubCodeSnippetResponseDto} from "../dto/GithubCodeSnippetResponseDto";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
+import { validateId } from "../../common/validator/validator";
+import { AuthGuard } from "../../auth/guard/AuthGuard";
+import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
+import { GithubCodeSnippetService } from "../service/GithubCodeSnippetService";
+import { GithubCodeSnippetCreateRequestDto } from "../dto/GithubCodeSnippetCreateRequestDto";
+import { GithubCodeSnippetResponseDto } from "../dto/GithubCodeSnippetResponseDto";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("/api/v1/github-code-snippets")
 export class AdminGithubCodeSnippetController {
-  constructor(private readonly codeSnippetService: GithubCodeSnippetService) {
-  }
+  constructor(private readonly codeSnippetService: GithubCodeSnippetService) {}
 
   @Get()
   @Roles("ADMIN")
@@ -45,16 +42,24 @@ export class AdminGithubCodeSnippetController {
   @Post()
   @Roles("ADMIN")
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createCodeSnippetDto: GithubCodeSnippetCreateRequestDto) {
+  async create(
+    @Body() createCodeSnippetDto: GithubCodeSnippetCreateRequestDto
+  ) {
     const created = await this.codeSnippetService.create(createCodeSnippetDto);
     return new DataResponseDto(created);
   }
 
   @Patch(":id")
   @Roles("ADMIN")
-  async updateById(@Param("id") id: string, @Body() updateCodeSnippetDto: GithubCodeSnippetResponseDto) {
+  async updateById(
+    @Param("id") id: string,
+    @Body() updateCodeSnippetDto: GithubCodeSnippetResponseDto
+  ) {
     validateId(id);
-    const updated = await this.codeSnippetService.updateById(+id, updateCodeSnippetDto);
+    const updated = await this.codeSnippetService.updateById(
+      +id,
+      updateCodeSnippetDto
+    );
     return new DataResponseDto(updated);
   }
 
@@ -63,6 +68,8 @@ export class AdminGithubCodeSnippetController {
   async deleteById(@Param("id") id: string) {
     validateId(id);
     await this.codeSnippetService.deleteById(+id);
-    return new MessageResponseDto(`GitHub code snippet with ID ${id} has been deleted successfully`);
+    return new MessageResponseDto(
+      `GitHub code snippet with ID ${id} has been deleted successfully`
+    );
   }
 }

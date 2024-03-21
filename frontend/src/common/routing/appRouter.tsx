@@ -9,6 +9,7 @@ import {Role} from "../../authentication/dto/Role.ts";
 import UserLayout from "../../user/layout/UserLayout.tsx";
 import {userMenuProfileRoutes} from "../config/menu/userMenuProfileRoutes.tsx";
 import Login from "../../authentication/pages/login/Login.tsx";
+import ProjectDetails from "../../public/pages/projects/ProjectDetails.tsx";
 
 const appRouter = createBrowserRouter([
   /* public */
@@ -18,6 +19,7 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorPage/>,
     children: [
       ...publicMenuRoutes.elements,
+      {path:"/projects/:projectName",element:<ProjectDetails/>},
       {path: "/login", element: <Login/>},
       {path: "/*", element: <NotFound/>}
     ]

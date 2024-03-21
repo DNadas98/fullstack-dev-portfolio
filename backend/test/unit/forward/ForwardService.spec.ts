@@ -1,10 +1,10 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {ForwardService} from "../../../src/forward/service/ForwardService";
-import {ConfigService} from "@nestjs/config";
+import { Test, TestingModule } from "@nestjs/testing";
+import { ForwardService } from "../../../src/forward/service/ForwardService";
+import { ConfigService } from "@nestjs/config";
 
 describe("ForwardService", () => {
   let service: ForwardService;
-  const mockConfigService = {get: jest.fn()};
+  const mockConfigService = { get: jest.fn() };
 
   beforeEach(async () => {
     mockConfigService.get.mockImplementation((key: string) => {
@@ -21,7 +21,7 @@ describe("ForwardService", () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ForwardService,
-        {provide: ConfigService, useValue: mockConfigService}
+        { provide: ConfigService, useValue: mockConfigService }
       ]
     }).compile();
 

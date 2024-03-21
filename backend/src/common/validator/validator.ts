@@ -1,4 +1,4 @@
-import {BadRequestException} from "@nestjs/common";
+import { BadRequestException } from "@nestjs/common";
 
 export function validateId(id: any) {
   if (!id || isNaN(parseInt(id)) || id < 1) {

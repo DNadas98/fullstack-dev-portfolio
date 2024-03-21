@@ -1,46 +1,51 @@
-import {IsInt, IsNotEmpty, IsOptional, IsString, Min} from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from "class-validator";
 
 export class ProjectCreateRequestDto {
-  @Min(1, {message: "Project owner ID must be greater than or equal to 1"})
-  @IsInt({message: "Invalid project owner ID format"})
+  @Min(1, { message: "Project owner ID must be greater than or equal to 1" })
+  @IsInt({ message: "Invalid project owner ID format" })
   readonly ownerId: number;
 
-  @IsNotEmpty({message: "Project name is missing"})
-  @IsString({message: "Invalid project name format"})
+  @IsNotEmpty({ message: "Project name is missing" })
+  @IsString({ message: "Invalid project name format" })
   readonly name: string;
 
-  @IsNotEmpty({message: "Project display name is missing"})
-  @IsString({message: "Invalid project display name format"})
+  @IsNotEmpty({ message: "Project display name is missing" })
+  @IsString({ message: "Invalid project display name format" })
   readonly displayName: string;
 
-  @IsNotEmpty({message: "Branch name is missing"})
-  @IsString({message: "Invalid branch name format"})
+  @IsNotEmpty({ message: "Branch name is missing" })
+  @IsString({ message: "Invalid branch name format" })
   readonly branchName: string;
 
   @IsOptional()
-  @IsString({message: "Invalid readme path format"})
+  @IsString({ message: "Invalid readme path format" })
   readonly readmePath?: string | null;
 
   @IsOptional()
-  @IsString({message: "Invalid readme format"})
+  @IsString({ message: "Invalid readme format" })
   readonly readmeFormat?: string | null;
 
   @IsOptional()
-  @IsString({message: "Invalid license path format"})
+  @IsString({ message: "Invalid license path format" })
   readonly licensePath?: string | null;
 
   @IsOptional()
-  @IsString({message: "Invalid license format"})
+  @IsString({ message: "Invalid license format" })
   readonly licenseFormat?: string | null;
 
   @IsOptional()
-  @IsString({message: "Invalid deployment URL format"})
+  @IsString({ message: "Invalid deployment URL format" })
   readonly deploymentUrl?: string | null;
 
   constructor(
-    ownerId: number, name: string, displayName: string, branchName: string,
-    readmePath: string | null = null, readmeFormat: string | null = null,
-    licensePath: string | null = null, licenseFormat: string | null = null,
+    ownerId: number,
+    name: string,
+    displayName: string,
+    branchName: string,
+    readmePath: string | null = null,
+    readmeFormat: string | null = null,
+    licensePath: string | null = null,
+    licenseFormat: string | null = null,
     deploymentUrl: string | null = null
   ) {
     this.ownerId = ownerId;

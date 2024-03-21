@@ -1,32 +1,35 @@
-import {Injectable} from "@nestjs/common";
-import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
-import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
-import {DatabaseService} from "../../database/service/DatabaseService";
-import {GithubUserNotFoundError} from "../error/GithubUserNotFoundError";
-import {Prisma} from "@prisma/client";
-import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
-import {GithubUserResponseDto} from "../dto/GithubUserResponseDto";
-import {GithubUserCreateRequestDto} from "../dto/GithubUserCreateRequestDto";
-import {GithubUserUpdateRequestDto} from "../dto/GithubUserUpdateRequestDto";
+import { Injectable } from "@nestjs/common";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { UniqueConstraintError } from "../../common/error/UniqueConstraintError";
+import { DatabaseService } from "../../database/service/DatabaseService";
+import { GithubUserNotFoundError } from "../error/GithubUserNotFoundError";
+import { Prisma } from "@prisma/client";
+import { DtoConverterService } from "../../common/converter/service/DtoConverterService";
+import { GithubUserResponseDto } from "../dto/GithubUserResponseDto";
+import { GithubUserCreateRequestDto } from "../dto/GithubUserCreateRequestDto";
+import { GithubUserUpdateRequestDto } from "../dto/GithubUserUpdateRequestDto";
 
 @Injectable()
 export class GithubUserService {
   private readonly prisma: DatabaseService;
   private readonly dtoConverter: DtoConverterService;
 
-  constructor(databaseService: DatabaseService, dtoConverter: DtoConverterService) {
+  constructor(
+    databaseService: DatabaseService,
+    dtoConverter: DtoConverterService
+  ) {
     this.prisma = databaseService;
     this.dtoConverter = dtoConverter;
   }
 
   async findAll(): Promise<GithubUserResponseDto[]> {
     const users = await this.prisma.githubUser.findMany({});
-    return users.map(user => this.dtoConverter.toGithubUserResponseDto(user));
+    return users.map((user) => this.dtoConverter.toGithubUserResponseDto(user));
   }
 
   async findById(id: number): Promise<GithubUserResponseDto> {
     const user = await this.prisma.githubUser.findUnique({
-      where: {id}
+      where: { id }
     });
     if (!user) {
       throw new GithubUserNotFoundError();
@@ -34,10 +37,12 @@ export class GithubUserService {
     return this.dtoConverter.toGithubUserResponseDto(user);
   }
 
-  async create(createUserDto: GithubUserCreateRequestDto): Promise<GithubUserResponseDto> {
+  async create(
+    createUserDto: GithubUserCreateRequestDto
+  ): Promise<GithubUserResponseDto> {
     try {
       const created = await this.prisma.githubUser.create({
-        data: {githubUsername: createUserDto.githubUsername}
+        data: { githubUsername: createUserDto.githubUsername }
       });
       return this.dtoConverter.toGithubUserResponseDto(created);
     } catch (e) {
@@ -50,13 +55,15 @@ export class GithubUserService {
     }
   }
 
-  async updateById(id: number, updateUserDto: GithubUserUpdateRequestDto): Promise<GithubUserResponseDto> {
+  async updateById(
+    id: number,
+    updateUserDto: GithubUserUpdateRequestDto
+  ): Promise<GithubUserResponseDto> {
     try {
-      const updateData: Partial<Prisma.GithubUserCreateInput> = this.getUpdateData(
-        updateUserDto
-      );
+      const updateData: Partial<Prisma.GithubUserCreateInput> =
+        this.getUpdateData(updateUserDto);
       const updated = await this.prisma.githubUser.update({
-        where: {id},
+        where: { id },
         data: updateData
       });
       return this.dtoConverter.toGithubUserResponseDto(updated);
@@ -83,14 +90,15 @@ export class GithubUserService {
     updateUserDto: GithubUserUpdateRequestDto
   ): Partial<Prisma.GithubUserCreateInput> {
     const updateData: Partial<Prisma.GithubUserCreateInput> = {};
-    if (updateUserDto.githubUsername) updateData.githubUsername = updateUserDto.githubUsername;
+    if (updateUserDto.githubUsername)
+      updateData.githubUsername = updateUserDto.githubUsername;
     return updateData;
   }
 
   async deleteById(id: number): Promise<void> {
     try {
       await this.prisma.githubUser.delete({
-        where: {id}
+        where: { id }
       });
     } catch (e) {
       if (e instanceof PrismaClientKnownRequestError && e.code === "P2025") {

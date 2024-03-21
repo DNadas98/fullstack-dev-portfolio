@@ -27,7 +27,7 @@ export default function ProjectPage(props: ProjectPageProps) {
             : <Grid container spacing={4} justifyContent={"space-between"}>
               {props.projects?.length
                 ? props.projects.map(project =>
-                  <Grid item xs={12} md={6} lg={3} textAlign={"left"}>
+                  <Grid item key={project.id} xs={12} md={6} lg={3} textAlign={"left"}>
                     <Card sx={{height: "100%", display: "flex", flexDirection: "column"}}>
                       <CardHeader color={"inherit"}
                                   title={project.displayName}

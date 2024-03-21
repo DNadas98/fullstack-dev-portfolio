@@ -7,16 +7,16 @@ import {
   Req,
   Res
 } from "@nestjs/common";
-import {AuthService} from "../service/AuthService";
-import {RegisterRequestDto} from "../dto/RegisterRequestDto";
-import {CookieOptions, Request, Response} from "express";
-import {LoginRequestDto} from "../dto/LoginRequestDto";
-import {UnauthorizedError} from "../error/UnauthorizedError";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
-import {ErrorResponseDto} from "../../common/dto/ErrorResponseDto";
-import {ConfigService} from "@nestjs/config";
-import {Throttle} from "@nestjs/throttler";
-import {authRateLimiterOptions} from "../../common/config/rateLimiterOptions";
+import { AuthService } from "../service/AuthService";
+import { RegisterRequestDto } from "../dto/RegisterRequestDto";
+import { CookieOptions, Request, Response } from "express";
+import { LoginRequestDto } from "../dto/LoginRequestDto";
+import { UnauthorizedError } from "../error/UnauthorizedError";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
+import { ErrorResponseDto } from "../../common/dto/ErrorResponseDto";
+import { ConfigService } from "@nestjs/config";
+import { Throttle } from "@nestjs/throttler";
+import { authRateLimiterOptions } from "../../common/config/rateLimiterOptions";
 
 @Controller("/api/v1/auth")
 export class AuthController {

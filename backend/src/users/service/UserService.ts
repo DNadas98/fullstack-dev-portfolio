@@ -1,14 +1,14 @@
-import {Injectable} from "@nestjs/common";
-import {UserResponsePrivateDto} from "../dto/UserResponsePrivateDto";
-import {DatabaseService} from "../../database/service/DatabaseService";
-import {AccountNotFoundError} from "../../auth/error/AccountNotFoundError";
-import {AccountDeactivatedError} from "../../auth/error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../../auth/error/AccountNotEnabledError";
-import {UserResponsePublicDto} from "../dto/UserResponsePublicDto";
-import {IPasswordEncoder} from "../../auth/service/IPasswordEncoder";
-import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
-import {UniqueConstraintError} from "../../common/error/UniqueConstraintError";
-import {DtoConverterService} from "../../common/converter/service/DtoConverterService";
+import { Injectable } from "@nestjs/common";
+import { UserResponsePrivateDto } from "../dto/UserResponsePrivateDto";
+import { DatabaseService } from "../../database/service/DatabaseService";
+import { AccountNotFoundError } from "../../auth/error/AccountNotFoundError";
+import { AccountDeactivatedError } from "../../auth/error/AccountDeactivatedError";
+import { AccountNotEnabledError } from "../../auth/error/AccountNotEnabledError";
+import { UserResponsePublicDto } from "../dto/UserResponsePublicDto";
+import { IPasswordEncoder } from "../../auth/service/IPasswordEncoder";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { UniqueConstraintError } from "../../common/error/UniqueConstraintError";
+import { DtoConverterService } from "../../common/converter/service/DtoConverterService";
 
 @Injectable()
 export class UserService {
@@ -16,7 +16,11 @@ export class UserService {
   private readonly passwordEncoder: IPasswordEncoder;
   private readonly dtoConverter: DtoConverterService;
 
-  constructor(prisma: DatabaseService, passwordEncoder: IPasswordEncoder, dtoConverter: DtoConverterService) {
+  constructor(
+    prisma: DatabaseService,
+    passwordEncoder: IPasswordEncoder,
+    dtoConverter: DtoConverterService
+  ) {
     this.prisma = prisma;
     this.passwordEncoder = passwordEncoder;
     this.dtoConverter = dtoConverter;
@@ -28,7 +32,7 @@ export class UserService {
 
   async readById(id: number): Promise<UserResponsePrivateDto> {
     const user = await this.prisma.user.findUnique({
-      where: {id}
+      where: { id }
     });
     if (!user) {
       throw new AccountNotFoundError();
@@ -38,7 +42,7 @@ export class UserService {
 
   async readByEmail(email: string): Promise<UserResponsePrivateDto> {
     const user = await this.prisma.user.findUnique({
-      where: {email: email}
+      where: { email: email }
     });
     if (!user) {
       throw new AccountNotFoundError();
@@ -55,7 +59,7 @@ export class UserService {
   async updateUsernameById(id: number, username: string) {
     const updated = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
-        where: {id}
+        where: { id }
       });
       if (!user) {
         throw new AccountNotFoundError();
@@ -66,7 +70,7 @@ export class UserService {
       if (!user.enabled) {
         throw new AccountNotEnabledError();
       }
-      return tx.user.update({where: {id}, data: {username}});
+      return tx.user.update({ where: { id }, data: { username } });
     });
     return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
@@ -75,7 +79,7 @@ export class UserService {
     try {
       const updated = await this.prisma.$transaction(async (tx) => {
         const user = await tx.user.findUnique({
-          where: {id}
+          where: { id }
         });
         if (!user) {
           throw new AccountNotFoundError();
@@ -86,7 +90,7 @@ export class UserService {
         if (!user.enabled) {
           throw new AccountNotEnabledError();
         }
-        return tx.user.update({where: {id}, data: {email}});
+        return tx.user.update({ where: { id }, data: { email } });
       });
       return this.dtoConverter.toUserResponsePrivateDto(updated);
     } catch (e) {
@@ -104,7 +108,7 @@ export class UserService {
 
     const updated = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
-        where: {id}
+        where: { id }
       });
       if (!user) {
         throw new AccountNotFoundError();
@@ -115,38 +119,47 @@ export class UserService {
       if (!user.enabled) {
         throw new AccountNotEnabledError();
       }
-      return tx.user.update({where: {id}, data: {password: hashedPassword}});
-    });
-    return this.dtoConverter.toUserResponsePrivateDto(updated);
-  }
-
-  async updateIsActive(id: number, isActive: boolean): Promise<UserResponsePrivateDto> {
-    const updated = await this.prisma.$transaction(async (tx) => {
-      const user = await tx.user.findUnique({
-        where: {id}
-      });
-      if (!user) {
-        throw new AccountNotFoundError();
-      }
       return tx.user.update({
-        where: {id},
-        data: {active: isActive}
+        where: { id },
+        data: { password: hashedPassword }
       });
     });
     return this.dtoConverter.toUserResponsePrivateDto(updated);
   }
 
-  async updateIsEnabled(id: number, isEnabled: boolean): Promise<UserResponsePrivateDto> {
+  async updateIsActive(
+    id: number,
+    isActive: boolean
+  ): Promise<UserResponsePrivateDto> {
     const updated = await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
-        where: {id}
+        where: { id }
       });
       if (!user) {
         throw new AccountNotFoundError();
       }
       return tx.user.update({
-        where: {id},
-        data: {enabled: isEnabled}
+        where: { id },
+        data: { active: isActive }
+      });
+    });
+    return this.dtoConverter.toUserResponsePrivateDto(updated);
+  }
+
+  async updateIsEnabled(
+    id: number,
+    isEnabled: boolean
+  ): Promise<UserResponsePrivateDto> {
+    const updated = await this.prisma.$transaction(async (tx) => {
+      const user = await tx.user.findUnique({
+        where: { id }
+      });
+      if (!user) {
+        throw new AccountNotFoundError();
+      }
+      return tx.user.update({
+        where: { id },
+        data: { enabled: isEnabled }
       });
     });
     return this.dtoConverter.toUserResponsePrivateDto(updated);
@@ -155,13 +168,13 @@ export class UserService {
   async deleteById(id: number): Promise<void> {
     await this.prisma.$transaction(async (tx) => {
       const user = await tx.user.findUnique({
-        where: {id}
+        where: { id }
       });
       if (!user) {
         throw new AccountNotFoundError();
       }
       return tx.user.delete({
-        where: {id}
+        where: { id }
       });
     });
   }

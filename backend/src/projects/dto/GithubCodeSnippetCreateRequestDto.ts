@@ -1,4 +1,4 @@
-import {IsInt, IsNotEmpty, IsString, Min} from "class-validator";
+import { IsInt, IsNotEmpty, IsString, Min } from "class-validator";
 
 export class GithubCodeSnippetCreateRequestDto {
   @IsString()
@@ -30,8 +30,13 @@ export class GithubCodeSnippetCreateRequestDto {
   readonly githubRepositoryId: number;
 
   constructor(
-    displayName: string, filePath: string, format: string, startLine: number,
-    endLine: number, description: string, githubRepositoryId: number
+    displayName: string,
+    filePath: string,
+    format: string,
+    startLine: number,
+    endLine: number,
+    description: string,
+    githubRepositoryId: number
   ) {
     this.displayName = displayName;
     this.filePath = filePath;

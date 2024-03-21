@@ -10,18 +10,17 @@ import {
   Query,
   UseGuards
 } from "@nestjs/common";
-import {UserService} from "../service/UserService";
-import {AuthGuard} from "../../auth/guard/AuthGuard";
-import {RoleGuard, Roles} from "../../auth/guard/RoleGuard";
-import {DataResponseDto} from "../../common/dto/DataResponseDto";
-import {MessageResponseDto} from "../../common/dto/MessageResponseDto";
-import {validateId} from "../../common/validator/validator";
+import { UserService } from "../service/UserService";
+import { AuthGuard } from "../../auth/guard/AuthGuard";
+import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
+import { DataResponseDto } from "../../common/dto/DataResponseDto";
+import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
+import { validateId } from "../../common/validator/validator";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("api/v1/admin")
 export class AdminController {
-  constructor(private readonly userService: UserService) {
-  }
+  constructor(private readonly userService: UserService) {}
 
   @Get("users")
   @HttpCode(HttpStatus.OK)
@@ -43,7 +42,10 @@ export class AdminController {
   @Patch("users/:id")
   @HttpCode(HttpStatus.OK)
   @Roles("ADMIN")
-  async updateIsActiveById(@Param("id") id: string, @Query("setActive") setActive: string) {
+  async updateIsActiveById(
+    @Param("id") id: string,
+    @Query("setActive") setActive: string
+  ) {
     validateId(id);
     if (!setActive || (setActive !== "true" && setActive !== "false")) {
       throw new BadRequestException();
@@ -59,6 +61,8 @@ export class AdminController {
   async deleteUserById(@Param("id") id: string) {
     validateId(id);
     await this.userService.deleteById(+id);
-    return new MessageResponseDto(`User account with ID ${id} has been deleted successfully`);
+    return new MessageResponseDto(
+      `User account with ID ${id} has been deleted successfully`
+    );
   }
 }

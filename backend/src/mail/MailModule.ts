@@ -1,8 +1,8 @@
-import {Module} from "@nestjs/common";
-import {MailService} from "./service/MailService";
-import {ConfigModule} from "@nestjs/config";
-import {MailController} from "./MailController";
-import {ConverterModule} from "../common/converter/ConverterModule";
+import { Module } from "@nestjs/common";
+import { MailService } from "./service/MailService";
+import { ConfigModule } from "@nestjs/config";
+import { MailController } from "./MailController";
+import { ConverterModule } from "../common/converter/ConverterModule";
 
 @Module({
   imports: [ConfigModule, ConverterModule],
@@ -10,5 +10,4 @@ import {ConverterModule} from "../common/converter/ConverterModule";
   controllers: [MailController],
   exports: [MailService]
 })
-export class MailModule {
-}
+export class MailModule {}

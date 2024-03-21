@@ -59,7 +59,7 @@ model GithubCodeSnippet {
   format             String
   startLine          Int
   endLine            Int
-  description        String
+  description        String           @db.VarChar(1000)
   githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }
