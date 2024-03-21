@@ -40,24 +40,28 @@ export class GithubApiController {
   @Throttle({ default: githubApiRateLimiterOptions })
   async getProjects(@Req() req: Request) {
     const projects = await this.projectService.findAll();
-    const githubProjects: any[] = [];
-    for (const project of projects) {
-      try {
-        const projectOwner = await this.githubUserService.findById(
-          project.ownerId
-        );
-        const githubProjectData =
-          await this.forwardService.forwardGitHubApiRequest(
+    const ownerPromises = projects.map((project) =>
+      this.githubUserService.findById(project.ownerId).then((owner) => ({
+        owner,
+        project
+      }))
+    );
+    const owners = await Promise.all(ownerPromises);
+    const requestPromises = owners
+      .filter(({ owner }) => owner !== undefined)
+      .map(({ owner, project }) =>
+        this.forwardService
+          .forwardGitHubApiRequest(
             req,
-            `repos/${projectOwner.githubUsername}/${project.name}`
-          );
-        githubProjectData.displayName = project.displayName;
-        githubProjects.push(githubProjectData);
-      } catch (e) {
-        console.error(e);
-      }
-    }
-    return new DataResponseDto(githubProjects);
+            `repos/${owner.githubUsername}/${project.name}`
+          )
+          .then((response) => {
+            response.displayName = project.displayName;
+            return response;
+          })
+      );
+    const resolvedRequests = await Promise.all(requestPromises);
+    return new DataResponseDto(resolvedRequests);
   }
 
   @Get("projects/:projectName")
