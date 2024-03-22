@@ -67,6 +67,7 @@ model GithubCodeSnippet {
 model ProjectImage {
   id                 Int              @id @default(autoincrement())
   src                String           @unique
+  alt                String
   githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }

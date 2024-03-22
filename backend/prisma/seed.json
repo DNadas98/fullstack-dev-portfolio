@@ -1,0 +1,115 @@
+{
+  "githubUsers": [
+    {
+      "githubUsername": "DNadas98"
+    }
+  ],
+  "githubRepositories": [
+    {
+      "ownerId": 1,
+      "contributorIds": [
+        1
+      ],
+      "name": "spring-project-manager",
+      "displayName": "Spring Project Manager",
+      "branchName": "master",
+      "readmePath": "README.md",
+      "readmeFormat": "markdown",
+      "licensePath": "LICENSE.txt",
+      "licenseFormat": "text",
+      "deploymentUrl": null,
+      "codeSnippets": [
+        {
+          "displayName": "Registration E-mail Verification",
+          "filePath": "backend/src/main/java/com/codecool/tasx/service/auth/LocalUserAccountService.java",
+          "format": "java",
+          "startLine": 41,
+          "endLine": 60,
+          "description": "This code snippet demonstrates the backend process for sending a registration verification email as part of a user registration workflow. It involves validating that the account does not already exist, generating a unique verification token, saving the token, and dispatching a verification email with the token embedded."
+        },
+        {
+          "displayName": "SMTP Configuration",
+          "filePath": "backend/src/main/java/com/codecool/tasx/config/email/EmailConfig.java",
+          "format": "java",
+          "startLine": 11,
+          "endLine": 48,
+          "description": "This code snippet configures a JavaMailSender bean within a Spring Boot application, intended for sending emails through an SMTP server. It begins by declaring configuration properties for the SMTP server, including the host, port, username, and password, which are injected from the application's environment variables. The javaMailSender method defines a bean that creates and configures a JavaMailSenderImpl instance with these SMTP settings. The configuration includes enabling SMTP authentication, specifying the port and class for the socket factory, enabling SSL for secure email transmission, and setting the SMTP host as a trusted entity. This setup is crucial for applications that need to send emails, such as for user registration, password resets, or notifications, ensuring that email communication is handled securely and efficiently."
+        },
+        {
+          "displayName": "OAuth2 Security Filter Chain",
+          "filePath": "backend/src/main/java/com/codecool/tasx/config/auth/SecurityFilterChainConfig.java",
+          "format": "java",
+          "startLine": 55,
+          "endLine": 77,
+          "description": "This code snippet configures a Spring Security filter chain specifically for OAuth2 authentication within a Spring Boot application. It sets up the security matchers to only apply to paths starting with /oauth2/**, disables CSRF, form login, and HTTP basic authentication for these paths, and enforces stateless session management to ensure that sessions are not used to store user state. It further customizes the OAuth2 login process by specifying custom endpoints for authorization, redirection after login, and user information retrieval. The snippet also integrates a custom authentication provider, a user service for fetching user details, and custom handlers for successful and failed authentication attempts. This setup is essential for applications that delegate authentication to external OAuth2 providers, offering a streamlined and secure authentication process."
+        }
+      ],
+      "images": [
+        {
+          "src": "https://raw.githubusercontent.com/DNadas98/spring-project-manager/master/images/01-home.png",
+          "alt": "Home Page"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/DNadas98/spring-project-manager/master/images/03-sign-up.png",
+          "alt": "Sign-up form"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/DNadas98/spring-project-manager/master/images/05-user.png",
+          "alt": "Profile Page"
+        },
+        {
+          "src": "https://raw.githubusercontent.com/DNadas98/spring-project-manager/master/images/08-light-dark-mode.png",
+          "alt": "Light VS Dark Mode"
+        }
+      ]
+    },
+    {
+      "ownerId": 1,
+      "contributorIds": [
+        1
+      ],
+      "name": "fullstack-dev-portfolio",
+      "displayName": "Full-stack Developer Portfolio",
+      "branchName": "main",
+      "readmePath": "README.md",
+      "readmeFormat": "markdown",
+      "licensePath": "LICENSE.txt",
+      "licenseFormat": "text",
+      "deploymentUrl": null,
+      "codeSnippets": [],
+      "images": []
+    },
+    {
+      "ownerId": 1,
+      "contributorIds": [
+        1
+      ],
+      "name": "cc-dungeoncrawl",
+      "displayName": "Java Dungeon Crawl RPG",
+      "branchName": "main",
+      "readmePath": "README.md",
+      "readmeFormat": "markdown",
+      "licensePath": "LICENSE",
+      "licenseFormat": "text",
+      "deploymentUrl": null,
+      "codeSnippets": [      ],
+      "images": []
+    },
+    {
+      "ownerId": 1,
+      "contributorIds": [
+        1
+      ],
+      "name": "training-portal",
+      "displayName": "Training Portal",
+      "branchName": "master",
+      "readmePath": "README.md",
+      "readmeFormat": "markdown",
+      "licensePath": "LICENSE.txt",
+      "licenseFormat": "text",
+      "deploymentUrl": null,
+      "codeSnippets": [],
+      "images": []
+    }
+  ]
+}

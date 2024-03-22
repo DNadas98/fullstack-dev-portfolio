@@ -106,8 +106,10 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                        sx={{whiteSpace: "nowrap", minWidth: "max-content"}}/>
                   <Tab label={"License"} value={"2"}
                        sx={{whiteSpace: "nowrap", minWidth: "max-content"}}/>
-                  <Tab label={"Code Snippets"} value={"3"}
-                       sx={{whiteSpace: "nowrap", minWidth: "max-content"}}/>
+                  {props.codeSnippets?.length > 1 &&
+                    <Tab label={"Code Snippets"} value={"3"}
+                         sx={{whiteSpace: "nowrap", minWidth: "max-content"}}/>
+                  }
                 </TabList>
                 {/* Readme */}
                 <TabPanel value={"1"}>
@@ -148,14 +150,6 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                             {codeSnippet.displayName}
                           </Button>
                         )}
-                        <Button disabled={props.codeSnippetLoading}
-                                onClick={props.handleCodeSnippetClose}>
-                          {"Code Snippet 2"}
-                        </Button>
-                        <Button disabled={props.codeSnippetLoading}
-                                onClick={props.handleCodeSnippetClose}>
-                          {"Code Snippet 3"}
-                        </Button>
                       </Grid>
                     </Grid>
                     {/* Code Snippet Viewer */}

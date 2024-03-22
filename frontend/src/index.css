@@ -3,13 +3,11 @@
   text-decoration: none;
 }
 
-
-
 .markdown-content img {
   max-width: 100%;
   height: auto;
 }
 
 .markdown-content code {
-  background-color: #111111;
+  color: darkgoldenrod;
 }
