@@ -1,19 +1,19 @@
-import { GithubUserResponseDto } from "./GithubUserResponseDto";
+import { StoredGithubUserResponseDto } from "./StoredGithubUserResponseDto";
 import { ProjectImageResponseDto } from "./ProjectImageResponseDto";
-import { GithubCodeSnippetResponseDto } from "./GithubCodeSnippetResponseDto";
+import { CodeSnippetResponseDto } from "./CodeSnippetResponseDto";
 import { ProjectResponseDto } from "./ProjectResponseDto";
 
 export class ProjectDetailsResponseDto {
   readonly project: ProjectResponseDto;
-  readonly contributors: GithubUserResponseDto[];
+  readonly contributors: StoredGithubUserResponseDto[];
   readonly images: ProjectImageResponseDto[];
-  readonly codeSnippets: GithubCodeSnippetResponseDto[];
+  readonly codeSnippets: CodeSnippetResponseDto[];
 
   constructor(
     project: ProjectResponseDto,
-    contributors: GithubUserResponseDto[],
+    contributors: StoredGithubUserResponseDto[],
     images: ProjectImageResponseDto[],
-    codeSnippets: GithubCodeSnippetResponseDto[]
+    codeSnippets: CodeSnippetResponseDto[]
   ) {
     this.project = project;
     this.contributors = contributors;

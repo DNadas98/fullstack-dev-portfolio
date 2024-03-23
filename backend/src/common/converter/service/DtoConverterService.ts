@@ -7,10 +7,10 @@ import {
 } from "@prisma/client";
 import { UserResponsePrivateDto } from "../../../users/dto/UserResponsePrivateDto";
 import { UserResponsePublicDto } from "../../../users/dto/UserResponsePublicDto";
-import { GithubUserResponseDto } from "../../../projects/dto/GithubUserResponseDto";
+import { StoredGithubUserResponseDto } from "../../../projects/dto/StoredGithubUserResponseDto";
 import { ProjectResponseDto } from "../../../projects/dto/ProjectResponseDto";
 import { ProjectImageResponseDto } from "../../../projects/dto/ProjectImageResponseDto";
-import { GithubCodeSnippetResponseDto } from "../../../projects/dto/GithubCodeSnippetResponseDto";
+import { CodeSnippetResponseDto } from "../../../projects/dto/CodeSnippetResponseDto";
 import { MailOptionsDto } from "../../../mail/dto/MailOptionsDto";
 import { ContactFormRequestDto } from "../../../mail/dto/ContactFormRequestDto";
 import { ProjectDetailsResponseDto } from "../../../projects/dto/ProjectDetailsResponseDto";
@@ -46,14 +46,17 @@ export class DtoConverterService {
    * projects
    */
 
-  toGithubUserResponseDto(githubUser: GithubUser): GithubUserResponseDto {
-    return new GithubUserResponseDto(githubUser.id, githubUser.githubUsername);
+  toGithubUserResponseDto(githubUser: GithubUser): StoredGithubUserResponseDto {
+    return new StoredGithubUserResponseDto(
+      githubUser.id,
+      githubUser.githubUsername
+    );
   }
 
   toGithubCodeSnippetResponseDto(
     codeSnippet: GithubCodeSnippet
-  ): GithubCodeSnippetResponseDto {
-    return new GithubCodeSnippetResponseDto(
+  ): CodeSnippetResponseDto {
+    return new CodeSnippetResponseDto(
       codeSnippet.id,
       codeSnippet.createdAt,
       codeSnippet.updatedAt,
@@ -101,12 +104,15 @@ export class DtoConverterService {
     const contributorDtos =
       contributors?.map(
         (contributor) =>
-          new GithubUserResponseDto(contributor.id, contributor.githubUsername)
+          new StoredGithubUserResponseDto(
+            contributor.id,
+            contributor.githubUsername
+          )
       ) ?? [];
     const codeSnippetDtos =
       codeSnippets?.map(
         (codeSnippet) =>
-          new GithubCodeSnippetResponseDto(
+          new CodeSnippetResponseDto(
             codeSnippet.id,
             codeSnippet.createdAt,
             codeSnippet.updatedAt,

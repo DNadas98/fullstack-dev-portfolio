@@ -8,7 +8,7 @@ import { ProjectNotFoundError } from "../../../src/projects/error/ProjectNotFoun
 import { ProjectCreateRequestDto } from "../../../src/projects/dto/ProjectCreateRequestDto";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UniqueConstraintError } from "../../../src/common/error/UniqueConstraintError";
-import { GithubUserNotFoundError } from "../../../src/projects/error/GithubUserNotFoundError";
+import { StoredGithubUserNotFoundError } from "../../../src/projects/error/StoredGithubUserNotFoundError";
 import { ProjectUpdateRequestDto } from "../../../src/projects/dto/ProjectUpdateRequestDto";
 
 describe("ProjectService", () => {
@@ -248,7 +248,7 @@ describe("ProjectService", () => {
           })
         );
         await expect(service.create(createProjectDto)).rejects.toThrow(
-          GithubUserNotFoundError
+          StoredGithubUserNotFoundError
         );
       }
     );
@@ -331,7 +331,7 @@ describe("ProjectService", () => {
 
       await expect(
         service.updateById(mockProjects[0].id, updateProjectDto)
-      ).rejects.toThrow(GithubUserNotFoundError);
+      ).rejects.toThrow(StoredGithubUserNotFoundError);
     });
 
     it(

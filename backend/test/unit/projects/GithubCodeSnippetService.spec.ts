@@ -2,18 +2,18 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { createMockContext, MockContext } from "../database/mock/context";
 import { DatabaseService } from "../../../src/database/service/DatabaseService";
 import { DtoConverterService } from "../../../src/common/converter/service/DtoConverterService";
-import { GithubCodeSnippetCreateRequestDto } from "../../../src/projects/dto/GithubCodeSnippetCreateRequestDto";
+import { CodeSnippetCreateRequestDto } from "../../../src/projects/dto/CodeSnippetCreateRequestDto";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { GithubCodeSnippetUpdateRequestDto } from "../../../src/projects/dto/GithubCodeSnippetUpdateRequestDto";
-import { GithubCodeSnippetService } from "../../../src/projects/service/GithubCodeSnippetService";
-import { GithubCodeSnippetResponseDto } from "../../../src/projects/dto/GithubCodeSnippetResponseDto";
+import { CodeSnippetUpdateRequestDto } from "../../../src/projects/dto/CodeSnippetUpdateRequestDto";
+import { CodeSnippetService } from "../../../src/projects/service/CodeSnippetService";
+import { CodeSnippetResponseDto } from "../../../src/projects/dto/CodeSnippetResponseDto";
 import { CodeSnippetNotFoundError } from "../../../src/projects/error/CodeSnippetNotFoundError";
 import { ProjectNotFoundError } from "../../../src/projects/error/ProjectNotFoundError";
 
 describe("GithubCodeSnippetService", () => {
   let mockPrismaCtx: MockContext;
 
-  let service: GithubCodeSnippetService;
+  let service: CodeSnippetService;
 
   const mockGithubCodeSnippets = [
     {
@@ -51,13 +51,13 @@ describe("GithubCodeSnippetService", () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        GithubCodeSnippetService,
+        CodeSnippetService,
         DtoConverterService,
         { provide: DatabaseService, useValue: mockPrismaCtx.prisma }
       ]
     }).compile();
 
-    service = module.get<GithubCodeSnippetService>(GithubCodeSnippetService);
+    service = module.get<CodeSnippetService>(CodeSnippetService);
   });
 
   afterEach(() => {
@@ -76,14 +76,13 @@ describe("GithubCodeSnippetService", () => {
         mockPrismaCtx.prisma.githubCodeSnippet.findMany.mockResolvedValue(
           mockGithubCodeSnippets
         );
-        const expectedOutput: GithubCodeSnippetResponseDto[] =
-          mockGithubCodeSnippets;
+        const expectedOutput: CodeSnippetResponseDto[] = mockGithubCodeSnippets;
 
         const result = await service.findAll();
 
         expect(result.length).toEqual(2);
-        expect(result[0]).toBeInstanceOf(GithubCodeSnippetResponseDto);
-        expect(result[1]).toBeInstanceOf(GithubCodeSnippetResponseDto);
+        expect(result[0]).toBeInstanceOf(CodeSnippetResponseDto);
+        expect(result[1]).toBeInstanceOf(CodeSnippetResponseDto);
         expect(result).toEqual(expectedOutput);
       }
     );
@@ -109,7 +108,7 @@ describe("GithubCodeSnippetService", () => {
 
       const result = await service.findById(codeSnippetId);
 
-      expect(result).toBeInstanceOf(GithubCodeSnippetResponseDto);
+      expect(result).toBeInstanceOf(CodeSnippetResponseDto);
       expect(result.id).toEqual(codeSnippetId);
       expect(
         mockPrismaCtx.prisma.githubCodeSnippet.findUnique
@@ -129,7 +128,7 @@ describe("GithubCodeSnippetService", () => {
   });
 
   describe("GithubCodeSnippetService create", () => {
-    const createGithubCodeSnippetDto = new GithubCodeSnippetCreateRequestDto(
+    const createGithubCodeSnippetDto = new CodeSnippetCreateRequestDto(
       mockGithubCodeSnippets[0].displayName,
       mockGithubCodeSnippets[0].filePath,
       mockGithubCodeSnippets[0].format,
@@ -149,17 +148,17 @@ describe("GithubCodeSnippetService", () => {
 
         const result = await service.create(createGithubCodeSnippetDto);
 
-        expect(result).toBeInstanceOf(GithubCodeSnippetResponseDto);
+        expect(result).toBeInstanceOf(CodeSnippetResponseDto);
         expect(result).toEqual(mockGithubCodeSnippets[0]);
       }
     );
   });
 
   describe("GithubCodeSnippetService updateById", () => {
-    let updateGithubCodeSnippetDto: GithubCodeSnippetUpdateRequestDto;
+    let updateGithubCodeSnippetDto: CodeSnippetUpdateRequestDto;
 
     beforeEach(() => {
-      updateGithubCodeSnippetDto = new GithubCodeSnippetUpdateRequestDto(
+      updateGithubCodeSnippetDto = new CodeSnippetUpdateRequestDto(
         "UpdatedDisplayName"
       );
     });
@@ -182,7 +181,7 @@ describe("GithubCodeSnippetService", () => {
         updateGithubCodeSnippetDto
       );
 
-      expect(result).toBeInstanceOf(GithubCodeSnippetResponseDto);
+      expect(result).toBeInstanceOf(CodeSnippetResponseDto);
       expect(result.displayName).toEqual(
         updateGithubCodeSnippetDto.displayName
       );

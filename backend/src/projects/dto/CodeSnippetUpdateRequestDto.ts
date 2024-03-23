@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from "class-validator";
 
-export class GithubCodeSnippetUpdateRequestDto {
+export class CodeSnippetUpdateRequestDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()

@@ -1,6 +1,6 @@
 import { IsInt, IsNotEmpty, IsString, Min } from "class-validator";
 
-export class GithubCodeSnippetCreateRequestDto {
+export class CodeSnippetCreateRequestDto {
   @IsString()
   @IsNotEmpty()
   readonly displayName: string;

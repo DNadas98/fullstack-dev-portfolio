@@ -4,7 +4,7 @@ import { ProjectUpdateRequestDto } from "../dto/ProjectUpdateRequestDto";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UniqueConstraintError } from "../../common/error/UniqueConstraintError";
 import { DatabaseService } from "../../database/service/DatabaseService";
-import { GithubUserNotFoundError } from "../error/GithubUserNotFoundError";
+import { StoredGithubUserNotFoundError } from "../error/StoredGithubUserNotFoundError";
 import { Prisma } from "@prisma/client";
 import { DtoConverterService } from "../../common/converter/service/DtoConverterService";
 import { ProjectNotFoundError } from "../error/ProjectNotFoundError";
@@ -89,7 +89,7 @@ export class ProjectService {
             "A Github Repository with the provided name already exists"
           );
         } else if (e.code === "P2025") {
-          throw new GithubUserNotFoundError();
+          throw new StoredGithubUserNotFoundError();
         }
       }
       throw e;
@@ -119,7 +119,7 @@ export class ProjectService {
             e?.meta?.cause &&
             e.meta.cause.toString().includes("GithubUser")
           ) {
-            throw new GithubUserNotFoundError();
+            throw new StoredGithubUserNotFoundError();
           }
           throw new ProjectNotFoundError();
         }

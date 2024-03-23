@@ -1,19 +1,19 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { createMockContext, MockContext } from "../database/mock/context";
-import { GithubUserResponseDto } from "../../../src/projects/dto/GithubUserResponseDto";
+import { StoredGithubUserResponseDto } from "../../../src/projects/dto/StoredGithubUserResponseDto";
 import { DatabaseService } from "../../../src/database/service/DatabaseService";
 import { DtoConverterService } from "../../../src/common/converter/service/DtoConverterService";
-import { GithubUserNotFoundError } from "../../../src/projects/error/GithubUserNotFoundError";
-import { GithubUserCreateRequestDto } from "../../../src/projects/dto/GithubUserCreateRequestDto";
+import { StoredGithubUserNotFoundError } from "../../../src/projects/error/StoredGithubUserNotFoundError";
+import { StoredGithubUserCreateRequestDto } from "../../../src/projects/dto/StoredGithubUserCreateRequestDto";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { UniqueConstraintError } from "../../../src/common/error/UniqueConstraintError";
-import { GithubUserUpdateRequestDto } from "../../../src/projects/dto/GithubUserUpdateRequestDto";
-import { GithubUserService } from "../../../src/projects/service/GithubUserService";
+import { StoredGithubUserUpdateRequestDto } from "../../../src/projects/dto/StoredGithubUserUpdateRequestDto";
+import { StoredGithubUserService } from "../../../src/projects/service/StoredGithubUserService";
 
 describe("GithubUserService", () => {
   let mockPrismaCtx: MockContext;
 
-  let service: GithubUserService;
+  let service: StoredGithubUserService;
 
   const mockGithubUsers = [
     { id: 1, githubUsername: "testGithubUser1" },
@@ -29,13 +29,13 @@ describe("GithubUserService", () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        GithubUserService,
+        StoredGithubUserService,
         DtoConverterService,
         { provide: DatabaseService, useValue: mockPrismaCtx.prisma }
       ]
     }).compile();
 
-    service = module.get<GithubUserService>(GithubUserService);
+    service = module.get<StoredGithubUserService>(StoredGithubUserService);
   });
 
   afterEach(() => {
@@ -51,13 +51,13 @@ describe("GithubUserService", () => {
       mockPrismaCtx.prisma.githubUser.findMany.mockResolvedValue(
         mockGithubUsers
       );
-      const expectedOutput: GithubUserResponseDto[] = mockGithubUsers;
+      const expectedOutput: StoredGithubUserResponseDto[] = mockGithubUsers;
 
-      const result: GithubUserResponseDto[] = await service.findAll();
+      const result: StoredGithubUserResponseDto[] = await service.findAll();
 
       expect(result.length).toEqual(2);
-      expect(result[0]).toBeInstanceOf(GithubUserResponseDto);
-      expect(result[1]).toBeInstanceOf(GithubUserResponseDto);
+      expect(result[0]).toBeInstanceOf(StoredGithubUserResponseDto);
+      expect(result[1]).toBeInstanceOf(StoredGithubUserResponseDto);
       expect(result).toEqual(expectedOutput);
     });
   });
@@ -67,13 +67,13 @@ describe("GithubUserService", () => {
       mockPrismaCtx.prisma.githubUser.findMany.mockResolvedValue(
         mockGithubUsers
       );
-      const expectedOutput: GithubUserResponseDto[] = mockGithubUsers;
+      const expectedOutput: StoredGithubUserResponseDto[] = mockGithubUsers;
 
-      const result: GithubUserResponseDto[] = await service.findAll();
+      const result: StoredGithubUserResponseDto[] = await service.findAll();
 
       expect(result.length).toEqual(2);
-      expect(result[0]).toBeInstanceOf(GithubUserResponseDto);
-      expect(result[1]).toBeInstanceOf(GithubUserResponseDto);
+      expect(result[0]).toBeInstanceOf(StoredGithubUserResponseDto);
+      expect(result[1]).toBeInstanceOf(StoredGithubUserResponseDto);
       expect(result).toEqual(expectedOutput);
     });
 
@@ -81,7 +81,7 @@ describe("GithubUserService", () => {
       mockPrismaCtx.prisma.githubUser.findMany.mockResolvedValue([]);
       const expectedOutput = [];
 
-      const result: GithubUserResponseDto[] = await service.findAll();
+      const result: StoredGithubUserResponseDto[] = await service.findAll();
 
       expect(Array.isArray(result)).toBeTruthy();
       expect(result.length).toEqual(0);
@@ -98,7 +98,7 @@ describe("GithubUserService", () => {
 
       const result = await service.findById(userId);
 
-      expect(result).toBeInstanceOf(GithubUserResponseDto);
+      expect(result).toBeInstanceOf(StoredGithubUserResponseDto);
       expect(result.id).toEqual(userId);
       expect(mockPrismaCtx.prisma.githubUser.findUnique).toHaveBeenCalledWith({
         where: { id: userId }
@@ -110,13 +110,13 @@ describe("GithubUserService", () => {
       mockPrismaCtx.prisma.githubUser.findUnique.mockResolvedValue(null);
 
       await expect(service.findById(githubUserId)).rejects.toThrow(
-        GithubUserNotFoundError
+        StoredGithubUserNotFoundError
       );
     });
   });
 
   describe("GithubUserService create", () => {
-    const createGithubUserDto = new GithubUserCreateRequestDto(
+    const createGithubUserDto = new StoredGithubUserCreateRequestDto(
       mockGithubUsers[0].githubUsername
     );
 
@@ -127,7 +127,7 @@ describe("GithubUserService", () => {
 
       const result = await service.create(createGithubUserDto);
 
-      expect(result).toBeInstanceOf(GithubUserResponseDto);
+      expect(result).toBeInstanceOf(StoredGithubUserResponseDto);
       expect(result).toEqual(mockGithubUsers[0]);
     });
 
@@ -145,10 +145,12 @@ describe("GithubUserService", () => {
   });
 
   describe("GithubUserService updateById", () => {
-    let updateGithubUserDto: GithubUserUpdateRequestDto;
+    let updateGithubUserDto: StoredGithubUserUpdateRequestDto;
 
     beforeEach(() => {
-      updateGithubUserDto = new GithubUserUpdateRequestDto("TestUserName");
+      updateGithubUserDto = new StoredGithubUserUpdateRequestDto(
+        "TestUserName"
+      );
     });
 
     it("should successfully update a GithubUser and return the updated GithubUserResponseDto", async () => {
@@ -166,7 +168,7 @@ describe("GithubUserService", () => {
         updateGithubUserDto
       );
 
-      expect(result).toBeInstanceOf(GithubUserResponseDto);
+      expect(result).toBeInstanceOf(StoredGithubUserResponseDto);
       expect(result.githubUsername).toEqual(updateGithubUserDto.githubUsername);
       // Validate other updated fields as necessary
       expect(mockPrismaCtx.prisma.githubUser.update).toHaveBeenCalledWith({
@@ -186,7 +188,7 @@ describe("GithubUserService", () => {
 
       await expect(
         service.updateById(111, updateGithubUserDto)
-      ).rejects.toThrow(GithubUserNotFoundError);
+      ).rejects.toThrow(StoredGithubUserNotFoundError);
     });
 
     it("should throw UniqueConstraintError when a GithubUser with the updated name already exists", async () => {
@@ -213,7 +215,7 @@ describe("GithubUserService", () => {
 
       await expect(
         service.updateById(mockGithubUsers[0].id, updateGithubUserDto)
-      ).rejects.toThrow(GithubUserNotFoundError);
+      ).rejects.toThrow(StoredGithubUserNotFoundError);
     });
 
     it(
@@ -230,7 +232,7 @@ describe("GithubUserService", () => {
 
         await expect(
           service.updateById(mockGithubUsers[0].id, updateGithubUserDto)
-        ).rejects.toThrow(GithubUserNotFoundError);
+        ).rejects.toThrow(StoredGithubUserNotFoundError);
       }
     );
   });
@@ -261,7 +263,7 @@ describe("GithubUserService", () => {
       );
 
       await expect(service.deleteById(githubUserIdToDelete)).rejects.toThrow(
-        GithubUserNotFoundError
+        StoredGithubUserNotFoundError
       );
     });
   });

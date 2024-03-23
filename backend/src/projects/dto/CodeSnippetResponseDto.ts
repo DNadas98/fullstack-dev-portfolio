@@ -1,4 +1,4 @@
-export class GithubCodeSnippetResponseDto {
+export class CodeSnippetResponseDto {
   readonly id: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;

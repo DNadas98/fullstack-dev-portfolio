@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString } from "class-validator";
 
-export class GithubUserUpdateRequestDto {
+export class StoredGithubUserUpdateRequestDto {
   @IsOptional()
   @IsNotEmpty({ message: "GitHub username is missing" })
   @IsString({ message: "Invalid GitHub username format" })

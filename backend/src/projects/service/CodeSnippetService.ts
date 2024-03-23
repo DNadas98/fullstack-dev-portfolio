@@ -4,13 +4,13 @@ import { DatabaseService } from "../../database/service/DatabaseService";
 import { GithubCodeSnippet, Prisma } from "@prisma/client";
 import { DtoConverterService } from "../../common/converter/service/DtoConverterService";
 import { ProjectNotFoundError } from "../error/ProjectNotFoundError";
-import { GithubCodeSnippetResponseDto } from "../dto/GithubCodeSnippetResponseDto";
+import { CodeSnippetResponseDto } from "../dto/CodeSnippetResponseDto";
 import { CodeSnippetNotFoundError } from "../error/CodeSnippetNotFoundError";
-import { GithubCodeSnippetCreateRequestDto } from "../dto/GithubCodeSnippetCreateRequestDto";
-import { GithubCodeSnippetUpdateRequestDto } from "../dto/GithubCodeSnippetUpdateRequestDto";
+import { CodeSnippetCreateRequestDto } from "../dto/CodeSnippetCreateRequestDto";
+import { CodeSnippetUpdateRequestDto } from "../dto/CodeSnippetUpdateRequestDto";
 
 @Injectable()
-export class GithubCodeSnippetService {
+export class CodeSnippetService {
   private readonly prisma: DatabaseService;
   private readonly dtoConverter: DtoConverterService;
 
@@ -22,14 +22,14 @@ export class GithubCodeSnippetService {
     this.dtoConverter = dtoConverter;
   }
 
-  async findAll(): Promise<GithubCodeSnippetResponseDto[]> {
+  async findAll(): Promise<CodeSnippetResponseDto[]> {
     const codeSnippets = await this.prisma.githubCodeSnippet.findMany({});
     return codeSnippets.map((codeSnippet) =>
       this.dtoConverter.toGithubCodeSnippetResponseDto(codeSnippet)
     );
   }
 
-  async findById(id: number): Promise<GithubCodeSnippetResponseDto> {
+  async findById(id: number): Promise<CodeSnippetResponseDto> {
     const codeSnippet = await this.prisma.githubCodeSnippet.findUnique({
       where: { id }
     });
@@ -40,8 +40,8 @@ export class GithubCodeSnippetService {
   }
 
   async create(
-    createCodeSnippetDto: GithubCodeSnippetCreateRequestDto
-  ): Promise<GithubCodeSnippetResponseDto> {
+    createCodeSnippetDto: CodeSnippetCreateRequestDto
+  ): Promise<CodeSnippetResponseDto> {
     try {
       if (createCodeSnippetDto.startLine > createCodeSnippetDto.endLine) {
         throw new BadRequestException(
@@ -74,8 +74,8 @@ export class GithubCodeSnippetService {
 
   async updateById(
     id: number,
-    updateCodeSnippetDto: GithubCodeSnippetUpdateRequestDto
-  ): Promise<GithubCodeSnippetResponseDto> {
+    updateCodeSnippetDto: CodeSnippetUpdateRequestDto
+  ): Promise<CodeSnippetResponseDto> {
     try {
       const updateData: Partial<Prisma.GithubCodeSnippetCreateInput> =
         this.getUpdateData(updateCodeSnippetDto);
@@ -111,7 +111,7 @@ export class GithubCodeSnippetService {
   }
 
   private validateUpdateData(
-    updateCodeSnippetDto: GithubCodeSnippetUpdateRequestDto,
+    updateCodeSnippetDto: CodeSnippetUpdateRequestDto,
     codeSnippet: GithubCodeSnippet
   ): void {
     const message =
@@ -132,7 +132,7 @@ export class GithubCodeSnippetService {
   }
 
   private getUpdateData(
-    updateCodeSnippetDto: GithubCodeSnippetUpdateRequestDto
+    updateCodeSnippetDto: CodeSnippetUpdateRequestDto
   ): Partial<Prisma.GithubCodeSnippetCreateInput> {
     const updateData: Partial<Prisma.GithubCodeSnippetCreateInput> = {};
     if (updateCodeSnippetDto.displayName)

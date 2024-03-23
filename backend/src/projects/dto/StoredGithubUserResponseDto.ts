@@ -1,4 +1,4 @@
-export class GithubUserResponseDto {
+export class StoredGithubUserResponseDto {
   readonly id: number;
   readonly githubUsername: string;
 

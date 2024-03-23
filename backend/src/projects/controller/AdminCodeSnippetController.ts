@@ -15,14 +15,14 @@ import { validateId } from "../../common/validator/validator";
 import { AuthGuard } from "../../auth/guard/AuthGuard";
 import { RoleGuard, Roles } from "../../auth/guard/RoleGuard";
 import { MessageResponseDto } from "../../common/dto/MessageResponseDto";
-import { GithubCodeSnippetService } from "../service/GithubCodeSnippetService";
-import { GithubCodeSnippetCreateRequestDto } from "../dto/GithubCodeSnippetCreateRequestDto";
-import { GithubCodeSnippetResponseDto } from "../dto/GithubCodeSnippetResponseDto";
+import { CodeSnippetService } from "../service/CodeSnippetService";
+import { CodeSnippetCreateRequestDto } from "../dto/CodeSnippetCreateRequestDto";
+import { CodeSnippetResponseDto } from "../dto/CodeSnippetResponseDto";
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller("/api/v1/github-code-snippets")
-export class AdminGithubCodeSnippetController {
-  constructor(private readonly codeSnippetService: GithubCodeSnippetService) {}
+export class AdminCodeSnippetController {
+  constructor(private readonly codeSnippetService: CodeSnippetService) {}
 
   @Get()
   @Roles("ADMIN")
@@ -42,9 +42,7 @@ export class AdminGithubCodeSnippetController {
   @Post()
   @Roles("ADMIN")
   @HttpCode(HttpStatus.CREATED)
-  async create(
-    @Body() createCodeSnippetDto: GithubCodeSnippetCreateRequestDto
-  ) {
+  async create(@Body() createCodeSnippetDto: CodeSnippetCreateRequestDto) {
     const created = await this.codeSnippetService.create(createCodeSnippetDto);
     return new DataResponseDto(created);
   }
@@ -53,7 +51,7 @@ export class AdminGithubCodeSnippetController {
   @Roles("ADMIN")
   async updateById(
     @Param("id") id: string,
-    @Body() updateCodeSnippetDto: GithubCodeSnippetResponseDto
+    @Body() updateCodeSnippetDto: CodeSnippetResponseDto
   ) {
     validateId(id);
     const updated = await this.codeSnippetService.updateById(
