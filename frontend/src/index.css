@@ -12,11 +12,14 @@
   color: darkgoldenrod;
 }
 
-#layout-box {
-  background: url("/background.svg");
+#root {
+  background: url("/background.svg") no-repeat center top;
   background-blend-mode: color-burn;
-  background-repeat: repeat-y;
-  background-position-x: center;
-  background-position-y: top;
-  background-size: 100vw;
+  background-size: 1920px auto;
+}
+
+@media (min-width: 1920px) {
+  #root {
+    background-size: 100% auto;
+  }
 }

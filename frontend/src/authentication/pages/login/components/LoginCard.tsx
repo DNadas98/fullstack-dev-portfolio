@@ -12,7 +12,7 @@ export default function LoginCard({onSubmit}: LoginCardProps) {
   return (
     <Grid container justifyContent={"center"} alignItems={"center"} flexGrow={1}>
       <Grid item xs={10} sm={8} md={7} lg={6}>
-        <Card sx={{
+        <Card variant={"elevation"} elevation={10} sx={{
           paddingTop: 4, textAlign: "center",
           maxWidth: 800, width: "100%",
           marginLeft: "auto", marginRight: "auto"

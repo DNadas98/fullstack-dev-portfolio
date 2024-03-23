@@ -5,9 +5,6 @@ import {
 } from "./authentication/context/AuthenticationProvider.tsx";
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./react_buddy_dev";
-import {
-  ThemePaletteModeProvider
-} from "./common/theme/context/ThemePaletteModeProvider.tsx";
 import appRouter from "./common/routing/appRouter.tsx";
 import {RouterProvider} from "react-router-dom";
 import {
@@ -24,7 +21,6 @@ const router = appRouter;
 
 root.render(
   <DevSupport ComponentPreviews={ComponentPreviews} useInitialHook={useInitial}>
-    <ThemePaletteModeProvider>
       <AppThemeProvider>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
         <NotificationProvider>
@@ -36,6 +32,5 @@ root.render(
         </NotificationProvider>
         </LocalizationProvider>
       </AppThemeProvider>
-    </ThemePaletteModeProvider>
   </DevSupport>
 );

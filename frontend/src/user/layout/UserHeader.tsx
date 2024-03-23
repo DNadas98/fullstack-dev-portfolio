@@ -1,7 +1,5 @@
 import {AppBar, Box, Toolbar, useMediaQuery, useTheme} from "@mui/material";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
-import ThemePaletteModeSwitch
-  from "../../common/theme/components/ThemePaletteModeSwitch.tsx";
 import {userMenuProfileRoutes} from "../../common/config/menu/userMenuProfileRoutes.tsx";
 import MenuUserSmall from "../../common/utils/components/MenuUserSmall.tsx";
 import {userMenuRoutes} from "../../common/config/menu/userMenuRoutes.tsx";
@@ -29,7 +27,6 @@ export default function UserHeader() {
           : <MenuLarge menu={publicMenu}/>
         }
         <MenuUserSmall menu={menu}/>
-        <ThemePaletteModeSwitch/>
       </Toolbar>
     </AppBar>
   );

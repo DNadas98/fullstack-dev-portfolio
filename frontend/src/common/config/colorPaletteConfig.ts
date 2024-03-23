@@ -14,13 +14,3 @@ export const darkPalette: PaletteOptions = {
   warning: {main: "#FF9800"},
   text: {primary: white, secondary: white}
 };
-
-export const lightPalette: PaletteOptions = {
-  primary: {main: lightBlue},
-  secondary: {main: darkBlue},
-  background: {default: white, paper: lightBlue},
-  success: {main: "#A5D6A7"},
-  error: {main: "#ef9a9a"},
-  warning: {main: "#FFCC80"},
-  text: {primary: black, secondary: darkBlue}
-};

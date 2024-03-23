@@ -24,9 +24,12 @@ const AboutMe = () => {
         <Grid item xs={12} paddingTop={2} paddingLeft={2} paddingRight={2}
               sx={{backgroundColor: "primary.main"}}>
           <Stack alignItems={"center"} justifyContent={"center"}
-                 spacing={2} sx={{flexWrap: "wrap"}} marginBottom={10}>
+                 spacing={2} sx={{flexWrap: "wrap"}} marginBottom={11}>
             <Box>
-              <Typography variant={"h3"} sx={{whiteSpace: "nowrap"}} gutterBottom>
+              <Typography variant={"h3"} sx={{
+                whiteSpace: "nowrap",
+                fontSize: "2.75rem"
+              }} gutterBottom>
                 Dániel Nádas
               </Typography>
               <Typography variant={"h6"}>
@@ -42,23 +45,6 @@ const AboutMe = () => {
                   sx={{height: "9rem", width: "9rem"}}/>
         </Grid>
       </Grid>
-      {/*<Grid container justifyContent={"center"} textAlign={"center"}>
-        <Grid item>
-          <Typography variant={"h6"}>
-            I'm currently working on:
-          </Typography>
-          <ListWithLinks items={[
-            {
-              path: "https://github.com/DNadas98/spring-project-manager",
-              text: "Java Spring Project Manager Application"
-            },
-            {
-              path: "https://github.com/DNadas98/fullstack-dev-portfolio",
-              text: "Full-stack Web Developer Portfolio"
-            }
-          ]}/>
-        </Grid>
-      </Grid>*/}
       <Grid container justifyContent={"center"} spacing={2} paddingLeft={2}
             paddingRight={2}>
         <Grid item md={12} lg={10} textAlign={"center"} mt={-4}>
@@ -168,7 +154,8 @@ const AboutMe = () => {
       <Grid container justifyContent={"center"} spacing={4} paddingTop={2}
             paddingBottom={2}>
         <Grid item xs={10} sm={8} md={5} lg={4}>
-          <Card style={{backgroundColor: `${palette.background.default}`}}
+          <Card variant={"elevation"} elevation={10}
+                style={{backgroundColor: `${palette.background.default}`}}
                 sx={{height: "100%"}}>
             <CardHeader title={"Self Definition"}/>
             <CardContent>
@@ -188,7 +175,8 @@ const AboutMe = () => {
           </Card>
         </Grid>
         <Grid item xs={10} sm={8} md={5} lg={4}>
-          <Card style={{backgroundColor: `${palette.background.default}`}}
+          <Card variant={"elevation"} elevation={10}
+                style={{backgroundColor: `${palette.background.default}`}}
                 sx={{height: "100%"}}>
             <CardHeader title={"Strengths"}/>
             <CardContent>

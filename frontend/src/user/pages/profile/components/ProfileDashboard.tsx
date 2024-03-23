@@ -18,7 +18,7 @@ export default function ProfileDashboard(props: ProfileDashboardProps) {
           <ProfileMainCard username={props.username}
                            email={props.email}
                            role={props.role}/>
-          <Card>
+          <Card variant={"elevation"} elevation={10}>
             <CardContent>
               <Typography variant={"body1"} mb={2}>
                 Manage user data

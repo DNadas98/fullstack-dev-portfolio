@@ -25,7 +25,7 @@ export default function ContactMePage(props: ContactMePageProps) {
     <Grid container justifyContent={"center"} alignItems={"center"} flexGrow={1}
           spacing={2} sx={{mt: 2}} minWidth={"fit-content"}>
       <Grid item xs={11} sm={11} md={10} lg={9}>
-        <Card sx={{
+        <Card variant={"elevation"} elevation={10} sx={{
           paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
           minWidth: "fit-content", marginLeft: "auto", marginRight: "auto"
         }}>
@@ -59,7 +59,7 @@ export default function ContactMePage(props: ContactMePageProps) {
         </Card>
       </Grid>
       <Grid item xs={11} sm={11} md={10} lg={9}>
-        <Card sx={{
+        <Card variant={"elevation"} elevation={10} sx={{
           paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
           marginLeft: "auto", marginRight: "auto"
         }}>

@@ -20,7 +20,7 @@ export interface CardGridItemProps {
 export default function CardGridItem(props: CardGridItemProps) {
   const theme = useTheme();
   return (
-    <Card>
+    <Card variant={"elevation"} elevation={10}>
       <CardHeader title={props.title}
                   sx={{textAlign: "center"}}/>
       <CardContent>

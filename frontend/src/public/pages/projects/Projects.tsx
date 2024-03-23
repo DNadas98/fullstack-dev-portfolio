@@ -46,7 +46,7 @@ export default function Projects() {
   }, []);
 
   return (
-    <ProjectPage handleProjectDetailsClick={handleProjectDetailsClick} loading={loading}
-                 projects={projects}/>
-  );
+    <ProjectPage handleProjectDetailsClick={handleProjectDetailsClick}
+                 loading={loading}
+                 projects={projects}/>);
 };

@@ -8,8 +8,7 @@ import {
   Stack,
   Tab,
   Tooltip,
-  Typography,
-  useTheme
+  Typography
 } from "@mui/material";
 import LoadingSpinner from "../../../../common/utils/components/LoadingSpinner.tsx";
 import {GithubProjectResponseDto} from "../dto/GithubProjectResponseDto.ts";
@@ -22,7 +21,8 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import {TabContext, TabList, TabPanel} from "@mui/lab";
-import {CodeBlock, nord} from "react-code-blocks";
+import {CodeBlock, hybrid} from "react-code-blocks";
+import {SyntheticEvent} from "react";
 
 interface ProjectDetailsPageProps {
   loading: boolean,
@@ -38,13 +38,12 @@ interface ProjectDetailsPageProps {
   decodeBase64Utf8: (encodedText: string) => string,
   codeSnippetLoading: boolean,
   tabValue: string,
-  handleTabValueChange: (_event: React.SyntheticEvent, newValue: string) => void,
+  handleTabValueChange: (_event: SyntheticEvent, newValue: string) => void,
   handleCodeSnippetSelect: (snippetId: number) => void,
   getCodeSnippetText: (encodedText: string, startLine: string, endLine: string) => string
 }
 
 export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
-  const theme = useTheme();
   return (
     <Grid container height={"100%"} flexGrow={1} justifyContent={"center"}
           alignItems={"top"} mt={4} whiteSpace={"break-all"} maxWidth={1000}>
@@ -127,7 +126,7 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                   <Grid container justifyContent={"center"}>
                     <Grid item width={"fit-content"} maxWidth={"80vw"}
                           sx={{overflowX: "auto"}}>
-                      <Card sx={{backgroundColor: theme.palette.background.default}}
+                      <Card sx={{padding: 1}}
                             variant={"elevation"} elevation={10}>
                         <CardContent>
                           <Markdown className={"markdown-content"}
@@ -145,11 +144,16 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                   <Grid container justifyContent={"center"}>
                     <Grid item width={"fit-content"} maxWidth={"80vw"}
                           sx={{overflowX: "auto"}}>
-                      <Markdown className={"markdown-content"}
-                                remarkPlugins={[remarkGfm]}
-                                rehypePlugins={[rehypeRaw]}>
-                        {props.decodeBase64Utf8(props.license.content)}
-                      </Markdown>
+                      <Card sx={{padding: 1}}
+                            variant={"elevation"} elevation={10}>
+                        <CardContent>
+                          <Markdown className={"markdown-content"}
+                                    remarkPlugins={[remarkGfm]}
+                                    rehypePlugins={[rehypeRaw]}>
+                            {props.decodeBase64Utf8(props.license.content)}
+                          </Markdown>
+                        </CardContent>
+                      </Card>
                     </Grid>
                   </Grid>
                 </TabPanel>
@@ -189,19 +193,27 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                               </Typography>
                               <Grid container justifyContent={"center"} rowSpacing={2}>
                                 <Grid item width={"fit-content"} maxWidth={"80vw"}>
-                                  <CodeBlock
-                                    text={
-                                      props.getCodeSnippetText(
-                                        props.selectedFile.content,
-                                        props.selectedFile.startLine,
-                                        props.selectedFile.endLine)
-                                    }
-                                    language={props.selectedFile.name.split(".")[1]}
-                                    showLineNumbers
-                                    startingLineNumber={parseInt(props.selectedFile.startLine)}
-                                    wrapLongLines={false}
-                                    theme={nord}
-                                    customStyle={{"padding": "1rem"}}/>
+                                  <Grid item width={"fit-content"} maxWidth={"80vw"}
+                                        sx={{overflowX: "auto"}}>
+                                    <Card variant={"elevation"} elevation={10}>
+                                      <CodeBlock
+                                        text={
+                                          props.getCodeSnippetText(
+                                            props.selectedFile.content,
+                                            props.selectedFile.startLine,
+                                            props.selectedFile.endLine)
+                                        }
+                                        language={props.selectedFile.name.split(".")[1]}
+                                        showLineNumbers
+                                        startingLineNumber={parseInt(props.selectedFile.startLine)}
+                                        wrapLongLines={false}
+                                        theme={hybrid}
+                                        customStyle={{
+                                          "padding": "1rem",
+                                          "background-color": "transparent"
+                                        }}/>
+                                    </Card>
+                                  </Grid>
                                 </Grid>
                                 <Grid item xs={12} textAlign={"center"}>
                                   <Button onClick={props.handleCodeSnippetClose}>

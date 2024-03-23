@@ -1,8 +1,7 @@
 import {createTheme, ThemeProvider} from "@mui/material/styles";
 import {ReactNode} from "react";
 import {CssBaseline} from "@mui/material";
-import useThemePaletteMode from "./ThemePaletteModeProvider.tsx";
-import {darkPalette, lightPalette} from "../../config/colorPaletteConfig.ts";
+import {darkPalette} from "../../config/colorPaletteConfig.ts";
 import {PaletteOptions} from "@mui/material/styles/createPalette";
 
 interface AppThemeProviderProps {
@@ -10,14 +9,10 @@ interface AppThemeProviderProps {
 }
 
 export function AppThemeProvider({children}: AppThemeProviderProps) {
-  const paletteMode = useThemePaletteMode().paletteMode;
-  const light: PaletteOptions = lightPalette;
   const dark: PaletteOptions = darkPalette;
 
   const theme = createTheme({
-    palette: paletteMode === "light"
-      ? light
-      : dark,
+    palette: dark,
     components: {
       MuiCssBaseline: {
         styleOverrides: {
@@ -43,10 +38,10 @@ export function AppThemeProvider({children}: AppThemeProviderProps) {
       MuiTextField: {
         defaultProps: {
           InputLabelProps: {
-            style: {color: paletteMode === "light" ? light.text?.primary : dark.text?.primary}
+            style: {color: dark.text?.primary}
           },
           InputProps: {
-            style: {color: paletteMode === "light" ? light.text?.primary : dark.text?.primary}
+            style: {color: dark.text?.primary}
           }
         }
       },
@@ -54,13 +49,13 @@ export function AppThemeProvider({children}: AppThemeProviderProps) {
         styleOverrides: {
           root: {
             "& $notchedOutline": {
-              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+              borderColor: dark.text?.primary
             },
             "&:hover $notchedOutline": {
-              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+              borderColor: dark.text?.primary
             },
             "&$focused $notchedOutline": {
-              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+              borderColor: dark.text?.primary
             }
           },
           notchedOutline: {}
@@ -69,9 +64,9 @@ export function AppThemeProvider({children}: AppThemeProviderProps) {
       MuiInputLabel: {
         styleOverrides: {
           root: {
-            color: paletteMode === "light" ? light.text?.primary : dark.text?.primary,
+            color: dark.text?.primary,
             "&$focused": {
-              color: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+              color: dark.text?.primary
             }
           }
         }
