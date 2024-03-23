@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {SyntheticEvent, useEffect, useState} from "react";
 import {
   useNotification
 } from "../../../common/notification/context/NotificationProvider.tsx";
@@ -7,6 +7,10 @@ import {useNavigate, useParams, useSearchParams} from "react-router-dom";
 import ProjectDetailsPage from "./components/ProjectDetailsPage.tsx";
 import {ProjectContributorResponseDto} from "./dto/ProjectContributorResponseDto.ts";
 import {ProjectImageResponseDto} from "./dto/ProjectImageResponseDto.ts";
+import {GithubProjectResponseDto} from "./dto/GithubProjectResponseDto.ts";
+import {GithubProjectOwnerResponseDto} from "./dto/GithubProjectOwnerResponseDto.ts";
+import {ProjectCodeSnippetResponseDto} from "./dto/ProjectCodeSnippetResponseDto.ts";
+import {GithubContentResponseDto} from "./dto/GithubContentResponseDto.ts";
 
 export default function ProjectDetails() {
   const [loading, setLoading] = useState<boolean>(true);
@@ -16,16 +20,16 @@ export default function ProjectDetails() {
 
 
   // TODO: create DTOs, replace 'any'
-  const [project, setProject] = useState<any>(undefined);
+  const [project, setProject] = useState<GithubProjectResponseDto | undefined>(undefined);
   const projectName = useParams()?.projectName;
-  const [owner, setOwner] = useState<any>(undefined);
-  const [readme, setReadme] = useState<any>(undefined);
-  const [license, setLicense] = useState<any>(undefined);
-  const [codeSnippets, setCodeSnippets] = useState<any>([]);
+  const [owner, setOwner] = useState<GithubProjectOwnerResponseDto | undefined>(undefined);
+  const [readme, setReadme] = useState<GithubContentResponseDto | undefined>(undefined);
+  const [license, setLicense] = useState<GithubContentResponseDto | undefined>(undefined);
+  const [codeSnippets, setCodeSnippets] = useState<ProjectCodeSnippetResponseDto[]>([]);
   const [contributors, setContributors] = useState<ProjectContributorResponseDto[]>([]);
   const [images, setImages] = useState<ProjectImageResponseDto[]>([]);
 
-  const [selectedCodeSnippet, setSelectedCodeSnippet] = useState<any>(undefined);
+  const [selectedCodeSnippet, setSelectedCodeSnippet] = useState<GithubContentResponseDto | undefined>(undefined);
   const [codeSnippetLoading, setCodeSnippetLoading] = useState<boolean>(false);
 
   const handleError = (message: string) => {
@@ -127,31 +131,14 @@ export default function ProjectDetails() {
   useEffect(() => {
     const snippetId = searchParams.get("snippetId");
     if (snippetId?.length) {
-      loadCodeSnippet(snippetId);
+      loadCodeSnippet(snippetId).then();
     } else {
       setSelectedCodeSnippet(undefined);
     }
   }, [searchParams]);
 
-  function decodeBase64Utf8(encodedText: string) {
-    const binaryString = window.atob(encodedText);
-    const bytes = new Uint8Array(binaryString.length);
-    for (let i = 0; i < binaryString.length; i++) {
-      bytes[i] = binaryString.charCodeAt(i);
-    }
-    return new TextDecoder().decode(bytes);
-  }
-
-  function getCodeSnippetText(encodedText: string, startLine: string, endLine: string) {
-    const decodedText = decodeBase64Utf8(encodedText);
-    if (!startLine || !endLine || isNaN(parseInt(startLine)) || isNaN(parseInt(endLine))) {
-      return decodedText;
-    }
-    return decodedText.split("\n").slice(parseInt(startLine) - 1, parseInt(endLine)).join("\n");
-  }
-
   const [tabValue, setTabValue] = useState<string>("1");
-  const handleTabValueChange = (_event: React.SyntheticEvent, newValue: string) => {
+  const handleTabValueChange = (_event: SyntheticEvent, newValue: string) => {
     setTabValue(newValue);
     handleCodeSnippetClose();
   };
@@ -166,8 +153,6 @@ export default function ProjectDetails() {
       loading={loading} project={project} owner={owner} readme={readme}
       license={license} contributors={contributors} images={images}
       codeSnippets={codeSnippets}
-      codeSnippetLoading={codeSnippetLoading}
-      decodeBase64Utf8={decodeBase64Utf8}
-      getCodeSnippetText={getCodeSnippetText}/>
+      codeSnippetLoading={codeSnippetLoading}/>
   );
 };

@@ -85,7 +85,7 @@ export class GithubContentResponseDto {
   constructor(codeSnippetData: any) {
     this.displayedDescription = codeSnippetData?.displayedDescription;
     this.startLine = codeSnippetData?.startLine;
-    this.endLine = codeSnippetData?.encoding;
+    this.endLine = codeSnippetData?.endLine;
     this.name = codeSnippetData.name;
     this.path = codeSnippetData.path;
     this.sha = codeSnippetData.sha;

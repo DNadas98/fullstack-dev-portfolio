@@ -1,5 +1,9 @@
 import {GithubProjectOwnerResponseDto} from "./GithubProjectOwnerResponseDto.ts";
-import {GithubProjectLicenseResponseDto} from "./GithubProjectLicenseResponseDto.ts";
+
+interface LicenseDto {
+  name: string;
+  url: string;
+}
 
 export interface GithubProjectResponseDto {
   id: number;
@@ -15,7 +19,7 @@ export interface GithubProjectResponseDto {
   clone_url: string;
   homepage?: string;
   size: number;
-  license: GithubProjectLicenseResponseDto;
+  license: LicenseDto;
   stargazers_count: number;
   subscribers_count: number;
   watchers: number;
