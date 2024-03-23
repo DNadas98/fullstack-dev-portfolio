@@ -11,6 +11,7 @@ import { GithubCodeSnippetService } from "./service/GithubCodeSnippetService";
 import { AdminGithubCodeSnippetController } from "./controller/AdminGithubCodeSnippetController";
 import { ForwardModule } from "../forward/ForwardModule";
 import { GithubApiController } from "./controller/GithubApiController";
+import { GithubApiService } from "./service/GithubApiService";
 
 @Module({
   imports: [
@@ -20,7 +21,12 @@ import { GithubApiController } from "./controller/GithubApiController";
     UsersModule,
     ForwardModule
   ],
-  providers: [ProjectService, GithubUserService, GithubCodeSnippetService],
+  providers: [
+    ProjectService,
+    GithubUserService,
+    GithubCodeSnippetService,
+    GithubApiService
+  ],
   controllers: [
     AdminProjectController,
     AdminGithubUserController,
