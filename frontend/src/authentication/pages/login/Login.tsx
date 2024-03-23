@@ -48,7 +48,6 @@ export default function Login() {
         handleError(response.error);
         return;
       }
-      debugger;
 
       handleSuccess(response as AuthenticationDto);
     } catch (e) {

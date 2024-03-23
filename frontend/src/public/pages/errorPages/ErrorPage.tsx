@@ -5,12 +5,12 @@ function ErrorPage() {
     return (
         <Grid container minHeight="100vh" minWidth={"100%"} textAlign={"left"}
               alignItems="center" justifyContent="center">
-            <Grid item>
+          <Grid item xs={11}>
                 <Typography variant="h4" gutterBottom>
                     An error has occurred.
                 </Typography>
                 <Typography variant="h6" gutterBottom>
-                    Return to the homepage or try again later.
+                  Return to the Home Page, or try again later.
                 </Typography>
                 <Grid container spacing={1} mt={1} textAlign={"left"}>
                     <Grid item>

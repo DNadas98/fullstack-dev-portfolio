@@ -1,5 +1,15 @@
 import {
-  Avatar, Button, Grid, Link, Stack, Tab, Tooltip, Typography
+  Avatar,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Link,
+  Stack,
+  Tab,
+  Tooltip,
+  Typography,
+  useTheme
 } from "@mui/material";
 import LoadingSpinner from "../../../../common/utils/components/LoadingSpinner.tsx";
 import {GithubProjectResponseDto} from "../dto/GithubProjectResponseDto.ts";
@@ -34,6 +44,7 @@ interface ProjectDetailsPageProps {
 }
 
 export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
+  const theme = useTheme();
   return (
     <Grid container height={"100%"} flexGrow={1} justifyContent={"center"}
           alignItems={"top"} mt={4} whiteSpace={"break-all"} maxWidth={1000}>
@@ -116,11 +127,16 @@ export default function ProjectDetailsPage(props: ProjectDetailsPageProps) {
                   <Grid container justifyContent={"center"}>
                     <Grid item width={"fit-content"} maxWidth={"80vw"}
                           sx={{overflowX: "auto"}}>
-                      <Markdown className={"markdown-content"}
-                                remarkPlugins={[remarkGfm]}
-                                rehypePlugins={[rehypeRaw]}>
-                        {props.decodeBase64Utf8(props.readme.content)}
-                      </Markdown>
+                      <Card sx={{backgroundColor: theme.palette.background.default}}
+                            variant={"elevation"} elevation={10}>
+                        <CardContent>
+                          <Markdown className={"markdown-content"}
+                                    remarkPlugins={[remarkGfm]}
+                                    rehypePlugins={[rehypeRaw]}>
+                            {props.decodeBase64Utf8(props.readme.content)}
+                          </Markdown>
+                        </CardContent>
+                      </Card>
                     </Grid>
                   </Grid>
                 </TabPanel>

@@ -26,7 +26,7 @@ const AboutMe = () => {
           <Stack alignItems={"center"} justifyContent={"center"}
                  spacing={2} sx={{flexWrap: "wrap"}} marginBottom={10}>
             <Box>
-              <Typography variant={"h4"} sx={{whiteSpace: "nowrap"}} gutterBottom>
+              <Typography variant={"h3"} sx={{whiteSpace: "nowrap"}} gutterBottom>
                 Dániel Nádas
               </Typography>
               <Typography variant={"h6"}>
@@ -38,8 +38,8 @@ const AboutMe = () => {
         <Grid item xs={12} display="flex" justifyContent="center"
               sx={{transform: "translateY(-50%)", zIndex: 2}}>
           <Avatar src={"/profile-picture.png"}
-                  alt={"profile picture"}
-                  sx={{height: "8rem", width: "8rem"}}/>
+                  alt={" "}
+                  sx={{height: "9rem", width: "9rem"}}/>
         </Grid>
       </Grid>
       {/*<Grid container justifyContent={"center"} textAlign={"center"}>
@@ -168,7 +168,7 @@ const AboutMe = () => {
       <Grid container justifyContent={"center"} spacing={4} paddingTop={2}
             paddingBottom={2}>
         <Grid item xs={10} sm={8} md={5} lg={4}>
-          <Card style={{backgroundColor: "transparent"}}
+          <Card style={{backgroundColor: `${palette.background.default}`}}
                 sx={{height: "100%"}}>
             <CardHeader title={"Self Definition"}/>
             <CardContent>
@@ -188,7 +188,7 @@ const AboutMe = () => {
           </Card>
         </Grid>
         <Grid item xs={10} sm={8} md={5} lg={4}>
-          <Card style={{backgroundColor: "transparent"}}
+          <Card style={{backgroundColor: `${palette.background.default}`}}
                 sx={{height: "100%"}}>
             <CardHeader title={"Strengths"}/>
             <CardContent>

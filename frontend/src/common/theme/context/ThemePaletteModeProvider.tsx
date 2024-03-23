@@ -7,14 +7,14 @@ interface AppThemePaletteProviderProps {
 }
 
 const ThemePaletteModeContext = createContext<IThemePaletteModeContext>({
-  paletteMode: "light",
+  paletteMode: "dark",
   togglePaletteMode: () => {
   }
 });
 
 export function ThemePaletteModeProvider({children}: AppThemePaletteProviderProps) {
   const [paletteMode, setPaletteMode] = useState<PaletteMode>(
-    localStorage.getItem("paletteMode") as PaletteMode || "light"
+    localStorage.getItem("paletteMode") as PaletteMode || "dark"
   );
 
   useEffect(() => {

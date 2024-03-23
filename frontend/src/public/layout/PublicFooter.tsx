@@ -1,4 +1,4 @@
-import {AppBar, Divider, Link, Toolbar, Typography, useTheme} from "@mui/material";
+import {AppBar, Link, Toolbar, Typography, useTheme} from "@mui/material";
 import MenuSmall from "../../common/utils/components/MenuSmall.tsx";
 import {publicMenuRoutes} from "../../common/config/menu/publicMenuRoutes.tsx";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
@@ -11,8 +11,12 @@ export default function PublicFooter() {
   const menu: IMenuRoutes = publicMenuRoutes;
   const theme = useTheme();
   return (
-    <AppBar position="sticky" color="primary" sx={{top: "auto", bottom: 0, marginTop: 4}}>
-      <Divider color={theme.palette.secondary.main}/>
+    <AppBar position="sticky" color="primary"
+            sx={{
+              top: "auto", bottom: 0, marginTop: 4,
+              boxShadow: `0 1px 10px ${theme.palette.background.default}`
+            }}
+            variant={"elevation"} elevation={0}>
       <Toolbar sx={{justifyContent: "center"}}>
         <MenuSmall menu={menu}/>
         <Typography mr={2}>

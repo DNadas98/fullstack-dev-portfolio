@@ -1,4 +1,4 @@
-import {AppBar, Toolbar, useMediaQuery, useTheme} from "@mui/material";
+import {AppBar, Box, Toolbar, useMediaQuery, useTheme} from "@mui/material";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
 import ThemePaletteModeSwitch
   from "../../common/theme/components/ThemePaletteModeSwitch.tsx";
@@ -7,7 +7,7 @@ import MenuUserSmall from "../../common/utils/components/MenuUserSmall.tsx";
 import {userMenuRoutes} from "../../common/config/menu/userMenuRoutes.tsx";
 import MenuSmall from "../../common/utils/components/MenuSmall.tsx";
 import MenuLarge from "../../common/utils/components/MenuLarge.tsx";
-import SiteNameH6 from "../../common/utils/components/SiteNameH6.tsx";
+import SiteLogo from "../../common/utils/components/SiteLogo.tsx";
 
 export default function UserHeader() {
   const menu: IMenuRoutes = userMenuProfileRoutes;
@@ -16,9 +16,14 @@ export default function UserHeader() {
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
-    <AppBar position="static">
+    <AppBar position="static"
+            variant={"elevation"} elevation={0}
+            sx={{
+              boxShadow: `0 1px 10px ${theme.palette.background.default}`
+            }}>
       <Toolbar>
-        <SiteNameH6/>
+        <SiteLogo/>
+        <Box flexGrow={1}/>
         {isSmallScreen
           ? <MenuSmall menu={publicMenu}/>
           : <MenuLarge menu={publicMenu}/>

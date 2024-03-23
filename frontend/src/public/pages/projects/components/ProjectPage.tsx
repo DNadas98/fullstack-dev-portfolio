@@ -1,6 +1,15 @@
 import {
-  Button, Card, CardActions, CardContent, CardHeader, Divider, Grid, Stack,
-  Typography, useTheme
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Divider,
+  Grid,
+  Stack,
+  Tooltip,
+  Typography,
+  useTheme
 } from "@mui/material";
 import LoadingSpinner from "../../../../common/utils/components/LoadingSpinner.tsx";
 import {GithubProjectResponseDto} from "../dto/GithubProjectResponseDto.ts";
@@ -18,9 +27,28 @@ export default function ProjectPage(props: ProjectPageProps) {
     <Grid container height={"100%"} flexGrow={1} justifyContent={"center"}
           alignItems={"center"} mt={4} textAlign={"center"} whiteSpace={"break-all"}>
       <Grid item xs={11}>
-        <Typography variant={"h5"} mb={4}>
+        <Typography variant={"h4"} mb={4}>
           Projects
         </Typography>
+        <Stack justifyContent={"center"} alignItems={"center"} textAlign={"justify"}
+               marginBottom={4} spacing={1}>
+          <Typography maxWidth={1000}>
+            Here You can see my current public projects, presented dynamically using my
+            <Tooltip
+              title={"GitHub, a popular platform for hosting and sharing code, allows developers to collaborate and track changes to their projects."}
+              arrow describeChild color={"inherit"}>
+              <span>{" GitHub REST API* "}</span>
+            </Tooltip>
+            integration. Metadata, such as displayed project names and filenames are
+            stored in a database and managed by my backend API.
+            Using these, the most current details, statistics, and
+            associated code snippets are fetched directly from GitHub.
+            I have created this showcase for You to get a streamlined view of my work,
+            saving You time and making it easier to discover each project's key
+            features.
+          </Typography>
+        </Stack>
+
         {
           props.loading
             ? <LoadingSpinner/>

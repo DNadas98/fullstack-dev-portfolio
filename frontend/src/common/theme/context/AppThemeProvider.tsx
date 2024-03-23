@@ -3,6 +3,7 @@ import {ReactNode} from "react";
 import {CssBaseline} from "@mui/material";
 import useThemePaletteMode from "./ThemePaletteModeProvider.tsx";
 import {darkPalette, lightPalette} from "../../config/colorPaletteConfig.ts";
+import {PaletteOptions} from "@mui/material/styles/createPalette";
 
 interface AppThemeProviderProps {
   children: ReactNode;
@@ -10,10 +11,13 @@ interface AppThemeProviderProps {
 
 export function AppThemeProvider({children}: AppThemeProviderProps) {
   const paletteMode = useThemePaletteMode().paletteMode;
+  const light: PaletteOptions = lightPalette;
+  const dark: PaletteOptions = darkPalette;
+
   const theme = createTheme({
     palette: paletteMode === "light"
-      ? lightPalette
-      : darkPalette,
+      ? light
+      : dark,
     components: {
       MuiCssBaseline: {
         styleOverrides: {
@@ -35,6 +39,42 @@ export function AppThemeProvider({children}: AppThemeProviderProps) {
           standardError: {color: "error"}
         },
         defaultProps: {variant: "standard"}
+      },
+      MuiTextField: {
+        defaultProps: {
+          InputLabelProps: {
+            style: {color: paletteMode === "light" ? light.text?.primary : dark.text?.primary}
+          },
+          InputProps: {
+            style: {color: paletteMode === "light" ? light.text?.primary : dark.text?.primary}
+          }
+        }
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            "& $notchedOutline": {
+              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+            },
+            "&:hover $notchedOutline": {
+              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+            },
+            "&$focused $notchedOutline": {
+              borderColor: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+            }
+          },
+          notchedOutline: {}
+        }
+      },
+      MuiInputLabel: {
+        styleOverrides: {
+          root: {
+            color: paletteMode === "light" ? light.text?.primary : dark.text?.primary,
+            "&$focused": {
+              color: paletteMode === "light" ? light.text?.primary : dark.text?.primary
+            }
+          }
+        }
       }
     }
   });

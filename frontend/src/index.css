@@ -11,3 +11,12 @@
 .markdown-content code {
   color: darkgoldenrod;
 }
+
+#layout-box {
+  background: url("/background.svg");
+  background-blend-mode: color-burn;
+  background-repeat: repeat-y;
+  background-position-x: center;
+  background-position-y: top;
+  background-size: 100vw;
+}
