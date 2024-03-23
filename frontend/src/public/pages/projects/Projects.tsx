@@ -21,17 +21,19 @@ export default function Projects() {
   };
 
   async function loadProjects() {
+    const defaultError =
+      "Project data is currently unavailable, please try again later";
     try {
       setLoading(true);
       const response = await publicJsonFetch({
         path: "github/projects"
       });
       if (!response || response.status > 399 || !response.data) {
-        handleError(response?.error ?? "Failed to load projects, please try again later");
+        handleError(response?.error ?? defaultError);
       }
       setProjects(response.data as GithubProjectResponseDto[]);
     } catch (e) {
-      handleError("Failed to load projects, please try again later");
+      handleError(defaultError);
     } finally {
       setLoading(false);
     }

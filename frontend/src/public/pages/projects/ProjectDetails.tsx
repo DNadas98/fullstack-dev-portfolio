@@ -37,7 +37,8 @@ export default function ProjectDetails() {
   };
 
   async function loadProjects() {
-    const defaultError = "Failed to load project details, please try again later";
+    const defaultError =
+      "The details of the selected project are currently unavailable, please try again later";
     try {
       setLoading(true);
       if (!projectName?.length) {
@@ -98,7 +99,8 @@ export default function ProjectDetails() {
   };
 
   const loadCodeSnippet = async (id: string) => {
-    const defaultError = "Failed to load code snippet, please try again later";
+    const defaultError =
+      "This code snippet is currently unavailable, please try again later";
     try {
       setCodeSnippetLoading(true);
       if (!id || isNaN(parseInt(id)) || parseInt(id) < 1) {

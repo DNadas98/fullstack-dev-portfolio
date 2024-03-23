@@ -25,7 +25,8 @@ export default function Login() {
       type: "error",
       vertical: "top",
       horizontal: "center",
-      message: error ?? "An error has occurred during the sign up process"
+      message: error ??
+        "The authentication service is currently unavailable, please try again later"
     });
   };
 
