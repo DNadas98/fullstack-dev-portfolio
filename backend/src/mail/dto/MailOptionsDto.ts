@@ -1,4 +1,4 @@
-import {IsEmail, IsNotEmpty, IsString, MaxLength} from "class-validator";
+import { IsEmail, IsNotEmpty, IsString, MaxLength } from "class-validator";
 
 /**
  * @param to should be a valid email
@@ -34,7 +34,14 @@ export class MailOptionsDto {
 
   readonly isHtml: boolean;
 
-  constructor(to: string, subject: string, content: string, isHtml: boolean, replyTo: string, name: string) {
+  constructor(
+    to: string,
+    subject: string,
+    content: string,
+    isHtml: boolean,
+    replyTo: string,
+    name: string
+  ) {
     this.to = to;
     this.replyTo = replyTo;
     this.subject = subject;

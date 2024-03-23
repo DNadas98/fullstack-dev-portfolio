@@ -1,8 +1,8 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import {AdminProjectController} from "../../../src/projects/controller/AdminProjectController";
-import {ProjectService} from "../../../src/projects/service/ProjectService";
-import {IJwtService} from "../../../src/auth/service/IJwtService";
-import {UserService} from "../../../src/users/service/UserService";
+import { AdminProjectController } from "../../../src/projects/controller/AdminProjectController";
+import { ProjectService } from "../../../src/projects/service/ProjectService";
+import { IJwtService } from "../../../src/auth/service/IJwtService";
+import { UserService } from "../../../src/users/service/UserService";
 
 describe("AdminProjectController", () => {
   let controller: AdminProjectController;

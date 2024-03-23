@@ -1,5 +1,5 @@
-import {ForbiddenException} from "@nestjs/common";
-import {CorsOptions} from "@nestjs/common/interfaces/external/cors-options.interface";
+import { ForbiddenException } from "@nestjs/common";
+import { CorsOptions } from "@nestjs/common/interfaces/external/cors-options.interface";
 
 /**
  * Cross Origin Resource Sharing configuration options
@@ -9,7 +9,9 @@ import {CorsOptions} from "@nestjs/common/interfaces/external/cors-options.inter
  * <br>
  * TODO: remove !origin -- only for development
  */
-export function getCorsConfig(allowedOrigins: string[] | null = null): CorsOptions {
+export function getCorsConfig(
+  allowedOrigins: string[] | null = null
+): CorsOptions {
   return {
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     origin: (origin, callback) => {

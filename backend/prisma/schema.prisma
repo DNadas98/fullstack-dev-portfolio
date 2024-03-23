@@ -32,6 +32,7 @@ model GithubRepository {
   ownerId       Int
   contributors  GithubUser[]        @relation(name: "Contributors")
   name          String              @unique
+  displayName   String
   branchName    String
   readmePath    String?
   readmeFormat  String?
@@ -58,7 +59,7 @@ model GithubCodeSnippet {
   format             String
   startLine          Int
   endLine            Int
-  description        String
+  description        String           @db.VarChar(1000)
   githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }
@@ -66,6 +67,7 @@ model GithubCodeSnippet {
 model ProjectImage {
   id                 Int              @id @default(autoincrement())
   src                String           @unique
+  alt                String
   githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
   githubRepositoryId Int
 }

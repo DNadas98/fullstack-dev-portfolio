@@ -1,0 +1,25 @@
+.markdown-content a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.markdown-content img {
+  max-width: 100%;
+  height: auto;
+}
+
+.markdown-content code {
+  color: darkgoldenrod;
+}
+
+#root {
+  background: url("/background.svg") no-repeat center top;
+  background-blend-mode: color-burn;
+  background-size: 1920px auto;
+}
+
+@media (min-width: 1920px) {
+  #root {
+    background-size: 100% auto;
+  }
+}

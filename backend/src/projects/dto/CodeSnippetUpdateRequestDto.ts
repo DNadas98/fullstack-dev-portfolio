@@ -1,6 +1,6 @@
-import {IsInt, IsNotEmpty, IsOptional, IsString, Min} from "class-validator";
+import { IsInt, IsNotEmpty, IsOptional, IsString, Min } from "class-validator";
 
-export class GithubCodeSnippetUpdateRequestDto {
+export class CodeSnippetUpdateRequestDto {
   @IsOptional()
   @IsString()
   @IsNotEmpty()
@@ -47,9 +47,13 @@ export class GithubCodeSnippetUpdateRequestDto {
    * @param githubRepositoryId
    */
   constructor(
-    displayName: string | null = null, filePath: string | null = null, format: string | null = null,
-    startLine: number | null = null, endLine: number | null = null,
-    description: string | null = null, githubRepositoryId: number | null = null
+    displayName: string | null = null,
+    filePath: string | null = null,
+    format: string | null = null,
+    startLine: number | null = null,
+    endLine: number | null = null,
+    description: string | null = null,
+    githubRepositoryId: number | null = null
   ) {
     this.displayName = displayName;
     this.filePath = filePath;

@@ -1,4 +1,4 @@
-export class GithubCodeSnippetResponseDto {
+export class CodeSnippetResponseDto {
   readonly id: number;
   readonly createdAt: Date;
   readonly updatedAt: Date;
@@ -11,9 +11,16 @@ export class GithubCodeSnippetResponseDto {
   readonly githubRepositoryId: number;
 
   constructor(
-    id: number, createdAt: Date, updatedAt: Date, displayName: string,
-    filePath: string, format: string, startLine: number, endLine: number,
-    description: string, githubRepositoryId: number
+    id: number,
+    createdAt: Date,
+    updatedAt: Date,
+    displayName: string,
+    filePath: string,
+    format: string,
+    startLine: number,
+    endLine: number,
+    description: string,
+    githubRepositoryId: number
   ) {
     this.id = id;
     this.createdAt = createdAt;

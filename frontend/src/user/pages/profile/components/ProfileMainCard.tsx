@@ -10,7 +10,7 @@ interface ProfileMainCardProps {
 
 export default function ProfileMainCard(props: ProfileMainCardProps) {
   return (
-    <Card>
+    <Card variant={"elevation"} elevation={10}>
       <CardHeader avatar={<AccountBoxRounded color={"secondary"}/>}
                   title={props.username} titleTypographyProps={{"variant": "h6"}}
                   subtitle={props.email}>

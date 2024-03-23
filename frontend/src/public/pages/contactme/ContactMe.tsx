@@ -3,7 +3,7 @@ import {
 } from "../../../common/notification/context/NotificationProvider.tsx";
 import {FormEvent, useState} from "react";
 import {publicJsonFetch} from "../../../common/api/service/apiService.ts";
-import ContactFormRequestDto from "../../dto/ContactFormRequestDto.ts";
+import ContactFormRequestDto from "./dto/ContactFormRequestDto.ts";
 import ContactMePage from "./components/ContactMePage.tsx";
 
 export default function ContactMe() {

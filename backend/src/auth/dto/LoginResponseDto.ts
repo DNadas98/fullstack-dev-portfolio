@@ -1,4 +1,4 @@
-import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
+import { UserResponsePrivateDto } from "../../users/dto/UserResponsePrivateDto";
 
 export class LoginResponseDto {
   readonly user: UserResponsePrivateDto;

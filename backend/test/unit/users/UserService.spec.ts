@@ -1,19 +1,17 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {UserService} from "../../../src/users/service/UserService";
-import {DatabaseService} from "../../../src/database/service/DatabaseService";
-import {createMockContext, MockContext} from "../database/mock/context";
-import {Role} from "@prisma/client";
-import {IPasswordEncoder} from "../../../src/auth/service/IPasswordEncoder";
-import {UserResponsePublicDto} from "../../../src/users/dto/UserResponsePublicDto";
-import {UserResponsePrivateDto} from "../../../src/users/dto/UserResponsePrivateDto";
-import {AccountNotFoundError} from "../../../src/auth/error/AccountNotFoundError";
-import {AccountDeactivatedError} from "../../../src/auth/error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../../../src/auth/error/AccountNotEnabledError";
-import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
-import {UniqueConstraintError} from "../../../src/common/error/UniqueConstraintError";
-import {
-  DtoConverterService
-} from "../../../src/common/converter/service/DtoConverterService";
+import { Test, TestingModule } from "@nestjs/testing";
+import { UserService } from "../../../src/users/service/UserService";
+import { DatabaseService } from "../../../src/database/service/DatabaseService";
+import { createMockContext, MockContext } from "../database/mock/context";
+import { Role } from "@prisma/client";
+import { IPasswordEncoder } from "../../../src/auth/service/IPasswordEncoder";
+import { UserResponsePublicDto } from "../../../src/users/dto/UserResponsePublicDto";
+import { UserResponsePrivateDto } from "../../../src/users/dto/UserResponsePrivateDto";
+import { AccountNotFoundError } from "../../../src/auth/error/AccountNotFoundError";
+import { AccountDeactivatedError } from "../../../src/auth/error/AccountDeactivatedError";
+import { AccountNotEnabledError } from "../../../src/auth/error/AccountNotEnabledError";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { UniqueConstraintError } from "../../../src/common/error/UniqueConstraintError";
+import { DtoConverterService } from "../../../src/common/converter/service/DtoConverterService";
 
 describe("UserService", () => {
   let service: UserService;
@@ -62,9 +60,10 @@ describe("UserService", () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        UserService, DtoConverterService,
-        {provide: DatabaseService, useValue: mockPrismaCtx.prisma},
-        {provide: IPasswordEncoder, useValue: mockPasswordEncoder}
+        UserService,
+        DtoConverterService,
+        { provide: DatabaseService, useValue: mockPrismaCtx.prisma },
+        { provide: IPasswordEncoder, useValue: mockPasswordEncoder }
       ]
     }).compile();
 
@@ -79,11 +78,9 @@ describe("UserService", () => {
     expect(service).toBeDefined();
   });
 
-  describe("UserService toUserResponsePrivateDto", () => {
-  });
+  describe("UserService toUserResponsePrivateDto", () => {});
 
-  describe("UserService toUserResponsePublicDto", () => {
-  });
+  describe("UserService toUserResponsePublicDto", () => {});
 
   describe("UserService readAll", () => {
     it("should return an array of UserResponsePublicDto objects when users are found", async () => {
@@ -120,7 +117,7 @@ describe("UserService", () => {
       expect(result.id).toEqual(mockUsers[0].id);
       expect(result.email).toEqual(mockUsers[0].email);
       expect(mockPrismaCtx.prisma.user.findUnique).toHaveBeenCalledWith({
-        where: {id: userId}
+        where: { id: userId }
       });
     });
 
@@ -128,7 +125,9 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.readById(userId)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.readById(userId)).rejects.toThrow(
+        AccountNotFoundError
+      );
     });
   });
 
@@ -142,7 +141,7 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(result.email).toEqual(userEmail);
       expect(mockPrismaCtx.prisma.user.findUnique).toHaveBeenCalledWith({
-        where: {email: userEmail}
+        where: { email: userEmail }
       });
     });
 
@@ -150,23 +149,29 @@ describe("UserService", () => {
       const userEmail = "nonexistent@example.com";
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.readByEmail(userEmail)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.readByEmail(userEmail)).rejects.toThrow(
+        AccountNotFoundError
+      );
     });
 
     it("should throw AccountDeactivatedError if the user's account is not active", async () => {
       const inactiveUserEmail = mockUsers[0].email;
-      const inactiveUser = {...mockUsers[0], active: false};
+      const inactiveUser = { ...mockUsers[0], active: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(inactiveUser);
 
-      await expect(service.readByEmail(inactiveUserEmail)).rejects.toThrow(AccountDeactivatedError);
+      await expect(service.readByEmail(inactiveUserEmail)).rejects.toThrow(
+        AccountDeactivatedError
+      );
     });
 
     it("should throw AccountNotEnabledError if the user's account is not enabled", async () => {
       const notEnabledUserEmail = mockUsers[0].email;
-      const notEnabledUser = {...mockUsers[0], enabled: false};
+      const notEnabledUser = { ...mockUsers[0], enabled: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(notEnabledUser);
 
-      await expect(service.readByEmail(notEnabledUserEmail)).rejects.toThrow(AccountNotEnabledError);
+      await expect(service.readByEmail(notEnabledUserEmail)).rejects.toThrow(
+        AccountNotEnabledError
+      );
     });
   });
 
@@ -174,7 +179,7 @@ describe("UserService", () => {
     it("should successfully update the username of an existing user", async () => {
       const userId = 1;
       const newUsername = "UpdatedUser";
-      const updatedUser = {...mockUsers[0], username: newUsername};
+      const updatedUser = { ...mockUsers[0], username: newUsername };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
       mockPrismaCtx.prisma.user.update.mockResolvedValue(updatedUser);
 
@@ -183,8 +188,8 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(result.username).toEqual(newUsername);
       expect(mockPrismaCtx.prisma.user.update).toHaveBeenCalledWith({
-        where: {id: userId},
-        data: {username: newUsername}
+        where: { id: userId },
+        data: { username: newUsername }
       });
     });
 
@@ -193,23 +198,29 @@ describe("UserService", () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
       mockPrismaCtx.prisma.user.update.mock;
 
-      await expect(service.updateUsernameById(userId, "NewUsername")).rejects.toThrow(AccountNotFoundError);
+      await expect(
+        service.updateUsernameById(userId, "NewUsername")
+      ).rejects.toThrow(AccountNotFoundError);
     });
 
     it("should throw AccountDeactivatedError if the user's account is not active", async () => {
       const inactiveUserId = mockUsers[0].id;
-      const inactiveUser = {...mockUsers[0], active: false};
+      const inactiveUser = { ...mockUsers[0], active: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(inactiveUser);
 
-      await expect(service.updateUsernameById(inactiveUserId, "NewUsername")).rejects.toThrow(AccountDeactivatedError);
+      await expect(
+        service.updateUsernameById(inactiveUserId, "NewUsername")
+      ).rejects.toThrow(AccountDeactivatedError);
     });
 
     it("should throw AccountNotEnabledError if the user's account is not enabled", async () => {
       const notEnabledUserId = mockUsers[0].id;
-      const notEnabledUser = {...mockUsers[0], enabled: false};
+      const notEnabledUser = { ...mockUsers[0], enabled: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(notEnabledUser);
 
-      await expect(service.updateUsernameById(notEnabledUserId, "NewUsername")).rejects.toThrow(AccountNotEnabledError);
+      await expect(
+        service.updateUsernameById(notEnabledUserId, "NewUsername")
+      ).rejects.toThrow(AccountNotEnabledError);
     });
   });
 
@@ -218,7 +229,7 @@ describe("UserService", () => {
 
     it("should successfully update the e-mail of an existing user", async () => {
       const userId = 1;
-      const updatedUser = {...mockUsers[0], email: newEmail};
+      const updatedUser = { ...mockUsers[0], email: newEmail };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
       mockPrismaCtx.prisma.user.update.mockResolvedValue(updatedUser);
 
@@ -227,8 +238,8 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(result.email).toEqual(newEmail);
       expect(mockPrismaCtx.prisma.user.update).toHaveBeenCalledWith({
-        where: {id: userId},
-        data: {email: newEmail}
+        where: { id: userId },
+        data: { email: newEmail }
       });
     });
 
@@ -236,34 +247,44 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.updateEmailById(userId, newEmail)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.updateEmailById(userId, newEmail)).rejects.toThrow(
+        AccountNotFoundError
+      );
     });
 
     it("should throw AccountDeactivatedError if the user's account is not active", async () => {
       const inactiveUserId = mockUsers[0].id;
-      const inactiveUser = {...mockUsers[0], active: false};
+      const inactiveUser = { ...mockUsers[0], active: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(inactiveUser);
 
-      await expect(service.updateEmailById(inactiveUserId, newEmail)).rejects.toThrow(AccountDeactivatedError);
+      await expect(
+        service.updateEmailById(inactiveUserId, newEmail)
+      ).rejects.toThrow(AccountDeactivatedError);
     });
 
     it("should throw AccountNotEnabledError if the user's account is not enabled", async () => {
       const notEnabledUserId = mockUsers[0].id;
-      const notEnabledUser = {...mockUsers[0], enabled: false};
+      const notEnabledUser = { ...mockUsers[0], enabled: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(notEnabledUser);
 
-      await expect(service.updateEmailById(notEnabledUserId, newEmail)).rejects.toThrow(AccountNotEnabledError);
+      await expect(
+        service.updateEmailById(notEnabledUserId, newEmail)
+      ).rejects.toThrow(AccountNotEnabledError);
     });
 
     it("should throw UniqueConstraintError for an already existing username", async () => {
       const userId = mockUsers[0].id;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
-      mockPrismaCtx.prisma.user.update.mockRejectedValue(new PrismaClientKnownRequestError("", {
-        code: "P2002",
-        clientVersion: ""
-      }));
+      mockPrismaCtx.prisma.user.update.mockRejectedValue(
+        new PrismaClientKnownRequestError("", {
+          code: "P2002",
+          clientVersion: ""
+        })
+      );
 
-      await expect(service.updateEmailById(userId, mockUsers[1].email)).rejects.toThrow(UniqueConstraintError);
+      await expect(
+        service.updateEmailById(userId, mockUsers[1].email)
+      ).rejects.toThrow(UniqueConstraintError);
     });
   });
 
@@ -274,7 +295,7 @@ describe("UserService", () => {
     it("should successfully update the user's password", async () => {
       const userId = 1;
       mockPasswordEncoder.hash.mockResolvedValue(newHashedPassword);
-      const updatedUser = {...mockUsers[0], password: newHashedPassword};
+      const updatedUser = { ...mockUsers[0], password: newHashedPassword };
 
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
       mockPrismaCtx.prisma.user.update.mockResolvedValue(updatedUser);
@@ -284,8 +305,8 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(mockPasswordEncoder.hash).toHaveBeenCalledWith(newPassword);
       expect(mockPrismaCtx.prisma.user.update).toHaveBeenCalledWith({
-        where: {id: userId},
-        data: {password: newHashedPassword}
+        where: { id: userId },
+        data: { password: newHashedPassword }
       });
     });
 
@@ -293,23 +314,29 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.updatePasswordById(userId, newPassword)).rejects.toThrow(AccountNotFoundError);
+      await expect(
+        service.updatePasswordById(userId, newPassword)
+      ).rejects.toThrow(AccountNotFoundError);
     });
 
     it("should throw AccountDeactivatedError if the user's account is not active", async () => {
       const inactiveUserId = mockUsers[0].id;
-      const inactiveUser = {...mockUsers[0], active: false};
+      const inactiveUser = { ...mockUsers[0], active: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(inactiveUser);
 
-      await expect(service.updatePasswordById(inactiveUserId, newPassword)).rejects.toThrow(AccountDeactivatedError);
+      await expect(
+        service.updatePasswordById(inactiveUserId, newPassword)
+      ).rejects.toThrow(AccountDeactivatedError);
     });
 
     it("should throw AccountNotEnabledError if the user's account is not enabled", async () => {
       const notEnabledUserId = mockUsers[0].id;
-      const notEnabledUser = {...mockUsers[0], enabled: false};
+      const notEnabledUser = { ...mockUsers[0], enabled: false };
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(notEnabledUser);
 
-      await expect(service.updatePasswordById(notEnabledUserId, newPassword)).rejects.toThrow(AccountNotEnabledError);
+      await expect(
+        service.updatePasswordById(notEnabledUserId, newPassword)
+      ).rejects.toThrow(AccountNotEnabledError);
     });
   });
 
@@ -317,7 +344,7 @@ describe("UserService", () => {
     it("should successfully update the user's active status", async () => {
       const userId = 1;
       const newActiveStatus = false;
-      const updatedUser = {...mockUsers[0], active: newActiveStatus};
+      const updatedUser = { ...mockUsers[0], active: newActiveStatus };
 
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
       mockPrismaCtx.prisma.user.update.mockResolvedValue(updatedUser);
@@ -327,8 +354,8 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(result.active).toEqual(newActiveStatus);
       expect(mockPrismaCtx.prisma.user.update).toHaveBeenCalledWith({
-        where: {id: userId},
-        data: {active: newActiveStatus}
+        where: { id: userId },
+        data: { active: newActiveStatus }
       });
     });
 
@@ -336,7 +363,9 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.updateIsActive(userId, true)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.updateIsActive(userId, true)).rejects.toThrow(
+        AccountNotFoundError
+      );
     });
   });
 
@@ -344,7 +373,7 @@ describe("UserService", () => {
     it("should successfully update the user's enabled status", async () => {
       const userId = 1;
       const newEnabledStatus = false;
-      const updatedUser = {...mockUsers[0], active: newEnabledStatus};
+      const updatedUser = { ...mockUsers[0], active: newEnabledStatus };
 
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUsers[0]);
       mockPrismaCtx.prisma.user.update.mockResolvedValue(updatedUser);
@@ -354,8 +383,8 @@ describe("UserService", () => {
       expect(result).toBeInstanceOf(UserResponsePrivateDto);
       expect(result.active).toEqual(newEnabledStatus);
       expect(mockPrismaCtx.prisma.user.update).toHaveBeenCalledWith({
-        where: {id: userId},
-        data: {enabled: newEnabledStatus}
+        where: { id: userId },
+        data: { enabled: newEnabledStatus }
       });
     });
 
@@ -363,7 +392,9 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.updateIsEnabled(userId, true)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.updateIsEnabled(userId, true)).rejects.toThrow(
+        AccountNotFoundError
+      );
     });
   });
 
@@ -376,7 +407,7 @@ describe("UserService", () => {
       await expect(service.deleteById(userId)).resolves.not.toThrow();
 
       expect(mockPrismaCtx.prisma.user.delete).toHaveBeenCalledWith({
-        where: {id: userId}
+        where: { id: userId }
       });
     });
 
@@ -384,7 +415,9 @@ describe("UserService", () => {
       const userId = 3;
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(null);
 
-      await expect(service.deleteById(userId)).rejects.toThrow(AccountNotFoundError);
+      await expect(service.deleteById(userId)).rejects.toThrow(
+        AccountNotFoundError
+      );
 
       expect(mockPrismaCtx.prisma.user.delete).not.toHaveBeenCalled();
     });

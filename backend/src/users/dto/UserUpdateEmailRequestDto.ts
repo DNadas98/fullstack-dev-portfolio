@@ -1,8 +1,8 @@
-import {Matches} from "class-validator";
-import {emailRegex} from "../../common/validator/validator";
+import { Matches } from "class-validator";
+import { emailRegex } from "../../common/validator/validator";
 
 export class UserUpdateEmailRequestDto {
-  @Matches(emailRegex, {message: "Invalid e-mail address format"})
+  @Matches(emailRegex, { message: "Invalid e-mail address format" })
   readonly email: string;
 
   constructor(email: string) {

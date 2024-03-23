@@ -4,7 +4,7 @@ interface ISiteConfig {
 }
 
 const siteConfig: ISiteConfig = {
-  siteName: "Portfolio",
+  siteName: "dnadas.net",
   githubRepoUrl: "https://github.com/DNadas98/fullstack-dev-portfolio"
 };
 

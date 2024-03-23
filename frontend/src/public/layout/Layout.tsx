@@ -11,7 +11,7 @@ function Layout() {
   return (
     <Box sx={{display: "flex", flexDirection: "column", minHeight: "100vh"}}>
       {isAuthenticated ? <UserHeader/> : <PublicHeader/>}
-      <Box sx={{
+      <Box id={"layout-box"} sx={{
         flexGrow: 1,
         display: "flex",
         flexDirection: "column",

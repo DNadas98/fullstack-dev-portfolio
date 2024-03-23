@@ -54,12 +54,12 @@ export function useAuthJsonFetch() {
         const refreshResponseDto = await refresh();
 
         // If the refresh token is also expired:
-        if (!refreshResponseDto?.bearerToken) {
+        if (!(refreshResponseDto as any)?.bearerToken) {
           return await notifyAndLogout(httpResponse, refreshResponseDto.error);
         }
         httpResponse = await authenticatedFetch(
           `${baseUrl}/${request.path}`, requestConfig,
-          refreshResponseDto.bearerToken);
+          (refreshResponseDto as any).bearerToken);
         responseObject = await httpResponse?.json();
       }
 
@@ -101,10 +101,9 @@ function verifyHttpResponse(httpResponse: Response): void {
 }
 
 function handleUnknownError(): ApiResponseDto {
-  console.error("Failed to load requested resource");
   return {
     status: 500,
-    error: "An unknown error has occurred"
+    error: undefined
   };
 }
 

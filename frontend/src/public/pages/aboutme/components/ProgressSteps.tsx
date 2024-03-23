@@ -39,7 +39,7 @@ export default function ProgressSteps(props: CodecoolStudyProgressProps) {
         }
         return prevProgress;
       });
-    }, 200);
+    }, 150);
     return () => {
       clearInterval(timer);
     };
@@ -65,11 +65,11 @@ export default function ProgressSteps(props: CodecoolStudyProgressProps) {
               sx: {
                 padding: 0.2,
                 borderRadius: "50%",
-                backgroundColor: `${theme.palette.text.primary}`,
+                backgroundColor: `${theme.palette.secondary.main}`,
                 color: `${theme.palette.primary.main}`
               }
             }}>
-              <Card
+              <Card variant={"elevation"} elevation={10}
                 sx={{maxWidth: isSmallScreen ? "20rem" : "100%", margin: "0 auto"}}>
                 <CardHeader title={step.title} titleTypographyProps={{variant: "body1"}}/>
                 <CardContent>

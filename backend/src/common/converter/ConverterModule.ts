@@ -1,5 +1,5 @@
-import {Module} from "@nestjs/common";
-import {DtoConverterService} from "./service/DtoConverterService";
+import { Module } from "@nestjs/common";
+import { DtoConverterService } from "./service/DtoConverterService";
 
 @Module({
   providers: [DtoConverterService],

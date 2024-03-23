@@ -16,13 +16,12 @@ export default function LinearProgressBar(props: LinearProgressBarProps) {
         {`${Math.round(props.progress ?? 0)} % `}
       </Typography>
       <LinearProgress value={props.progress}
-                      variant="determinate"
+                      variant={"determinate"}
                       color={"primary"}
                       sx={{
                         height: 8,
-                        backgroundColor: theme.palette.text.primary,
-                        border: `0.5px solid ${theme.palette.text.primary}`,
-                        borderRadius: 0.5,
+                        backgroundColor: theme.palette.secondary.main
+                        ,
                         "& .MuiLinearProgress-bar": {
                           backgroundColor: theme.palette.primary.main
                         }

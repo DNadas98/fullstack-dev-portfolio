@@ -1,38 +1,28 @@
-import {
-  AppBar,
-  Divider,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from "@mui/material";
+import {AppBar, Box, Toolbar, useMediaQuery, useTheme} from "@mui/material";
 import {IMenuRoutes} from "../../common/routing/IMenuRoutes.ts";
 import {publicMenuRoutes} from "../../common/config/menu/publicMenuRoutes.tsx";
-import ThemePaletteModeSwitch
-  from "../../common/theme/components/ThemePaletteModeSwitch.tsx";
 import MenuSmall from "../../common/utils/components/MenuSmall.tsx";
 import MenuLarge from "../../common/utils/components/MenuLarge.tsx";
-import siteConfig from "../../common/config/siteConfig.ts";
+import SiteLogo from "../../common/utils/components/SiteLogo.tsx";
 
 export default function PublicHeader() {
-  const theme = useTheme();
-  const {siteName} = siteConfig;
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const menu: IMenuRoutes = publicMenuRoutes;
-
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <AppBar position="static">
+    <AppBar position="static"
+            variant={"elevation"} elevation={0}
+            sx={{
+              boxShadow: `0 1px 10px ${theme.palette.background.default}`
+            }}>
       <Toolbar>
-        <Typography variant={"h6"} flexGrow={1}>
-          {siteName}
-        </Typography>
+        <SiteLogo/>
+        <Box flexGrow={1}/>
         {isSmallScreen
             ? <MenuSmall menu={menu}/>
             : <MenuLarge menu={menu}/>
         }
-        <ThemePaletteModeSwitch/>
       </Toolbar>
-      <Divider color={theme.palette.secondary.main}/>
     </AppBar>
   );
 }

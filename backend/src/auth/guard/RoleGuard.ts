@@ -1,8 +1,13 @@
-import {CanActivate, ExecutionContext, Injectable, SetMetadata} from "@nestjs/common";
-import {UnauthorizedError} from "../error/UnauthorizedError";
-import {UserResponsePrivateDto} from "../../users/dto/UserResponsePrivateDto";
-import {Role} from "@prisma/client";
-import {Reflector} from "@nestjs/core";
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  SetMetadata
+} from "@nestjs/common";
+import { UnauthorizedError } from "../error/UnauthorizedError";
+import { UserResponsePrivateDto } from "../../users/dto/UserResponsePrivateDto";
+import { Role } from "@prisma/client";
+import { Reflector } from "@nestjs/core";
 
 const ROLES_KEY = "roles";
 export const Roles = (...roles: Role[]) => SetMetadata(ROLES_KEY, roles);

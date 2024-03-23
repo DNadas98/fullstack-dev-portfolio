@@ -1,5 +1,5 @@
-import {Injectable} from "@nestjs/common";
-import {IPasswordEncoder} from "./IPasswordEncoder";
+import { Injectable } from "@nestjs/common";
+import { IPasswordEncoder } from "./IPasswordEncoder";
 import * as bcrypt from "bcrypt";
 
 @Injectable()

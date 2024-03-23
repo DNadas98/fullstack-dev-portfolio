@@ -9,8 +9,8 @@ import {
   Typography
 } from "@mui/material";
 import {FormEventHandler} from "react";
-import {GitHub, LinkedIn, MailOutline} from "@mui/icons-material";
-import ContactFormRequestDto from "../../../dto/ContactFormRequestDto.ts";
+import {AlternateEmailOutlined, GitHub, LinkedIn, MailOutline} from "@mui/icons-material";
+import ContactFormRequestDto from "../dto/ContactFormRequestDto.ts";
 import ContactElement from "./ContactElement.tsx";
 
 interface ContactMePageProps {
@@ -23,17 +23,22 @@ interface ContactMePageProps {
 export default function ContactMePage(props: ContactMePageProps) {
   return (
     <Grid container justifyContent={"center"} alignItems={"center"} flexGrow={1}
-          spacing={2} sx={{mt: 2, mb: 4}} minWidth={"fit-content"}>
+          spacing={2} sx={{mt: 2}} minWidth={"fit-content"}>
       <Grid item xs={11} sm={11} md={10} lg={9}>
-        <Card sx={{
+        <Card variant={"elevation"} elevation={10} sx={{
           paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
           minWidth: "fit-content", marginLeft: "auto", marginRight: "auto"
         }}>
-          <Typography variant={"h5"} mb={4}>My Contacts</Typography>
+          <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}
+                 spacing={1.5} flexWrap={"wrap"} marginTop={-1} marginBottom={4}
+                 maxWidth={"100%"}>
+            <Avatar src={"/profile-picture.png"}/>
+            <Typography variant={"h4"}>Dániel Nádas</Typography>
+          </Stack>
           <Grid container justifyContent={"space-around"} spacing={1}
                 minWidth={"fit-content"} paddingBottom={2}>
             <Grid item xs={10} md={3}>
-              <ContactElement icon={<MailOutline/>}
+              <ContactElement icon={<AlternateEmailOutlined/>}
                               text={"E-mail"}
                               link={"mailto:daniel.nadas@dnadas.net"}
                               linkText={"daniel.nadas@dnadas.net"}/>
@@ -54,17 +59,21 @@ export default function ContactMePage(props: ContactMePageProps) {
         </Card>
       </Grid>
       <Grid item xs={11} sm={11} md={10} lg={9}>
-        <Card sx={{
+        <Card variant={"elevation"} elevation={10} sx={{
           paddingTop: 4, textAlign: "center", width: "100%", maxWidth: 800,
           marginLeft: "auto", marginRight: "auto"
         }}>
           <Stack
-            spacing={2}
+            direction={"row"}
+            flexWrap={"wrap"}
+            spacing={1.5}
             alignItems={"center"}
-            justifyContent={"center"}>
+            justifyContent={"center"}
+            maxWidth={"100%"}
+            sx={{marginTop: -1, marginBottom: 1}}>
             <Avatar variant={"rounded"}
                     sx={{backgroundColor: "secondary.main", color: "primary.main"}}>
-              <MailOutline/>
+              <MailOutline sx={{height: 40, width: 40}}/>
             </Avatar>
             {!props.sentContactMail && <Typography variant="h5" gutterBottom>
               Send me a message!

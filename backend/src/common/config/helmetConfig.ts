@@ -1,4 +1,4 @@
-import {HelmetOptions} from "helmet";
+import { HelmetOptions } from "helmet";
 
 /**
  * Configuration file for Helmet JS<br>
@@ -57,7 +57,8 @@ export const helmetConfig: HelmetOptions = {
    * @link https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types#mime_sniffing
    */
   strictTransportSecurity: {
-    maxAge: 15552000, includeSubDomains: true
+    maxAge: 15552000,
+    includeSubDomains: true
   },
   /**
    * true = "nosniff"

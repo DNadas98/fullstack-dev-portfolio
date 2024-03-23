@@ -1,23 +1,21 @@
-import {Test, TestingModule} from "@nestjs/testing";
-import {AuthService} from "../../../src/auth/service/AuthService";
-import {DatabaseService} from "../../../src/database/service/DatabaseService";
-import {IPasswordEncoder} from "../../../src/auth/service/IPasswordEncoder";
-import {IJwtService} from "../../../src/auth/service/IJwtService";
-import {createMockContext, MockContext} from "../database/mock/context";
-import {RegisterRequestDto} from "../../../src/auth/dto/RegisterRequestDto";
-import {UserResponsePrivateDto} from "../../../src/users/dto/UserResponsePrivateDto";
-import {PrismaClientKnownRequestError} from "@prisma/client/runtime/library";
-import {UniqueConstraintError} from "../../../src/common/error/UniqueConstraintError";
-import {LoginRequestDto} from "../../../src/auth/dto/LoginRequestDto";
-import {LoginResponseDto} from "../../../src/auth/dto/LoginResponseDto";
-import {InvalidCredentialsError} from "../../../src/auth/error/InvalidCredentialsError";
-import {AccountDeactivatedError} from "../../../src/auth/error/AccountDeactivatedError";
-import {AccountNotEnabledError} from "../../../src/auth/error/AccountNotEnabledError";
-import {Role} from "@prisma/client";
-import {JwtPayloadDto} from "../../../src/auth/dto/JwtPayloadDto";
-import {
-  DtoConverterService
-} from "../../../src/common/converter/service/DtoConverterService";
+import { Test, TestingModule } from "@nestjs/testing";
+import { AuthService } from "../../../src/auth/service/AuthService";
+import { DatabaseService } from "../../../src/database/service/DatabaseService";
+import { IPasswordEncoder } from "../../../src/auth/service/IPasswordEncoder";
+import { IJwtService } from "../../../src/auth/service/IJwtService";
+import { createMockContext, MockContext } from "../database/mock/context";
+import { RegisterRequestDto } from "../../../src/auth/dto/RegisterRequestDto";
+import { UserResponsePrivateDto } from "../../../src/users/dto/UserResponsePrivateDto";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { UniqueConstraintError } from "../../../src/common/error/UniqueConstraintError";
+import { LoginRequestDto } from "../../../src/auth/dto/LoginRequestDto";
+import { LoginResponseDto } from "../../../src/auth/dto/LoginResponseDto";
+import { InvalidCredentialsError } from "../../../src/auth/error/InvalidCredentialsError";
+import { AccountDeactivatedError } from "../../../src/auth/error/AccountDeactivatedError";
+import { AccountNotEnabledError } from "../../../src/auth/error/AccountNotEnabledError";
+import { Role } from "@prisma/client";
+import { JwtPayloadDto } from "../../../src/auth/dto/JwtPayloadDto";
+import { DtoConverterService } from "../../../src/common/converter/service/DtoConverterService";
 import { RefreshResponseDto } from "../../../src/auth/dto/RefreshResponseDto";
 
 describe("AuthService", () => {
@@ -59,10 +57,11 @@ describe("AuthService", () => {
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AuthService, DtoConverterService,
-        {provide: DatabaseService, useValue: mockPrismaCtx.prisma},
-        {provide: IPasswordEncoder, useValue: mockPasswordEncoder},
-        {provide: IJwtService, useValue: mockJwtService}
+        AuthService,
+        DtoConverterService,
+        { provide: DatabaseService, useValue: mockPrismaCtx.prisma },
+        { provide: IPasswordEncoder, useValue: mockPasswordEncoder },
+        { provide: IJwtService, useValue: mockJwtService }
       ]
     }).compile();
 
@@ -253,7 +252,7 @@ describe("AuthService", () => {
 
   describe("AuthService refresh", () => {
     const mockRefreshToken = "mockRefreshToken";
-    const mockPayload = {email: mockUser.email};
+    const mockPayload = { email: mockUser.email };
 
     beforeEach(() => {
       mockJwtService.verifyRefreshToken.mockResolvedValue(mockPayload);
@@ -261,7 +260,6 @@ describe("AuthService", () => {
 
     it("should successfully refresh the bearer token", async () => {
       mockPrismaCtx.prisma.user.findUnique.mockResolvedValue(mockUser);
-
 
       const result = await service.refresh(mockRefreshToken);
 

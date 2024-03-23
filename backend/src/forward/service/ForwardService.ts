@@ -1,12 +1,11 @@
-import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
-import {ConfigService} from "@nestjs/config";
-import {Request} from "express";
-import axios, {AxiosError, AxiosRequestConfig} from "axios";
+import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
+import { Request } from "express";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 
 @Injectable()
 export class ForwardService {
-  constructor(private readonly configService: ConfigService) {
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   /**
    * Forwards requests to the GitHub REST API returns the response
@@ -32,28 +31,35 @@ export class ForwardService {
         const statusText = e?.response?.statusText;
         const status = e?.response?.status;
         throw new HttpException(
-          statusText ? {
-            message: message,
-            error: statusText,
-            statusCode: status
-          } : message,
-          status ?? HttpStatus.SERVICE_UNAVAILABLE);
+          statusText
+            ? {
+                message: message,
+                error: statusText,
+                statusCode: status
+              }
+            : message,
+          status ?? HttpStatus.SERVICE_UNAVAILABLE
+        );
       }
       throw e;
     }
   }
 
   private getGitHubRequestConfig(
-    req: Request, baseUrl: string, path: string, token: string
+    req: Request,
+    baseUrl: string,
+    path: string,
+    token: string
   ): AxiosRequestConfig {
     return {
       method: req.method,
       url: `${baseUrl}/${path}`,
       headers: {
         "Content-Type": "application/json",
-        ...(token ? {Authorization: `Bearer ${token}`} : {})
+        ...(token ? { Authorization: `Bearer ${token}` } : {})
       },
-      timeout: 20000, timeoutErrorMessage: "Request to GitHub REST API timed out"
+      timeout: 20000,
+      timeoutErrorMessage: "Request to GitHub REST API timed out"
     };
   }
 }

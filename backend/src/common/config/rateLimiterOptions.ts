@@ -1,4 +1,4 @@
-import {ThrottlerOptions} from "@nestjs/throttler";
+import { ThrottlerOptions } from "@nestjs/throttler";
 
 /**
  * Used globally for all API endpoints<br>
