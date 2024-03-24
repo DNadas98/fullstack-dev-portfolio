@@ -13,7 +13,7 @@
 }
 
 #root {
-  background: url("/background.svg") no-repeat center top;
+  background: url("/media/background.svg") no-repeat center top;
   background-blend-mode: color-burn;
   background-size: 1920px auto;
 }

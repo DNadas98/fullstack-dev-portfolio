@@ -6,7 +6,7 @@ export default function SiteLogo() {
   return (<Button
     startIcon={
       <Avatar>
-        <img src={"/logo.png"} height={38} width={38} alt={`${siteName}`}/>
+        <img src={"/media/logo.png"} height={38} width={38} alt={`${siteName}`}/>
       </Avatar>
     }
     component={Link}

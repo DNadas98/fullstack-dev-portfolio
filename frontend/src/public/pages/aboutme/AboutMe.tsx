@@ -40,7 +40,7 @@ const AboutMe = () => {
         </Grid>
         <Grid item xs={12} display="flex" justifyContent="center"
               sx={{transform: "translateY(-50%)", zIndex: 2}}>
-          <Avatar src={"/profile-picture.png"}
+          <Avatar src={"/media/profile-picture.png"}
                   alt={" "}
                   sx={{height: "9rem", width: "9rem"}}/>
         </Grid>
@@ -57,7 +57,7 @@ const AboutMe = () => {
                     rel={"noopener noreferrer"}
                     target={"_blank"}
                     variant={"text"}>
-              <img src={"/codecool.webp"} alt={"Codecool"} height={30}/>
+              <img src={"/media/codecool.webp"} alt={"Codecool"} height={30}/>
               <Typography color={"text.primary"} variant={"body1"}>
                 CodeCool
               </Typography>
@@ -108,46 +108,46 @@ const AboutMe = () => {
         <Grid item xs={10} textAlign={"center"}>
           <CardGrid items={[{
             title: "Frontend Development",
-            content: [{iconSrc: "/html.svg", text: "HTML"},
-              {iconSrc: "css.svg", text: "CSS"},
-              {iconSrc: "javascript.svg", text: "Javascript"},
-              {iconSrc: "typescript.svg", text: "Typescript"},
-              {iconSrc: "react.svg", text: "React JS"},
-              {iconSrc: "/materialui.svg", text: "Material UI"}]
+            content: [{iconSrc: "/media/html.svg", text: "HTML"},
+              {iconSrc: "/media/css.svg", text: "CSS"},
+              {iconSrc: "/media/javascript.svg", text: "Javascript"},
+              {iconSrc: "/media/typescript.svg", text: "Typescript"},
+              {iconSrc: "/media/react.svg", text: "React JS"},
+              {iconSrc: "/media/materialui.svg", text: "Material UI"}]
           }, {
             title: "Backend Development",
-            content: [{iconSrc: "java.svg", text: "Java"},
-              {iconSrc: "spring.svg", text: "Java Spring"},
-              {iconSrc: "nodejs.svg", text: "Node.js"},
-              {iconSrc: "express.svg", text: "Express JS"},
-              {iconSrc: "nestjs.svg", text: "Nest JS"},
-              {iconSrc: "php.svg", text: "PHP"}]
+            content: [{iconSrc: "/media/java.svg", text: "Java"},
+              {iconSrc: "/media/spring.svg", text: "Java Spring"},
+              {iconSrc: "/media/nodejs.svg", text: "Node.js"},
+              {iconSrc: "/media/express.svg", text: "Express JS"},
+              {iconSrc: "/media/nestjs.svg", text: "Nest JS"},
+              {iconSrc: "/media/php.svg", text: "PHP"}]
           }, {
             title: "Databases, ORM/ODM",
-            content: [{iconSrc: "postgresql.svg", text: "PostgreSQL"},
-              {iconSrc: "mysql.svg", text: "MySQL"},
-              {iconSrc: "mongodb.png", text: "MongoDB"},
-              {iconSrc: "spring.svg", text: "Spring Data JPA"},
-              {iconSrc: "prisma.svg", text: "Prisma ORM"},
-              {iconSrc: "mongoose.svg", text: "Mongoose JS"}]
+            content: [{iconSrc: "/media/postgresql.svg", text: "PostgreSQL"},
+              {iconSrc: "/media/mysql.svg", text: "MySQL"},
+              {iconSrc: "/media/mongodb.png", text: "MongoDB"},
+              {iconSrc: "/media/spring.svg", text: "Spring Data JPA"},
+              {iconSrc: "/media/prisma.svg", text: "Prisma ORM"},
+              {iconSrc: "/media/mongoose.svg", text: "Mongoose JS"}]
           }, {
             title: "Integration, Deployment",
-            content: [{iconSrc: "/githubactions.svg", text: "Github Actions"},
-              {iconSrc: "/docker.svg", text: "Docker (Compose)"},
-              {iconSrc: "/nginx.svg", text: "NginX"},
-              {iconSrc: "/apache.png", text: "Apache HTTP Server"}]
+            content: [{iconSrc: "/media/githubactions.svg", text: "Github Actions"},
+              {iconSrc: "/media/docker.svg", text: "Docker (Compose)"},
+              {iconSrc: "/media/nginx.svg", text: "NginX"},
+              {iconSrc: "/media/apache.png", text: "Apache HTTP Server"}]
           }, {
             title: "Security, Authentication",
-            content: [{iconSrc: "/spring.svg", text: "Spring Security"},
-              {iconSrc: "/jwt.svg", text: "Json Web Token"},
-              {iconSrc: "/oauth2.svg", text: "OAuth 2.0"},
+            content: [{iconSrc: "/media/spring.svg", text: "Spring Security"},
+              {iconSrc: "/media/jwt.svg", text: "Json Web Token"},
+              {iconSrc: "/media/oauth2.svg", text: "OAuth 2.0"},
               {icon: <Security/>, text: "API Security Basics"}]
           }, {
             title: "Server management",
-            content: [{iconSrc: "/linux.png", text: "Linux VPS"},
+            content: [{iconSrc: "/media/linux.png", text: "Linux VPS"},
               {icon: <Mail/>, text: "E-mail Server"},
               {icon: <Storage/>, text: "Web Storage, FTP"},
-              {iconSrc: "wordpress.svg", text: "Wordpress CMS"}]
+              {iconSrc: "/media/wordpress.svg", text: "Wordpress CMS"}]
           }]}/>
         </Grid>
       </Grid>
@@ -197,7 +197,7 @@ const AboutMe = () => {
                 textAlign={"center"}>
             <Grid item xs={10} sm={4}>
               <Button variant={"outlined"}
-                      href={"/cv-daniel-nadas.pdf"}
+                      href={"/media/documents/cv-daniel-nadas.pdf"}
                       target={"_blank"}
                       rel={"noopener noreferrer"}
                       fullWidth

@@ -32,7 +32,7 @@ export default function ContactMePage(props: ContactMePageProps) {
           <Stack direction={"row"} justifyContent={"center"} alignItems={"center"}
                  spacing={1.5} flexWrap={"wrap"} marginTop={-1} marginBottom={4}
                  maxWidth={"100%"}>
-            <Avatar src={"/profile-picture.png"}/>
+            <Avatar src={"/media/profile-picture.png"}/>
             <Typography variant={"h4"}>Dániel Nádas</Typography>
           </Stack>
           <Grid container justifyContent={"space-around"} spacing={1}
