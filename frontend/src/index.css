@@ -15,5 +15,11 @@
 #root {
   background: url("/media/background.svg") no-repeat center top;
   background-blend-mode: color-burn;
-  background-size: auto 100vh;
+  background-size: 1920px auto;
+}
+
+@media only screen and (min-width: 1920px) {
+  #root {
+    background-size: 100vw auto;
+  }
 }
