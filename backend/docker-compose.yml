@@ -1,13 +1,31 @@
 version: "3"
 
-# dev mysql container
+
 services:
-  mysql:
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - db_network
+    env_file:
+      - .env
+    depends_on:
+      - portfoliomysql
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  portfoliomysql:
     image: mysql:latest
-    #    networks:
-    #      - db_network
-    ports: # Exposes MySQL on localhost for development
-      - "${PORTFOLIO_DB_EXPOSED_PORT}:3306"
+    networks:
+      - db_network
     environment:
       MYSQL_ROOT_PASSWORD: "${PORTFOLIO_DB_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${PORTFOLIO_DB_NAME}"
@@ -15,16 +33,16 @@ services:
       MYSQL_PASSWORD: "${PORTFOLIO_DB_PASSWORD}"
     volumes:
       - "mysql_data:/var/lib/mysql"
-    restart: "no"
+    restart: "always"
     logging:
       driver: "json-file"
       options:
         max-size: "10m"
         max-file: "3"
 
-#networks:
-#  db_network:
-#    driver: bridge
+networks:
+  db_network:
+    driver: bridge
 
 volumes:
   mysql_data:
