@@ -1,6 +1,9 @@
 .idea
 *.env*
 
+*.zip
+*.tar.*
+
 # compiled output
 dist
 node_modules
