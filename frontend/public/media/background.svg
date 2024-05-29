@@ -154,138 +154,138 @@
     <path d="M1920 324 L15360 1080"></path>
     <g>
       <path d="M0 324 L1920 324"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 5.725917159763314" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 329.7259171597633 L1920 329.7259171597633"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 11.451834319526629" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 341.17775147928995 L1920 341.17775147928995"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 17.17775147928994" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 358.3555029585799 L1920 358.3555029585799"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 22.903668639053254" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 381.25917159763316 L1920 381.25917159763316"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 28.62958579881657" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 409.8887573964497 L1920 409.8887573964497"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 34.35550295857988" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 444.2442603550296 L1920 444.2442603550296"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 40.081420118343196" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 484.3256804733728 L1920 484.3256804733728"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 45.80733727810651" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 530.1330177514793 L1920 530.1330177514793"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 51.53325443786982" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 581.6662721893491 L1920 581.6662721893491"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 57.259171597633134" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 638.9254437869822 L1920 638.9254437869822"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 62.985088757396454" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 701.9105325443786 L1920 701.9105325443786"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 68.71100591715977" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 770.6215384615384 L1920 770.6215384615384"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 74.43692307692308" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 845.0584615384615 L1920 845.0584615384615"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 80.16284023668639" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 925.2213017751479 L1920 925.2213017751479"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 85.8887573964497" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 1011.1100591715976 L1920 1011.1100591715976"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 91.61467455621302" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <g>
       <path d="M0 1102.7247337278106 L1920 1102.7247337278106"></path>
-      <animateTransform attributeName="transform" type="translate"
+      <!--<animateTransform attributeName="transform" type="translate"
                         repeatCount="indefinite" calcMode="linear" keyTimes="0;1"
                         values="0 0;0 97.34059171597633" begin="0s"
-                        dur="0.8333333333333334s"></animateTransform>
+                        dur="0.8333333333333334s"></animateTransform>-->
 
     </g>
     <rect x="0" y="0" width="1920" height="1080"
