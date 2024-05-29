@@ -21,7 +21,8 @@ async function bootstrap() {
   const allowedOrigins = [
     `https://localhost`,
     `http://localhost`,
-    `https://dnadas.net`
+    `https://dnadas.net`,
+    `https://api.github.com`
   ];
   app.enableCors(getCorsConfig(allowedOrigins));
 
