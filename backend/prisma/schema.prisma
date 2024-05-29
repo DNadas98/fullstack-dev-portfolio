@@ -60,7 +60,7 @@ model GithubCodeSnippet {
   startLine          Int
   endLine            Int
   description        String           @db.VarChar(1000)
-  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id], onDelete: Cascade)
   githubRepositoryId Int
 }
 
@@ -68,6 +68,6 @@ model ProjectImage {
   id                 Int              @id @default(autoincrement())
   src                String           @unique
   alt                String
-  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id])
+  githubRepository   GithubRepository @relation(fields: [githubRepositoryId], references: [id], onDelete: Cascade)
   githubRepositoryId Int
 }
